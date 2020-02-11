@@ -7,9 +7,11 @@ class GameScreen
 {
 public:
 	GameScreen();
+	bool inp = true;
 	int x = 10, y = 10;
 	char player = '@';
 	void clear();
+	void movement();
 
 protected:
 

@@ -149,12 +149,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Dungeon.cpp" />
     <ClCompile Include="GameMain.cpp" />
     <ClCompile Include="GameScreen.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="menu.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Dungeon.h" />
     <ClInclude Include="GameMain.h" />
     <ClInclude Include="GameScreen.h" />
     <ClInclude Include="MainMenu.h" />
