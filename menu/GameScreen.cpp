@@ -14,7 +14,6 @@ using namespace std;
 
 GameScreen::GameScreen()
 {
-	int x = 10, y = 10;
 	gotoxy(x, y);
 	cout << player << endl;
 	cout << "User input" << endl;
@@ -23,21 +22,25 @@ GameScreen::GameScreen()
 		char move = _getch(); // keyboard response
 		switch (move) {
 		case KEY_UP:
+			clear();
 			y = y - 1;
 			gotoxy(x, y);
 			cout << player;
 			break;
 		case KEY_DOWN:
+			clear();
 			y = y + 1;
 			gotoxy(x, y);
 			cout << player;
 			break;
 		case KEY_LEFT:
+			clear();
 			x = x - 1;
 			gotoxy(x, y);
 			cout << player;
 			break;
 		case KEY_RIGHT:
+			clear();
 			x = x + 1;
 			gotoxy(x, y);
 			cout << player;
@@ -46,4 +49,9 @@ GameScreen::GameScreen()
 			inp = false;
 		}
 	}
+}
+
+void GameScreen::clear() {
+	gotoxy(x, y);
+	cout << " ";
 }
