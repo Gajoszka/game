@@ -1,22 +1,44 @@
 #include "Dungeon.h"
 #include<iostream>
 #include <stdlib.h>
+#include <vector>
+#include <random>
 
 using namespace std;
 
-Dungeon::Dungeon() {
-	const char room[2] = { '#', '.' };
-	char level[15][15];               // ctrl+c+k a potem ctrl+k+u
-	for (int i = 0; i <= 15; i++) {
-		for (int j = 0; j <= 15; j++) {
-			cout << level[room[rand() % 2]][room[rand() % 2]];
-		}
-	}
+random_device rd;
+mt19937 mt(rd());
 
-	
-	
+
+int Dungeon::randomInt(int min, int max) {
+	uniform_int_distribution<> dist(0, max - min);
+	return dist(mt) + min;
 }
 
-void Dungeon::print() {
-	//cout << wall or floor;
+void Dungeon::createRoom(int x, int y, Directions dir, bool firstRoom = false) {
+	const int minRoomSize = 5;
+	const int maxRoomSize = 15;
+
+	Rect room;
+	room.width = randomInt(minRoomSize, maxRoomSize);
+	room.height = randomInt(minRoomSize, maxRoomSize);
+
+	if (dir == North) {
+		room.x = x - room.width / 2;
+		room.y = y - room.height / 2;
+	}
+	else if (dir == South) {
+		room.x = x - room.width / 2;
+		room.y = y + 1;
+	}
+
+	else if (dir == West) {
+		room.x = x - room.width;
+		room.y = y - room.height / 2;
+	}
+
+	else if (dir == East) {
+		room.x = x + 1;
+		room.y = y - room.height / 2;
+	}
 }

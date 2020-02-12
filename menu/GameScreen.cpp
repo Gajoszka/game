@@ -58,3 +58,5 @@ void GameScreen::clear() {
 	gotoxy(x, y);
 	cout << " ";
 }
+
+

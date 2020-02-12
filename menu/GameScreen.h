@@ -12,6 +12,7 @@ public:
 	char player = '@';
 	void clear();
 	void movement();
+	//void SDLmain();
 
 protected:
 

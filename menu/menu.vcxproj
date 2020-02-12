@@ -121,13 +121,15 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>D:\PDCurses-3.8;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -149,16 +151,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="comments.cpp" />
     <ClCompile Include="Dungeon.cpp" />
     <ClCompile Include="GameMain.cpp" />
     <ClCompile Include="GameScreen.cpp" />
+    <ClCompile Include="KeyFunctions.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="menu.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="comments.h" />
     <ClInclude Include="Dungeon.h" />
     <ClInclude Include="GameMain.h" />
     <ClInclude Include="GameScreen.h" />
+    <ClInclude Include="KeyFunctions.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Screen.h" />
   </ItemGroup>
