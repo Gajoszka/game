@@ -7,7 +7,6 @@ class MainMenu
 public:
 	MainMenu();
 	void user_choice();
-	void key_functions();
 	~MainMenu();
 
 protected:

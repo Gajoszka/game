@@ -1,6 +1,8 @@
 #pragma once
 class KeyFunctions
 {
-	KeyFunctions();
+public:
+	void connection();
+	
 };
 

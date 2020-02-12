@@ -1,5 +1,6 @@
 #include "MainMenu.h"
 #include "GameMain.h"
+#include "KeyFunctions.h"
 #include <iostream>
 #include <vector>
 #include <iomanip>
@@ -18,20 +19,18 @@ MainMenu::MainMenu() {
 	}
 }
 
-void MainMenu::key_functions() {
-
-}
 
 void MainMenu::user_choice()
 {
 	int choice;
 	GameMain intro;
+	KeyFunctions obj;
 	cout << "Which option do you choose?";
 	cin >> choice;
 	switch (choice) {
 	case 1: intro.GameIntro();
 		break;
-	case 2: cout << "Key functions" << endl;
+	case 2: obj.connection();
 		break;
 	case 3: cout << "Score board" << endl;
 		break;
