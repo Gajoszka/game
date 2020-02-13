@@ -1,4 +1,5 @@
 #include "KeyFunctions.h"
+#include "DBconnection.h"
 #include <mysql.h>
 #include <iostream>
 #include <string>
@@ -11,6 +12,10 @@ void KeyFunctions::connection() {
 	MYSQL* conn;
 	MYSQL_ROW row;
 	MYSQL_RES* res;
+	conn = mysql_init(0);
+
+	conn = mysql_real_connect(conn, "localhost", "agata", "DanonkI09", "roguelike", 3306, NULL, 0);
+
 	conn = mysql_init(0);
 
 	conn = mysql_real_connect(conn, "localhost", "agata", "DanonkI09", "roguelike", 3306, NULL, 0);
