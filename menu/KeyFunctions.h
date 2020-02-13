@@ -5,7 +5,7 @@ public:
 	void connection();
 	void movement();
 	void clear();
-	int x = 10, y = 10;
+	int x = 0, y = 0;
 	char player = '@';
 	bool inp = true;
 };

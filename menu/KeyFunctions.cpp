@@ -1,8 +1,8 @@
 #include "KeyFunctions.h"
 #include "DBconnection.h"
+#include "MainMenu.h"
 #include "Screen.h"
 #include <mysql.h>
-//#include <conio.h>
 #include <iostream>
 #include <string>
 
@@ -66,6 +66,7 @@ void KeyFunctions::movement() {
 			inp = false;
 		}
 	}
+	MainMenu menu;
 }
 
 void KeyFunctions::clear() {

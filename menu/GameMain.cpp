@@ -1,6 +1,8 @@
 #include "GameMain.h"
 #include "GameScreen.h"
+#include "DBconnection.h"
 #include <stdio.h>
+#include <string>
 #include <stdlib.h>
 #include <iostream>
 
@@ -13,7 +15,7 @@ void GameMain::GameIntro()
 	cout << "Welcome to the game!" << endl;
 	cout << "What's your name?" << endl;
 	cin >> name;
-	//store name to database
+	//store name, so it cann be added to database with a score
 	system("CLS");
 	GameScreen a;
 	//starts displaying game mode
