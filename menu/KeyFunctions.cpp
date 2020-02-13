@@ -2,7 +2,7 @@
 #include "DBconnection.h"
 #include "Screen.h"
 #include <mysql.h>
-#include <conio.h>
+//#include <conio.h>
 #include <iostream>
 #include <string>
 
@@ -16,35 +16,19 @@ using namespace std;
 
 void KeyFunctions::connection() {
 
-	int qstate;
-	MYSQL* conn;
-	MYSQL_ROW row;
-	MYSQL_RES* res;
-	conn = mysql_init(0);
-
-	conn = mysql_real_connect(conn, "localhost", "agata", "DanonkI09", "roguelike", 3306, NULL, 0);
-
-	conn = mysql_init(0);
-
-	conn = mysql_real_connect(conn, "localhost", "agata", "DanonkI09", "roguelike", 3306, NULL, 0);
-
-	if (conn) {
-		puts("Successful connection to databse");
-
+	DBconnection db;
 		string query = "SELECT * FROM keyFun";
 		const char* q = query.c_str();
-		qstate = mysql_query(conn, q);
-		if (!qstate) {
-			res = mysql_store_result(conn);
-			while (row = mysql_fetch_row(res)) {
-				printf("Key: %s- %s\t\n", row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10]);
+		db.qstate = mysql_query(db.conn, q);
+		if (!db.qstate) {
+			db.res = mysql_store_result(db.conn);
+			while (db.row = mysql_fetch_row(db.res)) {
+				printf("Key: %s- %s\t\n", db.row[0], db.row[1], db.row[2], db.row[3], db.row[4], db.row[5], db.row[6], db.row[7], db.row[8], db.row[9], db.row[10]);
 			}
 		} else {
-			cout << "Query failed: " << mysql_error(conn) << endl;
+			cout << "Query failed: " << mysql_error(db.conn) << endl;
 		}
-	} else {
-		puts("Connection to database failed");
-		}
+
 	}
 
 void KeyFunctions::movement() {
