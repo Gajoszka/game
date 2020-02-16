@@ -4,7 +4,6 @@
 #include <iostream>
 #include <vector>
 #include <iomanip>
-#include <SDL.h>
 
 
 using namespace std;

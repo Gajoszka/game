@@ -1,24 +1,49 @@
 #include "dungeon.h"
+#include "Frame.h"
 #include "keyfunctions.h"
+#include "Stats.h"
 #include "Screen.h"
-#include <string>
+#include <vector>
 #include <iostream>
 
 
 using namespace std;
 
 void Dungeon::test1() {
-	gotoxy(x, y);
-	string multitable[10][5];
-	for (int i = 1; i <= 10; ++i) {
-		for (int j = 1; j <= 5; ++j) {
-			multitable[i - 1][j - 1] = "*";
-			cout << multitable[i - 1][j - 1] << "\t";
-		}
-		cout << endl;
-	}
-	KeyFunctions go;
-	go.movement();
+
+    Frame room;
+    room.printFrame(1, 1, 45, 15);
+	//gotoxy(x, y);
+ //   for (int i = 0; i < width + 2; i++) {
+ //       if (i == 20) //make range for entrances/exits at top
+ //           cout << " ";
+ //       else
+ //           cout << "#";
+ //   }
+ //   cout << endl;
+
+ //   for (int i = 0; i < height; i++) {
+ //       for (int j = 0; j < width; j++) {
+ //           if (j == 0)
+ //               cout << "#";
+
+ //           cout << " ";
+
+ //           if (j == width - 1)
+ //               cout << "#";
+ //       }
+ //       cout << endl;
+ //   }
+ //   for (int i = 0; i < width + 2; i++) {
+ //       cout << "#";
+ //   }
+ //   cout << endl;
+
+	//
+ //   Stats st;
+ //   st.frame();
+ //   //cout << "@";
+	////go.movement();
 
 
 }

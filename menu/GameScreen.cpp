@@ -1,17 +1,19 @@
 #include "GameScreen.h"
 #include "KeyFunctions.h"
 #include "Dungeon.h"
+#include "Stats.h"
 #include <iostream>
 
 using namespace std;
 
 GameScreen::GameScreen()
 {
-	KeyFunctions obj;
+	//KeyFunctions obj;
 	Dungeon go;
-	cout << "User input" << endl;
+	//Stats st;
 	go.test1();
-	obj.movement();
+	//st.frame();
+	//obj.movement();
 }
 
 

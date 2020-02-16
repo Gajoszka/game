@@ -157,7 +157,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="comments.cpp" />
     <ClCompile Include="DBconnection.cpp" />
     <ClCompile Include="Dungeon.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -165,21 +164,24 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="Frame.cpp" />
     <ClCompile Include="GameMain.cpp" />
     <ClCompile Include="GameScreen.cpp" />
     <ClCompile Include="KeyFunctions.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="menu.cpp" />
+    <ClCompile Include="Stats.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="comments.h" />
     <ClInclude Include="DBconnection.h" />
     <ClInclude Include="Dungeon.h" />
+    <ClInclude Include="Frame.h" />
     <ClInclude Include="GameMain.h" />
     <ClInclude Include="GameScreen.h" />
     <ClInclude Include="KeyFunctions.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Screen.h" />
+    <ClInclude Include="Stats.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
