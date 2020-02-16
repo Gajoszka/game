@@ -1,5 +1,4 @@
-﻿#include <iostream>
-#include "DBconnection.h"
+﻿#include "DBconnection.h"
 #include "MainMenu.h"
 
 
@@ -9,6 +8,5 @@ int main()
 {
     DBconnection connect;
     MainMenu start;
-    start.user_choice();
     return 0;
 }

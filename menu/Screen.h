@@ -22,7 +22,7 @@ using namespace std;
 // screen.  (5000 = 5 seconds, approximately)
 // --------------------------------------------------------
 // Function for delay( )
-void delay(long seconds)
+static void delay(long seconds)
 {
 	clock_t time1 = clock();  // use clock time
 	clock_t time2 = time1 + seconds;
@@ -37,7 +37,7 @@ void delay(long seconds)
 // to the coordinates (1,1) for easier counting of spaces.
 // --------------------------------------------------------
 // Function for gotoxy( , )
-void gotoxy(int x, int y)
+static void gotoxy(int x, int y)
 {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	COORD point;
@@ -53,7 +53,7 @@ void gotoxy(int x, int y)
 // user's response on the screen (no echo).
 // --------------------------------------------------------
 // Function for getch( ) 
-int getch(void)
+inline int getch(void)
 {
 	int response;
 	std::cout << std::flush;
@@ -69,7 +69,7 @@ int getch(void)
 // response on the screen (echo).
 // --------------------------------------------------------
 // Function for getche( )
-int getche(void)
+inline int getche(void)
 {
 	int response;
 	response = _getche();

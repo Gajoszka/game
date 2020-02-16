@@ -19,6 +19,7 @@ MainMenu::MainMenu() {
 	for (int i = 0; i < menu_options.size(); i++) {
 		cout << menu_options[i] << endl;
 	}
+	user_choice();
 }
 
 

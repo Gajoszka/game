@@ -159,7 +159,12 @@
   <ItemGroup>
     <ClCompile Include="comments.cpp" />
     <ClCompile Include="DBconnection.cpp" />
-    <ClCompile Include="Dungeon.cpp" />
+    <ClCompile Include="Dungeon.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="GameMain.cpp" />
     <ClCompile Include="GameScreen.cpp" />
     <ClCompile Include="KeyFunctions.cpp" />
