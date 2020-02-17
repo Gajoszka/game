@@ -19,9 +19,7 @@ void Player::playerSpace() {
 		placeUser();
 	};
 	gotoxy(x, y);
-	cout << player;
-	KeyFunctions go;
-	movement();
+	cout << user;
 };
 
 void Player::placeUser() {
@@ -29,44 +27,3 @@ void Player::placeUser() {
 	y = rand();
 };
 
-void Player::movement() {
-	while (inp) {
-		char move = _getch(); // keyboard response
-		switch (move) {
-		case KEY_UP:
-			clear();
-			y = y - 1;
-			if(y == '#' || x == '#')
-				movement();
-			else
-				gotoxy(x, y);
-				cout << player;
-			break;
-		case KEY_DOWN:
-			clear();
-			y = y + 1;
-			gotoxy(x, y);
-			cout << player;
-			break;
-		case KEY_LEFT:
-			clear();
-			x = x - 1;
-			gotoxy(x, y);
-			cout << player;
-			break;
-		case KEY_RIGHT:
-			clear();
-			x = x + 1;
-			gotoxy(x, y);
-			cout << player;
-			break;
-		case KEY_END:
-			inp = false;
-		}
-	}
-};
-
-void Player::clear() {
-	gotoxy(x, y);
-	cout << " ";
-}

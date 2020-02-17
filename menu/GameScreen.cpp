@@ -10,16 +10,16 @@ using namespace std;
 
 GameScreen::GameScreen()
 {
-	//KeyFunctions obj;
+	KeyFunctions obj;
 	Dungeon go;
 	Stats st;
 	InfoDisplay info;
-	Player user;
+	//Player user;
 	go.test1();
 	st.frame();
 	info.infoFrame();
-	user.playerSpace();
-	//obj.movement();
+	//user.playerSpace();
+	obj.movement();
 }
 
 

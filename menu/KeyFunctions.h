@@ -1,12 +1,14 @@
 #pragma once
+#include "Player.h"
 class KeyFunctions
 {
 public:
 	void connection();
-	//void movement();
-	//void clear();
-	//int x = 0, y = 20;
-	//char player = '@';
-	//bool inp = true;
+	void movement();
+	void clear();
+	Player obj;
+	int x = obj.x;
+	int y = obj.y;
+	bool inp = true;
 };
 
