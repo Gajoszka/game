@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "Dungeon.h"
+#include "Frame.h"
 #include "KeyFunctions.h"
 #include "Screen.h"
 #include <iostream>
@@ -13,11 +14,12 @@
 using namespace std;
 
 void Player::playerSpace() {
-	Dungeon coor;
-	bool ok = x >= coor.width || x <= coor.x || y >= coor.height || y <= coor.y;
-	while (x >= 45 || x <= 1 || y >= 15 || y <= 1) {
+	//Frame coor(20,20);
+	/*coor.isInside(21, 11);
+	bool ok = (x >= coor.width || x <= coor.x) &&  (y >= coor.height || y <= coor.y);
+	while (obj.isInside()) {
 		placeUser();
-	};
+	};*/
 	gotoxy(x, y);
 	cout << user;
 };

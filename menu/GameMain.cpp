@@ -18,6 +18,9 @@ void GameMain::GameIntro()
 	cin >> name;
 	//store name, so it cann be added to database with a score
 	system("CLS");
-	GameScreen a;
+	GameScreen game;
+	/*Frame room(15, 45);
+	game.setRoom(room);
+	game.printScreen()*/;
 	//starts displaying game mode
 }

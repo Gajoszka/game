@@ -9,6 +9,8 @@ Frame::Frame(int width, int height) {
 }
 
 void Frame::printFrame(int x, int y) {
+	this->x = x;
+	this->y = y;
 	//printPoint(x, y, top_left);
 	printHorizontal(x, y, width);
 	//printPoint(x + width - 1, y, top_right );
@@ -35,4 +37,8 @@ void Frame::printHorizontal(int x, int y1, int width) {
 void Frame::printPoint(int x, int y, char sign) {
 	gotoxy(x, y);
 	cout << sign;
+}
+
+bool Frame::isInside(int x, int y) {
+	return  (x > this->x && x <= this->x+this->width) && (y >= this->y && y < this->y+this->height);
 }
