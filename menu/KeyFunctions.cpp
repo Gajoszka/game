@@ -31,45 +31,41 @@ void KeyFunctions::connection() {
 
 	}
 
-void KeyFunctions::movement() {
-	gotoxy(x, y);
-	cout << player << endl;
-	
-	while (inp) {
-		char move = _getch(); // keyboard response
-		switch (move) {
-		case KEY_UP:
-			clear();
-			y = y - 1;
-			gotoxy(x, y);
-			cout << player;
-			break;
-		case KEY_DOWN:
-			clear();
-			y = y + 1;
-			gotoxy(x, y);
-			cout << player;
-			break;
-		case KEY_LEFT:
-			clear();
-			x = x - 1;
-			gotoxy(x, y);
-			cout << player;
-			break;
-		case KEY_RIGHT:
-			clear();
-			x = x + 1;
-			gotoxy(x, y);
-			cout << player;
-			break;
-		case KEY_END:
-			inp = false;
-		}
-	}
-	MainMenu menu;
-}
-
-void KeyFunctions::clear() {
-	gotoxy(x, y);
-	cout << " ";
-}
+//void KeyFunctions::movement() {
+//	while (inp) {
+//		char move = _getch(); // keyboard response
+//		switch (move) {
+//		case KEY_UP:
+//			clear();
+//			y = y - 1;
+//			gotoxy(x, y);
+//			cout << player;
+//			break;
+//		case KEY_DOWN:
+//			clear();
+//			y = y + 1;
+//			gotoxy(x, y);
+//			cout << player;
+//			break;
+//		case KEY_LEFT:
+//			clear();
+//			x = x - 1;
+//			gotoxy(x, y);
+//			cout << player;
+//			break;
+//		case KEY_RIGHT:
+//			clear();
+//			x = x + 1;
+//			gotoxy(x, y);
+//			cout << player;
+//			break;
+//		case KEY_END:
+//			inp = false;
+//		}
+//	}
+//}
+//
+//void KeyFunctions::clear() {
+//	gotoxy(x, y);
+//	cout << " ";
+//}

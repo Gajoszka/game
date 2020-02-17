@@ -167,9 +167,11 @@
     <ClCompile Include="Frame.cpp" />
     <ClCompile Include="GameMain.cpp" />
     <ClCompile Include="GameScreen.cpp" />
+    <ClCompile Include="InfoDisplay.cpp" />
     <ClCompile Include="KeyFunctions.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="menu.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Stats.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -178,8 +180,10 @@
     <ClInclude Include="Frame.h" />
     <ClInclude Include="GameMain.h" />
     <ClInclude Include="GameScreen.h" />
+    <ClInclude Include="InfoDisplay.h" />
     <ClInclude Include="KeyFunctions.h" />
     <ClInclude Include="MainMenu.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="Stats.h" />
   </ItemGroup>

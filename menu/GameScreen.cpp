@@ -1,5 +1,7 @@
 #include "GameScreen.h"
 #include "KeyFunctions.h"
+#include "Player.h"
+#include "InfoDisplay.h"
 #include "Dungeon.h"
 #include "Stats.h"
 #include <iostream>
@@ -10,9 +12,13 @@ GameScreen::GameScreen()
 {
 	//KeyFunctions obj;
 	Dungeon go;
-	//Stats st;
+	Stats st;
+	InfoDisplay info;
+	Player user;
 	go.test1();
-	//st.frame();
+	st.frame();
+	info.infoFrame();
+	user.playerSpace();
 	//obj.movement();
 }
 
