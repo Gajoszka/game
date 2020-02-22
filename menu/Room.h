@@ -1,11 +1,11 @@
 #pragma once
 #include "Frame.h"
 
-
-class Stats : public Frame
+class Room : public Frame
 {
 public:
-	Stats();
+	Room();
 	virtual void printInside();
+private:
+	int room[45][15] = ;
 };
-

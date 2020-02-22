@@ -1,11 +1,10 @@
 #pragma once
-class InfoDisplay
+#include "Frame.h"
+
+class InfoDisplay : public Frame
 {
 public:
-	int width = 45;
-	int height = 5;
-	int x = 1;
-	int y = 16;
-	void infoFrame();
+	InfoDisplay();
+	virtual void printInside();
 };
 

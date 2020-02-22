@@ -158,13 +158,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DBconnection.cpp" />
-    <ClCompile Include="Dungeon.cpp">
+    <ClCompile Include="Room.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Frame.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameMain.cpp" />
     <ClCompile Include="GameScreen.cpp" />
     <ClCompile Include="InfoDisplay.cpp" />
@@ -176,8 +178,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DBconnection.h" />
-    <ClInclude Include="Dungeon.h" />
+    <ClInclude Include="Room.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Frame.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="GameMain.h" />
     <ClInclude Include="GameScreen.h" />
     <ClInclude Include="InfoDisplay.h" />

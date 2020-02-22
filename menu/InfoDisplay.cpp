@@ -4,7 +4,10 @@
 
 using namespace std;
 
-void InfoDisplay::infoFrame() {
-	Frame info(width, height);
-	info.printFrame(x,y);
-};
+InfoDisplay::InfoDisplay() : Frame(45, 5) {
+
+}
+
+void InfoDisplay::printInside() {
+	printLine(1, "Dzieñ dobry");
+}

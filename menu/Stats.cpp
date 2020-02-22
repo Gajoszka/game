@@ -5,7 +5,10 @@
 
 using namespace std;
 
-void Stats::frame() {
-    Frame stats(width, height);
-    stats.printFrame(x, y);
+Stats::Stats() : Frame(20, 15) {
+
+}
+
+void Stats::printInside() {
+	
 }

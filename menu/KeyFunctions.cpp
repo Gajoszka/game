@@ -33,7 +33,7 @@ void KeyFunctions::connection() {
 	}
 
 void KeyFunctions::movement() {
-	obj.playerSpace();
+	//obj.playerSpace();
 	while (inp) {
 		char move = _getch(); // keyboard response
 		switch (move) {

@@ -1,5 +1,5 @@
 ﻿#include "DBconnection.h"
-#include "MainMenu.h"
+#include "Game.h"
 
 
 using namespace std;
@@ -7,6 +7,7 @@ using namespace std;
 int main()
 {
     DBconnection connect;
-    MainMenu start;
+    Game game;
+    game.start();
     return 0;
 }

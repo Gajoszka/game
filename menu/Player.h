@@ -1,13 +1,12 @@
 #pragma once
 #include <math.h>
-#include "Dungeon.h"
+#include "Room.h"
 class Player
 {
 public:
 	const char user = '@';
-	void playerSpace();
+	void printPlayer(int x, int y);
 	int x;
 	int y;
-	void placeUser();
 };
 

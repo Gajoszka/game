@@ -1,36 +1,58 @@
 #include "MainMenu.h"
+#include "GameScreen.h"
 #include "GameMain.h"
 #include "KeyFunctions.h"
+#include "Screen.h"
 #include <iostream>
 #include <vector>
 #include <iomanip>
 
 
 using namespace std;
+MainMenu::MainMenu() :Frame(40,10) {
+	
+}
 
-MainMenu::MainMenu() {
-
+void MainMenu::printInside() {
 	vector<string> menu_options;
 	menu_options.push_back("1. Start new game");
 	menu_options.push_back("2. Key functions");
 	menu_options.push_back("3. Score board");
 	menu_options.push_back("4. Exit");
 	for (int i = 0; i < menu_options.size(); i++) {
-		cout << menu_options[i] << endl;
+		printLine(i+1, menu_options[i]);
 	}
+	printLine(7, "Which option do you choose?");
 	user_choice();
 }
 
+void MainMenu::play() {
+	GameScreen gra;
+	gra.play();
+}
+
+void MainMenu::intro()
+{
+	system("CLS");
+	printFrame();
+	string name;
+	printCenterLine(1, "Welcome to the game!");
+	printLine(3,"What's your name?");
+	cin >> name;
+	//store name, so it cann be added to database with a score
+	system("CLS");
+	play();
+	
+}
 
 void MainMenu::user_choice()
 {
 	int choice;
-	GameMain intro;
 	KeyFunctions obj;
-	cout << "Which option do you choose?";
+	
 	cin >> choice;
 	switch (choice) {
-	case 1: intro.GameIntro();
+	case 1: intro();
 		break;
 	case 2: obj.connection();
 		break;
@@ -38,8 +60,4 @@ void MainMenu::user_choice()
 		break;
 	case 4: cout << "Exit" << endl;
 	}
-}
-
-MainMenu::~MainMenu() {
-
 }
