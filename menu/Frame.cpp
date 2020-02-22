@@ -22,13 +22,19 @@ void Frame::print(int x, int y) {
 
 void Frame::printFrame() {
 
-	//printPoint(x, y, top_left);
-	printHorizontal(x, y, width);
-	//printPoint(x + width - 1, y, top_right );
-	printVertical(x, y+1, height);
-	printHorizontal(x, y + height, width);
-	printVertical(x + width, y+1, height);
-	gotoxy(1, y + height + 1);
+
+	printHorizontal(x+1, y, width-1);
+	printHorizontal(x+1, y + height, width-1);
+	printVertical(x, y+1, height-1);
+	printVertical(x + width, y+1, height-1);
+	gotoxy(x, y);
+	cout << top_left;
+	gotoxy(x + width, y);
+	cout << top_right;
+	gotoxy(x, y+height);
+	cout << bottom_left;
+	gotoxy(x + width, y+height);
+	cout << bottom_right;
 };
 
 void Frame::printVertical(int x, int y, int height) {
@@ -45,17 +51,21 @@ void Frame::printHorizontal(int x, int y1, int width) {
 	}
 };
 
+void Frame::cursor(int x, int y) {
+	gotoxy(this->x + x, this->y + y);
+}
+
 void Frame::printPoint(int x, int y, char sign) {
-	gotoxy(x, y);
+	cursor(x, y);
 	cout << sign;
 }
 void Frame::printLine(int line, string text) {
-	gotoxy(x + 2, y + line + 1);
+	cursor(2, line);
 	cout << text;
 }
 
 void Frame::printCenterLine(int line, string text) {
-	gotoxy(x + 1+ (width-text.size())/2, y + line + 1);
+	cursor( (width-text.size())/2, line);
 	cout << text;
 }
 

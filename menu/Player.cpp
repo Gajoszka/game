@@ -7,14 +7,8 @@
 
 using namespace std;
 
-void Player::printPlayer(int x, int y) {
-	Frame check(45, 15);
-	/*do {
-		x = rand() % 45 + 3;
-		y = rand() % 15 + 2;
-	} while(room.isInside(x, y));*/
+Player::Player() {
+	//printPlayer();
+}
 
-	gotoxy(x, y);
-	cout << user;
-};
 

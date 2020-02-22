@@ -1,6 +1,5 @@
 #include "MainMenu.h"
-#include "GameScreen.h"
-#include "GameMain.h"
+#include "GameManager.h"
 #include "KeyFunctions.h"
 #include "Screen.h"
 #include <iostream>
@@ -20,14 +19,14 @@ void MainMenu::printInside() {
 	menu_options.push_back("3. Score board");
 	menu_options.push_back("4. Exit");
 	for (int i = 0; i < menu_options.size(); i++) {
-		printLine(i+1, menu_options[i]);
+		printLine(i+2, menu_options[i]);
 	}
-	printLine(7, "Which option do you choose?");
+	printLine(8, "Which option do you choose?");
 	user_choice();
 }
 
 void MainMenu::play() {
-	GameScreen gra;
+	GameManager gra;
 	gra.play();
 }
 
@@ -36,8 +35,9 @@ void MainMenu::intro()
 	system("CLS");
 	printFrame();
 	string name;
-	printCenterLine(1, "Welcome to the game!");
-	printLine(3,"What's your name?");
+	printCenterLine(2, "Welcome to the game!");
+	printLine(5,"What's your name?");
+	printPoint(20, 5, ':');
 	cin >> name;
 	//store name, so it cann be added to database with a score
 	system("CLS");

@@ -1,5 +1,5 @@
 #pragma once
-#include "GameScreen.h"
+#include "GameManager.h"
 #include"MainMenu.h"
 class Game
 {

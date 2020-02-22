@@ -167,8 +167,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Frame.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GameMain.cpp" />
-    <ClCompile Include="GameScreen.cpp" />
+    <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="InfoDisplay.cpp" />
     <ClCompile Include="KeyFunctions.cpp" />
     <ClCompile Include="MainMenu.cpp" />
@@ -182,8 +181,7 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Frame.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="GameMain.h" />
-    <ClInclude Include="GameScreen.h" />
+    <ClInclude Include="GameManager.h" />
     <ClInclude Include="InfoDisplay.h" />
     <ClInclude Include="KeyFunctions.h" />
     <ClInclude Include="MainMenu.h" />

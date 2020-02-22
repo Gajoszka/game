@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Stats::Stats() : Frame(20, 15) {
+Stats::Stats() : Frame(20, 24) {
 
 }
 

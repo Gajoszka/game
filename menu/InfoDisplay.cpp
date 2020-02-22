@@ -4,7 +4,7 @@
 
 using namespace std;
 
-InfoDisplay::InfoDisplay() : Frame(45, 5) {
+InfoDisplay::InfoDisplay() : Frame(48, 5) {
 
 }
 
