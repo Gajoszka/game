@@ -30,17 +30,38 @@ void Room::generator() {
 		room[0][i] = 1;
 		room[widthRoom-1][i] = 1;
 	}
+
+	for (int i = 8; i < 15; i++) {
+		room[5][i] = 1;
+		room[i + 4][11] = 1;
+	}
+
+	room[10][10] = 1;
+	room[10][12] = 1;
+	room[10][13] = 2;
+	room[10][14] = 1;
+	room[20][10] = 1;
 }
 
 void Room::printInside() {
 	for (int i = 0; i < 45; i++) {
 		for (int j = 0; j < 15; j++) {
-			printPoint(i + 2, j + 2, room[i][j] == 0 ? ' ' : 'X');
+			printPoint(i + 2, j + 2, getSign(room[i][j]));
 		}
 	}
 }
 
 bool Room::isInside(int x, int y) {
-	return room[x][y] == 0;
+	return x>0 && y> 0 && x< widthRoom && y<=heightRoom && room[x-2][y-2] != 1;
 }
 
+char Room::getSign(int x) {
+	switch (x) {
+	case 0:
+		return ' ';
+	case 1:
+		return 'X';
+	case 2:
+		return 'S';
+	}
+}

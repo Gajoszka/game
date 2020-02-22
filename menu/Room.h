@@ -9,7 +9,7 @@ public:
 	virtual bool isInside(int x, int y);
 	void generator();
 private:
-
+	char getSign(int x);
 	int room[45][15];
 	int widthRoom;
 	int heightRoom;

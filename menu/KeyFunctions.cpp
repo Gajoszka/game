@@ -32,42 +32,42 @@ void KeyFunctions::connection() {
 
 	}
 
-void KeyFunctions::movement() {
-	//obj.playerSpace();
-	while (inp) {
-		char move = _getch(); // keyboard response
-		switch (move) {
-		case KEY_UP:
-			clear();
-			obj.y = obj.y - 1;
-			gotoxy(obj.x, obj.y);
-			cout << obj.user;
-			break;
-		case KEY_DOWN:
-			clear();
-			obj.y = obj.y + 1;
-			gotoxy(obj.x, obj.y);
-			cout << obj.user;
-			break;
-		case KEY_LEFT:
-			clear();
-			obj.x = obj.x - 1;
-			gotoxy(obj.x, obj.y);
-			cout << obj.user;
-			break;
-		case KEY_RIGHT:
-			clear();
-			obj.x = obj.x + 1;
-			gotoxy(obj.x, obj.y);
-			cout << obj.user;
-			break;
-		case KEY_END:
-			inp = false;
-		}
-	}
-};
-
-void KeyFunctions::clear() {
-	gotoxy(obj.x, obj.y);
-	cout << " ";
-}
+//void KeyFunctions::movement() {
+//	//obj.playerSpace();
+//	while (inp) {
+//		char move = _getch(); // keyboard response
+//		switch (move) {
+//		case KEY_UP:
+//			clear();
+//			obj.y = obj.y - 1;
+//			gotoxy(obj.x, obj.y);
+//			cout << obj.user;
+//			break;
+//		case KEY_DOWN:
+//			clear();
+//			obj.y = obj.y + 1;
+//			gotoxy(obj.x, obj.y);
+//			cout << obj.user;
+//			break;
+//		case KEY_LEFT:
+//			clear();
+//			obj.x = obj.x - 1;
+//			gotoxy(obj.x, obj.y);
+//			cout << obj.user;
+//			break;
+//		case KEY_RIGHT:
+//			clear();
+//			obj.x = obj.x + 1;
+//			gotoxy(obj.x, obj.y);
+//			cout << obj.user;
+//			break;
+//		case KEY_END:
+//			inp = false;
+//		}
+//	}
+//};
+//
+//void KeyFunctions::clear() {
+//	gotoxy(obj.x, obj.y);
+//	cout << " ";
+//}

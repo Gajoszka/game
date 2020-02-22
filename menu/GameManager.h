@@ -23,17 +23,17 @@ public:
 	};
 	void play();
 	void keyReader();
-	
+	void shutCursor(bool visible);
+	~GameManager();
 
 protected:
 
 private:
 	bool inp = true;
 	bool endGame = false;
-	KeyFunctions move;
 	Room room;
 	Stats stats;
 	InfoDisplay info;
 	Player player;
-	void playerGoTo(int x,int y);
+	bool playerGoTo(int x,int y);
 };
