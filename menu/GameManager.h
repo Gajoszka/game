@@ -5,6 +5,7 @@
 #include "Room.h"
 #include "Stats.h"
 #include "InfoDisplay.h"
+#include "Creature.h"
 
 
 #define KEY_UP 72
@@ -16,7 +17,7 @@
 class GameManager
 {
 public:
-	GameManager() : room(), stats(), info(), player() {
+	GameManager() : room(), stats(), info() {
 		room.print(1,1);
 		stats.print(50, 1);
 		info.print(1,20);
@@ -25,15 +26,14 @@ public:
 	void keyReader();
 	void shutCursor(bool visible);
 	~GameManager();
-
 protected:
 	Room room;
 private:
+	Player player;
 	bool inp = true;
 	bool endGame = false;
-	
 	Stats stats;
 	InfoDisplay info;
-	Player player;
+	
 	bool playerGoTo(int x,int y);
 };

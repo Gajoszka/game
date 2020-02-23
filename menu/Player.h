@@ -7,7 +7,7 @@
 class Player : public Creature
 {
 public:
-	Player() : creature(10, 4, 3) {};
+	Player();
 	virtual bool playerGoTo(int x, int y);
 	const char P = '@';
 	int x;
@@ -24,10 +24,11 @@ public:
 	void setX(int value) {
 		x = value;
 	};
+
 	void setY(int value) {
 		y = value;
 	};
 private:
-	Creature creature;
+	Room room;
 };
 

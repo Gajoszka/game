@@ -3,6 +3,7 @@
 #include "Screen.h"
 #include "KeyFunctions.h"
 #include "Game.h"
+#include "Player.h"
 #include "InfoDisplay.h"
 #include "Room.h"
 #include "Stats.h"
