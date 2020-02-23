@@ -157,6 +157,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Creature.cpp" />
     <ClCompile Include="DBconnection.cpp" />
     <ClCompile Include="Room.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -176,6 +177,7 @@
     <ClCompile Include="Stats.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Creature.h" />
     <ClInclude Include="DBconnection.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="Enemy.h" />
