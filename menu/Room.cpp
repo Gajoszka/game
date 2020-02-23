@@ -9,59 +9,45 @@
 
 using namespace std;
 
-Room::Room() : Frame(48 ,18) {
-	widthRoom = 45;
-	heightRoom = 15;
-	generator();
-}
-
-void Room::generator() {
-	for (int i = 0; i < widthRoom; i++) {
-		for (int j = 0; j < heightRoom; j++) {
-			room[i][j] = 0;
+Room::Room(int map[15][45]) : Frame(45 ,15) {
+	if (map!=NULL)
+	for (int j = 0; j < height; j++) {
+		for (int i = 0; i < width; i++) {
+			arenaMap[j][i]=map[j][i];
 		}
 	}
-	for (int i = 0; i < widthRoom; i++) {
-			room[i][0] = 1;
-			room[i][heightRoom -1] = 1;
-	}
 
-	for (int i = 0; i < heightRoom; i++) {
-		room[0][i] = 1;
-		room[widthRoom-1][i] = 1;
-	}
-
-	for (int i = 8; i < 15; i++) {
-		room[5][i] = 1;
-		room[i + 4][11] = 1;
-	}
-
-	room[10][10] = 1;
-	room[10][12] = 1;
-	room[10][13] = 2;
-	room[10][14] = 1;
-	room[20][10] = 1;
 }
+
+void Room::printFrame()
+{
+}
+
 
 void Room::printInside() {
-	for (int i = 0; i < 45; i++) {
-		for (int j = 0; j < 15; j++) {
-			printPoint(i + 2, j + 2, getSign(room[i][j]));
+	for (int j = 0; j < height; j++) {
+		for (int i = 0; i < width; i++) {
+			printPoint(i , j , getSign(arenaMap[j][i]));
 		}
 	}
 }
 
+
 bool Room::isInside(int x, int y) {
-	return x>0 && y> 0 && x< widthRoom && y<=heightRoom && room[x-2][y-2] != 1;
+	int indexX = x - getTop().getX();
+	int indexY = y - getTop().getY();
+	return indexX>=0 && indexY>= 0 && indexX<width && indexY<=height && arenaMap[indexY][indexX] != 1;
 }
 
-char Room::getSign(int x) {
-	switch (x) {
+char Room::getSign(int value) {
+	switch (value) {
 	case 0:
 		return ' ';
 	case 1:
 		return 'X';
 	case 2:
 		return 'S';
+	default:
+		return ' ';
 	}
 }

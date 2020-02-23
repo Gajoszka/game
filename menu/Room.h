@@ -4,13 +4,11 @@
 class Room : public Frame
 {
 public:
-	Room();
+	Room(int map[15][45]);
+	virtual void printFrame();
 	virtual void printInside();
 	virtual bool isInside(int x, int y);
-	void generator();
 private:
 	char getSign(int x);
-	int room[45][15];
-	int widthRoom;
-	int heightRoom;
+	int arenaMap[15][45];
 };

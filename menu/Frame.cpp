@@ -4,17 +4,14 @@
 #include <string>
 
 using namespace std;
-Frame::Frame(int width, int height) {
-	this->width = width;
-	this->height = height;
-}
+
 void Frame::printInside() {
 
 }
 
 void Frame::print(int x, int y) {
-	this->x = x;
-	this->y = y;
+	this->topLeft.setX(x);
+	topLeft.setY(y);
 	printFrame();
 	printInside();
 };
@@ -23,17 +20,17 @@ void Frame::print(int x, int y) {
 void Frame::printFrame() {
 
 
-	printHorizontal(x+1, y, width-1);
-	printHorizontal(x+1, y + height, width-1);
-	printVertical(x, y+1, height-1);
-	printVertical(x + width, y+1, height-1);
-	gotoxy(x, y);
+	printHorizontal(topLeft.getX()+1, topLeft.getY(), width-1);
+	printHorizontal(topLeft.getX() +1, topLeft.getY() + height, width-1);
+	printVertical(topLeft.getX(), topLeft.getY() +1, height-1);
+	printVertical(topLeft.getX() + width, topLeft.getY() +1, height-1);
+	gotoxy(topLeft.getX(), topLeft.getY());
 	cout << top_left;
-	gotoxy(x + width, y);
+	gotoxy(topLeft.getX() + width, topLeft.getY());
 	cout << top_right;
-	gotoxy(x, y+height);
+	gotoxy(topLeft.getX(), topLeft.getY() +height);
 	cout << bottom_left;
-	gotoxy(x + width, y+height);
+	gotoxy(topLeft.getX() + width, topLeft.getY() +height);
 	cout << bottom_right;
 };
 
@@ -51,8 +48,8 @@ void Frame::printHorizontal(int x, int y1, int width) {
 	}
 };
 
-void Frame::cursor(int x, int y) {
-	gotoxy(this->x + x, this->y + y);
+void Frame::cursor(int stepX, int stepY) {
+	gotoxy(topLeft.getX() +stepX, topLeft.getY() +stepY);
 }
 
 void Frame::printPoint(int x, int y, char sign) {
@@ -70,5 +67,5 @@ void Frame::printCenterLine(int line, string text) {
 }
 
 bool Frame::isInside(int x, int y) {
-	return  (x > this->x && x <= this->x+this->width) && (y >= this->y && y < this->y+this->height);
+	return  (x > topLeft.getX() && x <= this->topLeft.getX() +this->width) && (y >= topLeft.getY() && y < topLeft.getY() +this->height);
 }

@@ -12,8 +12,16 @@ using namespace std;
 
 void GameManager::play() {
 	shutCursor(false);
-	player.setX(1);
-	player.setY(1);
+	RoomBuilder roomBuilder;
+	roomBuilder.setWallCount(3);
+	mainFrame.setRoom(roomBuilder.build());
+	mainFrame.print(1, 1);
+	stats.print(50, 1);
+	info.print(1, 20);
+	player.setLocation((*getRoom()).getTop().getX()+1,(*getRoom()).getTop().getY()+1);
+	int i = 0;
+	while (!playerGoTo(i, i))
+		i++;
 	while (!playerGoTo(rand()%45,rand()%18));
 	while (!endGame) {
 		keyReader();	
@@ -53,19 +61,17 @@ void GameManager::shutCursor(bool visible) {
 }
 
 bool GameManager::playerGoTo(int x, int y) {
-	int xAct = player.x + x;
-	int yAct = player.y + y;
-	room.printPoint(player.x, player.y, ' ');
+	int xAct = player.getLocation().getX() + x;
+	int yAct = player.getLocation().getY() + y;
+	player.clear();
 	Sleep(30);
 	bool result = true;
-	if (!room.isInside(xAct, yAct)) {
-		 xAct = player.x ;
-		 yAct = player.y;
+	if (!(*getRoom()).isInside(xAct, yAct)) {
+		 xAct = player.getLocation().getX();
+		 yAct = player.getLocation().getY();
 		 result = false;
 	}
-	player.setX(xAct);
-	player.setY(yAct);
-	room.printPoint(xAct, yAct, player.getP());
+	player.print(xAct, yAct);
 	return result;
 }
 

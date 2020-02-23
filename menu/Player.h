@@ -1,29 +1,15 @@
 #pragma once
 #include <math.h>
 #include "Room.h"
-class Player
+#include "Creature.h"
+
+class Player:public Creature
 {
 public:
-	Player();
+	Player() :Creature('@', 10, 4, 3) {};
 
-	const char P = '@';
-	void printPlayer(int x, int y);
-	int x;
-	int y;
-	char getP() {
-		return P;
-	};
-	int getX() {
-		return x;
-	};
-	int getY() {
-		return y;
-	};
-	void setX(int value) {
-		x = value;
-	};
-	void setY(int value) {
-		y = value;
-	};
+private:
+
+	
 };
 

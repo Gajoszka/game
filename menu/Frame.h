@@ -1,19 +1,26 @@
 #pragma once
 #include <string>
+#include "Point.h"
 class Frame
 {
 public:
-	Frame(int width, int height);
-	void printFrame();
+	Frame(int width, int height) :topLeft(0, 0) {
+		this->width = width;
+		this->height = height;
+	};
+	virtual void printFrame();
 	virtual void printInside();
 	virtual bool isInside(int x, int y);
 	void print(int x, int y);
 	void printPoint(int x, int y, char sign);
+	Point getTop() {
+		return topLeft;
+	}
+	
 private:
 	void printVertical(int x,int y,int width);
 	void printHorizontal(int x, int y, int height);
-	void cursor(int x, int y);
-	
+	void cursor(int stepX, int stepY);
 	char wall = 186;
 	char top_right = 187;
 	char top_left = 201;
@@ -27,8 +34,8 @@ protected:
 	void printCenterLine(int line, std::string text);
 	int width;
 	int height;
-	int x;
-	int y;
+	Point topLeft;
+	
 	
 };
 
