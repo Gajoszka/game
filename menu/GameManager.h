@@ -27,11 +27,11 @@ public:
 	~GameManager();
 
 protected:
-
+	Room room;
 private:
 	bool inp = true;
 	bool endGame = false;
-	Room room;
+	
 	Stats stats;
 	InfoDisplay info;
 	Player player;

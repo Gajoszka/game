@@ -8,23 +8,22 @@
 using namespace std;
 
 Player::Player() {
-	
+	this->creature = P;
 }
 
 bool Player::playerGoTo(int x, int y) {
-	int xAct = player.x + x;
-	int yAct = player.y + y;
-	room.printPoint(player.x, player.y, ' ');
+	int xAct = this->x + x;
+	int yAct = this->y + y;
+	room.printPoint(this->x, this->y, ' ');
 	Sleep(30);
 	bool result = true;
 	if (!room.isInside(xAct, yAct)) {
-		xAct = player.x;
-		yAct = player.y;
+		xAct = this->x;
+		yAct = this->y;
 		result = false;
 	}
-	player.setX(xAct);
-	player.setY(yAct);
-	room.printPoint(xAct, yAct, player.getP());
+	setX(xAct);
+	setY(yAct);
+	room.printPoint(xAct, yAct, getP());
 	return result;
-}
 }
