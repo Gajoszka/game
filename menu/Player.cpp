@@ -8,7 +8,7 @@
 using namespace std;
 
 Player::Player() : Creature('@', 10, 4, 3) {
-}
+};
 
 bool Player::playerGoTo(int x, int y) {
 	int xAct = this->x + x;

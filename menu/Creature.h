@@ -3,8 +3,8 @@
 class Creature
 {
 public:
-	Creature();
-	virtual bool playerGoTo(int x, int y) = 0;
+	Creature() {};
+	virtual bool playerGoTo(int x, int y);
 	virtual void fight();
 	virtual void takeDamage();
 protected:

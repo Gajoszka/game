@@ -4,6 +4,7 @@
 #include <string>
 
 using namespace std;
+
 Frame::Frame(int width, int height) {
 	this->width = width;
 	this->height = height;
