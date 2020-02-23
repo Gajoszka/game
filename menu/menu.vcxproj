@@ -105,13 +105,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Program Files\MySQL\Connector C++ 8.0\include;C:\Program Files\MySQL\MySQL Server 8.0\include;D:\Development\SDL2\SDL2-2.0.10\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Development\SDL2\SDL2-2.0.10\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Program Files\MySQL\Connector C++ 8.0\lib64\vs14;C:\Program Files\MySQL\MySQL Server 8.0\lib;D:\Development\SDL2\SDL2-2.0.10\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>mysqlcppconn.lib;libmysql.lib;SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\Development\SDL2\SDL2-2.0.10\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -157,7 +157,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Creature.cpp" />
     <ClCompile Include="DBconnection.cpp" />
+    <ClCompile Include="MainFrame.cpp" />
+    <ClCompile Include="Point.cpp" />
     <ClCompile Include="Room.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </ExcludedFromBuild>
@@ -169,23 +172,26 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="InfoDisplay.cpp" />
-    <ClCompile Include="KeyFunctions.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="menu.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="RoomBuilder.cpp" />
     <ClCompile Include="Stats.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Creature.h" />
     <ClInclude Include="DBconnection.h" />
+    <ClInclude Include="MainFrame.h" />
+    <ClInclude Include="Point.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Frame.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="InfoDisplay.h" />
-    <ClInclude Include="KeyFunctions.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="RoomBuilder.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="Stats.h" />
   </ItemGroup>
