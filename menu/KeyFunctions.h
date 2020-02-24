@@ -7,8 +7,8 @@ public:
 	void movement();
 	void clear();
 	Player obj;
-	int x = obj.x;
-	int y = obj.y;
+	int x = obj.getLocation().getX();
+	int y = obj.getLocation().getY();
 	bool inp = true;
 };
 

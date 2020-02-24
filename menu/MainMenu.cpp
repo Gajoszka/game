@@ -20,7 +20,7 @@ void MainMenu::printInside() {
 	for (int i = 0; i < menu_options.size(); i++) {
 		printLine(i+2, menu_options[i]);
 	}
-	printLine(8, "Which option do you choose?");
+	printLine(8, "Which option do you choose? ");
 	user_choice();
 }
 
@@ -35,8 +35,7 @@ void MainMenu::intro()
 	printFrame();
 	string name;
 	printCenterLine(2, "Welcome to the game!");
-	printLine(5,"What's your name?");
-	printPoint(20, 5, ':');
+	printLine(5,"What's your name? ");
 	cin >> name;
 	//store name, so it cann be added to database with a score
 	system("CLS");

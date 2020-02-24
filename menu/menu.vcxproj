@@ -182,6 +182,7 @@
     <ClInclude Include="Creature.h" />
     <ClInclude Include="DBconnection.h" />
     <ClInclude Include="MainFrame.h" />
+    <ClInclude Include="GameAction.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="Enemy.h" />

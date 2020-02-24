@@ -13,6 +13,8 @@ public:
 	virtual bool isInside(int x, int y);
 	void print(int x, int y);
 	void printPoint(int x, int y, char sign);
+	void clear();
+	void clearLine(int nrLine);
 	Point getTop() {
 		return topLeft;
 	}

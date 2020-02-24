@@ -12,46 +12,47 @@ using namespace std;
 
 void GameManager::play() {
 	shutCursor(false);
-	RoomBuilder roomBuilder;
-	roomBuilder.setWallCount(3);
-	mainFrame.setRoom(roomBuilder.build());
-	mainFrame.print(1, 1);
-	stats.print(50, 1);
-	info.print(1, 20);
-	player.setLocation((*getRoom()).getTop().getX()+1,(*getRoom()).getTop().getY()+1);
-	int i = 0;
-	while (!playerGoTo(i, i))
-		i++;
-	while (!playerGoTo(rand()%45,rand()%18));
-	while (!endGame) {
-		keyReader();	
-	}
-	
+	statsFrame.print(50, 1);
+	infoFrame.print(1, 20);
+	createRoom();
+	keyReader();
+
 }
 
-void GameManager::keyReader() {
 
-	while (inp) {
-	
-		char move = _getch(); // keyboard response
-		switch (move) {
+void GameManager::keyReader() {
+	GameAction action= served;
+	while (action!=endGame) {
+		
+		char key = _getch(); // keyboard response
+		switch (key) {
 		case KEY_UP:
-			playerGoTo(0,-1);
+			action = key_up;
 			break;
 		case KEY_DOWN:
-			playerGoTo(0, +1);
+			action = key_down;
 			break;
 		case KEY_LEFT:
-			playerGoTo(-1, 0);
+			action = key_left;
 			break;
 		case KEY_RIGHT:
-			playerGoTo(+1, 0);
+			action = key_right;
 			break;
 		case KEY_END:
-			inp = false;
+			action = endGame;
+			break;
+		case KEY_F5:
+			statsFrame.addScore(-10);
+			action = exitRoom;
+			break;
+		default:
+			action = served;
 		}
+		runAction(action);
+
 	}
-};
+}
+
 void GameManager::shutCursor(bool visible) {
 	HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_CURSOR_INFO ccur;
@@ -60,21 +61,48 @@ void GameManager::shutCursor(bool visible) {
 	SetConsoleCursorInfo(hStdOut, &ccur);
 }
 
-bool GameManager::playerGoTo(int x, int y) {
-	int xAct = player.getLocation().getX() + x;
-	int yAct = player.getLocation().getY() + y;
-	player.clear();
-	Sleep(30);
-	bool result = true;
-	if (!(*getRoom()).isInside(xAct, yAct)) {
-		 xAct = player.getLocation().getX();
-		 yAct = player.getLocation().getY();
-		 result = false;
-	}
-	player.print(xAct, yAct);
-	return result;
+void GameManager::exitFromRoom()
+{
+	statsFrame.addScore(5);
+	this->infoFrame.setContent("zmiana pokoju");
+	Sleep(1000);
+	createRoom();
+	this->infoFrame.setContent("Nowy pokoj");
+	Sleep(1000);
+	this->infoFrame.printInside();
 }
+
+void GameManager::runAction(GameAction action)
+{
+	action= getRoom()->runAction(action);
+	switch (action)
+	{
+	case served:
+		break;
+	case exitRoom:
+		exitFromRoom();
+		break;
+	case Failed:
+		break;
+	default:
+		break;
+	}
+
+}
+
 
 GameManager::~GameManager() {
 	shutCursor(true);
+}
+
+void GameManager::createRoom()
+{
+		RoomBuilder roomBuilder;
+		roomBuilder.setObstacleCount((rand() % 5)+1);
+		roomBuilder.setDoorCount(1);
+		mainFrame.setRoom(roomBuilder.build());
+		mainFrame.print(1, 1);
+		(*getRoom()).setPlayer(&player);
+	
+		
 }

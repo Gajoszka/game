@@ -9,5 +9,6 @@ InfoDisplay::InfoDisplay() : Frame(48, 5) {
 }
 
 void InfoDisplay::printInside() {
-	printLine(1, "Dzieñ dobry");
+	clear();
+	printCenterLine(1, content);
 }

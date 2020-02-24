@@ -1,12 +1,12 @@
 #pragma once
-#include <mysql.h>
+//#include <mysql.h>
 class DBconnection
 {
 	public:
 		DBconnection();
 		int qstate;
-		MYSQL* conn;
-		MYSQL_ROW row;
-		MYSQL_RES* res;//okfd
+		//MYSQL* conn;
+		//MYSQL_ROW row;
+		//MYSQL_RES* res;//okfd
 };
 
