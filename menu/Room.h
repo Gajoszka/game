@@ -24,6 +24,7 @@ public:
 private:
 	GameAction playerGoTo(int x, int y);
 	char getMapElement(int x, int y);
+	void setMapElement(int x, int y, int value);
 	Player *player;
 	char getSign(int x);
 	int arenaMap[15][45];

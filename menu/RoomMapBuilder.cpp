@@ -1,7 +1,7 @@
 #include "RoomMapBuilder.h"
 #include <stdlib.h>
 
-int* RoomMapBuilder::build(int roomMap[15][45])
+std::vector<int> RoomMapBuilder::build()
 {
 
 	createRoomMap(roomMap);
@@ -39,7 +39,7 @@ void RoomMapBuilder::createRoomMap(int roomMap[15][45]) {
 		
 	}
 
-
+	createTreasure(roomMap);
 }
 
 
@@ -88,4 +88,12 @@ void RoomMapBuilder::createVObstacle(int roomMap[15][45],int x, int y, int size)
 }
 }
 
+
+void RoomMapBuilder::createTreasure(int roomMap[15][45])
+{
+	for (int j = 0; j <  treasureCount; j++) {
+		
+		roomMap[(rand() % (height - 4)) + 2][(rand()%(width-5))+2] = 10;
+	}
+}
 

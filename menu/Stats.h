@@ -7,14 +7,12 @@ class Stats : public Frame
 public:
 	Stats();
 	virtual void printInside();
-	void addScore(int s) {
-		score = score + s;
-		printInside();
+	void printScore(int score) {
+		content[1]= "Score: " + std::to_string(score);
+		printLine(1, content[1]);
 	}
-	int getScore() {
-		return score;
-	}
+	
 private:
-	int score=0;
+	std::string content[12] = { "","","" ,"","","","","","","","","" };
 };
 

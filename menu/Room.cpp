@@ -42,6 +42,14 @@ char Room::getMapElement(int x, int y) {
 	return -10;
 }
 
+
+void Room::setMapElement(int x, int y,int value) {
+	int indexX = x - getTop().getX();
+	int indexY = y - getTop().getY();
+	if (indexX >= 0 && indexY >= 0 && indexX < width && indexY <= height)
+		  arenaMap[indexY][indexX]=value;
+}
+
 bool Room::isInside(int x, int y) {
 	return getMapElement(x,y) != 1 && getMapElement(x, y) != 2;
 }
@@ -61,7 +69,12 @@ GameAction Room::playerGoTo(int x, int y) {
 		yAct = (*player).getLocation().getY();
 		result = false;
 	}
+	else if (getMapElement(xAct, yAct)==10) {
+		(*player).addScore(2);
+		setMapElement(xAct, yAct,0);
+	}
 	(*player).print(xAct, yAct);
+
 	return served;
 }
 
@@ -93,9 +106,9 @@ char Room::getSign(int value) {
 	case 1:
 		return 219;
 	case 2:
-		return 218;
+		return 178;
 	case 10:
-		return 'S';
+		return 240;
 	default:
 		return ' ';
 	}

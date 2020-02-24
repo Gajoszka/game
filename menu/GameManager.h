@@ -27,8 +27,6 @@ public:
 		return mainFrame.getRoom();
 	}
 	void play();
-	void keyReader();
-	void shutCursor(bool visible);
 	void exitFromRoom();
 	void runAction(GameAction action);
 	~GameManager();
@@ -37,6 +35,10 @@ protected:
 	void createRoom();
 
 private:
+	void setFont();
+	void shutCursor(bool visible);
+	void keyReader();
+	void addScore(int s);
 	MainFrame mainFrame;
 	Stats statsFrame;
 	InfoDisplay infoFrame;

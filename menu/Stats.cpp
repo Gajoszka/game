@@ -10,5 +10,6 @@ Stats::Stats() : Frame(20, 24) {
 }
 
 void Stats::printInside() {
-	printLine(1, "Score: " + std::to_string(score));
+	for (int i = 0; i < 12; i++)
+		printLine(i + 1, content[i]);
 }
