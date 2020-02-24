@@ -61,7 +61,8 @@ void Frame::clear()
 {
 	for (int j = 1; j < height - 1; j++) {
 		for (int i = 1; i < width - 1; i++) {
-			printPoint(topLeft.getX() + i, topLeft.getY() + j,' ');
+			cursor(i, j);
+			cout << ' ';
 		}
 	}
 }
@@ -69,20 +70,21 @@ void Frame::clear()
 
 void Frame::clearLine(int nrLine)
 {
+	   cursor(2, nrLine);
 		for (int i = 1; i < width - 2; i++) {
-			printPoint(topLeft.getX() + i, topLeft.getY() + nrLine, 'v ');
+			cout << ' ';
 		}
 }
 
-void Frame::printLine(int line, string text) {
-	clearLine(line);
-	cursor(2, line);
+void Frame::printLine(int nrLine, string text) {
+	clearLine(nrLine);
+	cursor(2, nrLine);
 	cout << text;
 }
 
-void Frame::printCenterLine(int line, string text) {
-	clearLine(line);
-	cursor( (width-text.size())/2, line);
+void Frame::printCenterLine(int nrLine, string text) {
+	clearLine(nrLine);
+	cursor( (width-text.size())/2, nrLine);
 	cout << text;
 }
 
