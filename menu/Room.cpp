@@ -10,7 +10,7 @@
 
 using namespace std;
 
-Room::Room(int map[15][45]) : Frame(45 ,15) {
+void Room::setMap(int map[15][45]) {
 	if (map!=NULL)
 	for (int j = 0; j < height; j++) {
 		for (int i = 0; i < width; i++) {
@@ -52,7 +52,7 @@ GameAction Room::playerGoTo(int x, int y) {
 	int xAct = (*player).getLocation().getX() + x;
 	int yAct = (*player).getLocation().getY() + y;
 	(*player).clear();
-	Sleep(30);
+	Sleep(20);
 	bool result = true;
 	if (getMapElement(xAct, yAct) == -1)
 		return exitRoom;

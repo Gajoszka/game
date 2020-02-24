@@ -11,6 +11,9 @@ public:
 		score = score + s;
 		printInside();
 	}
+	int getScore() {
+		return score;
+	}
 private:
 	int score=0;
 };

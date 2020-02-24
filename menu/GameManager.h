@@ -15,6 +15,7 @@
 #define KEY_RIGHT 77
 #define KEY_END 79
 #define KEY_F5 63
+#define KEY_F10 68
 
 class GameManager
 {

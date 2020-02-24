@@ -9,5 +9,6 @@ InfoDisplay::InfoDisplay() : Frame(48, 5) {
 }
 
 void InfoDisplay::printInside() {
-	printCenterLine(1, content);
+	for (int i=0;i<4;i++)
+		printCenterLine(i+1, content[i]);
 }

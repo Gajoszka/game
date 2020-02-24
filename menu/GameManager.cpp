@@ -7,6 +7,7 @@
 #include "Room.h"
 #include "Stats.h"
 #include <iostream>
+#include "RoomMapBuilder.h"
 
 using namespace std;
 
@@ -14,6 +15,7 @@ void GameManager::play() {
 	shutCursor(false);
 	statsFrame.print(50, 1);
 	infoFrame.print(1, 20);
+	infoFrame.setContent(4, "F5-new room, F10-exit");
 	createRoom();
 	keyReader();
 
@@ -38,8 +40,9 @@ void GameManager::keyReader() {
 		case KEY_RIGHT:
 			action = key_right;
 			break;
-		case KEY_END:
+		case KEY_F10:
 			action = endGame;
+			system("CLS");
 			break;
 		case KEY_F5:
 			statsFrame.addScore(-10);
@@ -97,10 +100,12 @@ GameManager::~GameManager() {
 
 void GameManager::createRoom()
 {
-		RoomBuilder roomBuilder;
-		roomBuilder.setObstacleCount((rand() % 5)+1);
+		RoomMapBuilder roomBuilder;
+		roomBuilder.setObstacleCount(min((rand() % (max(statsFrame.getScore(),6)))+1,10));
 		roomBuilder.setDoorCount(1);
-		mainFrame.setRoom(roomBuilder.build());
+		int map[15][45];
+		roomBuilder.build(map);
+		(*getRoom()).setMap(map);
 		mainFrame.print(1, 1);
 		(*getRoom()).setPlayer(&player);
 	

@@ -1,14 +1,15 @@
-#include "RoomBuilder.h"
+#include "RoomMapBuilder.h"
+#include <stdlib.h>
 
-Room RoomBuilder::build()
+int* RoomMapBuilder::build(int roomMap[15][45])
 {
 
-	createRoomMap();
-	return Room(roomMap);
+	createRoomMap(roomMap);
+	return *roomMap;
 }
 
 
-void RoomBuilder::createRoomMap() {
+void RoomMapBuilder::createRoomMap(int roomMap[15][45]) {
 	for (int j = 0; j < height; j++) {
 		for (int i = 0; i < width; i++) {
 			roomMap[j][i] = 0;
@@ -26,15 +27,15 @@ void RoomBuilder::createRoomMap() {
 
 
 	for (int i = 0; i < this->doorCount; i++) {
-		createDoor();
+		createDoor(roomMap);
 	}
 
 	for (int i = 0; i < this->obstacleCount; i++) {
-		createHObstacle((rand() % (height - 4))+1, (rand() % (width - 4)) + 1, (rand() % (width - 25))+1);
+		createHObstacle(roomMap,(rand() % (height - 4))+1, (rand() % (width - 4)) + 1, (rand() % (width - 25))+1);
 		
 	}
 	for (int i = 0; i < this->obstacleCount; i++) {
-		createVObstacle((rand() % (height - 4)) + 1, (rand() % (width - 4)) + 1 ,(rand() % (height - 5))+1);
+		createVObstacle(roomMap,(rand() % (height - 4)) + 1, (rand() % (width - 4)) + 1 ,(rand() % (height - 5))+1);
 		
 	}
 
@@ -42,7 +43,7 @@ void RoomBuilder::createRoomMap() {
 }
 
 
-void RoomBuilder::createDoor() {
+void RoomMapBuilder::createDoor(int roomMap[15][45]) {
 	int door;
 	switch (rand()%4)
 	{case 0:
@@ -67,7 +68,7 @@ void RoomBuilder::createDoor() {
 
 }
 
-void RoomBuilder::createHObstacle(int x, int y, int size)
+void RoomMapBuilder::createHObstacle(int roomMap[15][45],int x, int y, int size)
 {
 	for (int j = x; j < x+size; j++){
 		if (roomMap[y][j] == 1)
@@ -76,7 +77,7 @@ void RoomBuilder::createHObstacle(int x, int y, int size)
 	}
 }
 
-void RoomBuilder::createVObstacle(int x, int y, int size)
+void RoomMapBuilder::createVObstacle(int roomMap[15][45],int x, int y, int size)
 {
 	if (roomMap[y][x - 1] == -1)
 		return;

@@ -1,12 +1,11 @@
 #pragma once
 #include "Frame.h"
 #include "Room.h"
-#include "RoomBuilder.h"
 class MainFrame :
 	public Frame
 {
 public:
-	MainFrame() : Frame(48, 18) ,room(NULL){
+	MainFrame() : Frame(48, 18) ,room(){
 	}
 	virtual void printInside();
 	void setRoom(Room _room) {

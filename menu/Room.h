@@ -7,10 +7,11 @@
 class Room : public Frame
 {
 public:
-	Room(int map[15][45]);
+	Room() :Frame(45, 15) {};
 	virtual void printFrame();
 	virtual void printInside();
-	virtual bool isInside(int x, int y);
+    virtual bool isInside(int x, int y);
+	void setMap(int map[15][45]);
 	void setPlayer(Player* player) {
 		this->player = player;
 		if (this->player == NULL)
