@@ -1,10 +1,8 @@
 #pragma once
-class Enemy
+#include "Creature.h"
+class Enemy : public Creature
 {
 public:
-	const char enemy = 'E'; // take random creature from database
-	void printEnemy(int x, int y);
-	int x;
-	int y;
+	Enemy() : Creature('E', 2, 1, 1) {};
 };
 
