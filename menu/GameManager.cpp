@@ -64,10 +64,10 @@ void GameManager::shutCursor(bool visible) {
 void GameManager::exitFromRoom()
 {
 	statsFrame.addScore(5);
-	this->infoFrame.setContent("zmiana pokoju");
+	this->infoFrame.printTemporaryContent("zmiana pokoju");
 	Sleep(1000);
 	createRoom();
-	this->infoFrame.setContent("Nowy pokoj");
+	this->infoFrame.printTemporaryContent("Nowy pokoj");
 	Sleep(1000);
 	this->infoFrame.printInside();
 }

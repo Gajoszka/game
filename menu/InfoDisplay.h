@@ -6,7 +6,7 @@ class InfoDisplay : public Frame
 public:
 	InfoDisplay();
 	virtual void printInside();
-	void setTemporaryContent(std::string content) {
+	void printTemporaryContent(std::string content) {
 		printCenterLine(1, content);
 	}
 	void setContent(std::string content) {

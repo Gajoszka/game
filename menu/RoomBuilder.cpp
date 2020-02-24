@@ -46,20 +46,20 @@ void RoomBuilder::createDoor() {
 	int door;
 	switch (rand()%4)
 	{case 0:
-		 door = rand() % width;
-		roomMap[0][door] = -1;
+		 door = rand() % (width-2);
+		roomMap[0][door+1] = -1;
 		break;
 	case 1:
-		 door = rand() % height;
-		roomMap[door][width-1] = -1;
+		 door = rand() % (height-2);
+		roomMap[door+1][width-1] = -1;
 		break;
 	case 2:
-		 door = rand() % width;
-		roomMap[height-1][door] = -1;
+		 door = rand() % (width-2);
+		roomMap[height-1][door+1] = -1;
 		break;
 	case 3:
-	    door = rand() % height;
-		roomMap[door][0] = -1;
+	    door = rand() % (height-2);
+		roomMap[door+1][0] = -1;
 		break;
 	default:
 		break;

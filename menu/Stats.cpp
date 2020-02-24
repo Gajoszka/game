@@ -10,5 +10,5 @@ Stats::Stats() : Frame(20, 24) {
 }
 
 void Stats::printInside() {
-	printLine(1, "Score: " + score);
+	printLine(1, "Score: " + std::to_string(score));
 }
