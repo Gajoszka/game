@@ -160,6 +160,7 @@
   <ItemGroup>
     <ClCompile Include="Creature.cpp" />
     <ClCompile Include="DBconnection.cpp" />
+    <ClCompile Include="GameLayout.cpp" />
     <ClCompile Include="MainFrame.cpp" />
     <ClCompile Include="Point.cpp" />
     <ClCompile Include="Room.cpp">
@@ -177,11 +178,11 @@
     <ClCompile Include="menu.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RoomMapBuilder.cpp" />
-    <ClCompile Include="Stats.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Creature.h" />
     <ClInclude Include="DBconnection.h" />
+    <ClInclude Include="GameLayout.h" />
     <ClInclude Include="MainFrame.h" />
     <ClInclude Include="GameAction.h" />
     <ClInclude Include="Point.h" />
@@ -195,8 +196,6 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="RoomMapBuilder.h" />
     <ClInclude Include="Screen.h" />
-    <ClInclude Include="Stats.h" />
-    <ClInclude Include="TempleteRoomMap.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

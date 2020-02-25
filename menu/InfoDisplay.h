@@ -1,23 +1,26 @@
 #pragma once
 #include "Frame.h"
+#include <vector>
+using namespace std;
 
 class InfoDisplay : public Frame
 {
 public:
-	InfoDisplay();
-	virtual void printInside();
-	void printTemporaryContent(std::string content) {
-		printCenterLine(1, content);
+	InfoDisplay(int width, int height) : Frame(width, height) {
+		for (int i = 0; i < height - 1; i++)
+			content.push_back("");
 	}
-	void setContent(int nr, std::string content) {
-		if (nr > 0 && nr <= 4) {
-			this->content[nr - 1] = content;
+	virtual void printInside();
+
+	void printLine(int rowNr, std::string content) {
+		if (rowNr > 0 && rowNr < content.size()) {
+			this->content[rowNr - 1] = content;
 			printInside();
 		}
 	}
-	
+
 
 private:
-	std::string content[4] = { "","","" ,"" };
+	vector<std::string> content;
 };
 

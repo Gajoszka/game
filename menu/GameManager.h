@@ -3,10 +3,9 @@
 #include "Frame.h"
 #include "Player.h"
 #include "Room.h"
-#include "Stats.h"
-#include "InfoDisplay.h"
-#include "MainFrame.h"
+
 #include "GameAction.h"
+#include "GameLayout.h"
 
 
 #define KEY_UP 72
@@ -20,11 +19,11 @@
 class GameManager
 {
 public:
-	GameManager() : mainFrame(), statsFrame(), infoFrame() {
+	GameManager() : layout() {
 		
 	};
 	Room* getRoom() {
-		return mainFrame.getRoom();
+		return layout.getRoom();
 	}
 	void play(Player *player);
 	void exitFromRoom();
@@ -35,12 +34,9 @@ protected:
 	void createRoom();
 
 private:
-	void setFont();
-	void shutCursor(bool visible);
+	
 	void keyReader();
 	void addScore(int s);
-	MainFrame mainFrame;
-	StatsFrame statsFrame;
-	InfoDisplay infoFrame;
+	GameLayout layout;
 	Player *player=nullptr;
 };

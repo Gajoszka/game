@@ -1,9 +1,6 @@
 #include "GameManager.h"
-#include "Frame.h"
 #include "Screen.h"
-#include "InfoDisplay.h"
 #include "Room.h"
-#include "Stats.h"
 #include <iostream>
 #include <windows.h>
 #include <stdio.h>
@@ -13,19 +10,15 @@ using namespace std;
 
 void GameManager::play(Player *player) {
 	this->player = player;
-	shutCursor(false);
-	setFont();
-	statsFrame.print(50, 1);
-	infoFrame.print(1, 20);
-	statsFrame.printName((*player).getName());
-	infoFrame.setContent(4, "F5-new room, F10-exit");
+	layout.printName((*player).getName());
 	createRoom();
+	(*getRoom()).setPlayer(player);
 	keyReader();
 }
 
 void GameManager::addScore(int score) {
 	(*player).addScore(score);
-	statsFrame.printScore((*player).getScore());
+	layout.printScore((*player).getScore());
 }
 
 void GameManager::keyReader() {
@@ -70,36 +63,15 @@ void GameManager::keyReader() {
 	}
 }
 
-void GameManager::setFont() {
-	CONSOLE_FONT_INFOEX cfi;
-	cfi.cbSize = sizeof cfi;
-	cfi.nFont = 0;
-	cfi.dwFontSize.X = 0;
-	cfi.dwFontSize.Y = 20;
-	cfi.FontFamily = FF_DONTCARE;
-	cfi.FontWeight = FW_NORMAL;
-	wcscpy_s(cfi.FaceName, L"Lucida Console");
-	wcscpy_s(cfi.FaceName, L"Consolas");
-	//SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
-}
-
-void GameManager::shutCursor(bool visible) {
-	HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
-	CONSOLE_CURSOR_INFO ccur;
-	ccur.dwSize = sizeof(CONSOLE_CURSOR_INFO);
-	ccur.bVisible = visible;
-	SetConsoleCursorInfo(hStdOut, &ccur);
-}
-
 void GameManager::exitFromRoom()
 {
 	addScore(5);
-	this->infoFrame.printTemporaryContent("zmiana pokoju");
+	this->layout.printInfo("zmiana pokoju");
 	Sleep(1000);
 	createRoom();
-	this->infoFrame.printTemporaryContent("Nowy pokoj");
+	this->layout.printInfo("Nowy pokoj");
 	Sleep(1000);
-	this->infoFrame.printInside();
+	this->layout.printInfo("");
 }
 
 void GameManager::runAction(GameAction action)
@@ -123,7 +95,7 @@ void GameManager::runAction(GameAction action)
 
 
 GameManager::~GameManager() {
-	shutCursor(true);
+
 }
 
 void GameManager::createRoom()
@@ -132,9 +104,8 @@ void GameManager::createRoom()
 	roomBuilder.setObstacleCount(min((rand() % (max((*player).getScore(), 6))) + 1, 10));
 	roomBuilder.setDoorCount(1);
 	roomBuilder.setTreasure(rand() % 10);
-	(*getRoom()).setMap(roomBuilder.build());
-	mainFrame.print(1, 1);
-	(*getRoom()).setPlayer(player);
+	layout.printRoom(roomBuilder.build());
+	
 
 
 }

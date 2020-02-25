@@ -4,7 +4,7 @@
 class Frame
 {
 public:
-	Frame(int width, int height) :topLeft(0, 0) {
+	Frame(int width, int height) :topLeft(1, 1) {
 		this->width = width;
 		this->height = height;
 	};
@@ -20,8 +20,8 @@ public:
 	}
 	
 private:
-	void printVertical(int column,int y,int width);
-	void printHorizontal(int column, int y, int height);
+	void printVertical(int column,int row,int width);
+	void printHorizontal(int column, int row, int height);
 	void moveCursor(int columnStep, int rowStep);
 	char sign_wall = static_cast<char>(186);
 	char sign_top_right = static_cast<char>(187);

@@ -10,7 +10,7 @@ void Room::printFrame()
 
 
 void Room::printInside() {
-	for (int row = 0; row < height; row++) {
+	for (int row = 0; row < roomMap.size(); row++) {
 		for (int column = 0; column < width; column++) {
 			printPoint(column , row , getSign(roomMap[row][column]));
 		}

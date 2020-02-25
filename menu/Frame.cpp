@@ -9,9 +9,9 @@ void Frame::printInside() {
 
 }
 
-void Frame::print(int x, int y) {
-	this->topLeft.setColumn(x);
-	topLeft.setRow(y);
+void Frame::print(int column, int row) {
+	this->topLeft.setColumn(column);
+	topLeft.setRow(row);
 	printFrame();
 	printInside();
 };
@@ -34,15 +34,15 @@ void Frame::printFrame() {
 	cout << sign_bottom_right;
 };
 
-void Frame::printVertical(int x, int y, int height) {
+void Frame::printVertical(int column, int row, int height) {
 	for (int i = 0; i < height; i++) {
-		gotoxy(x, y + i);
+		gotoxy(column, row + i);
 		cout << sign_wall;
 	}
 };
 
-void Frame::printHorizontal(int x, int y1, int width) {
-	gotoxy(x, y1);
+void Frame::printHorizontal(int column, int row, int width) {
+	gotoxy(column, row);
 	for (int i = 0; i < width; i++) {
 		cout << sign_dash;
 	}

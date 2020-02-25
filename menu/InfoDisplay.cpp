@@ -4,11 +4,7 @@
 
 using namespace std;
 
-InfoDisplay::InfoDisplay() : Frame(48, 5) {
-
-}
-
 void InfoDisplay::printInside() {
-	for (int i=0;i<4;i++)
+	for (int i=0;i<content.size();i++)
 		printCenterLine(i+1, content[i]);
 }
