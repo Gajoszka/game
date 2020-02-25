@@ -44,7 +44,7 @@ GameAction Room::playerGoTo(int columnStep, int rowStep) {
 	int actColumn = (*player).getLocation().getColumn() + columnStep;
 	int actRow = (*player).getLocation().getRow() + rowStep;
 	(*player).clear();
-	Sleep(20);
+	Sleep(15);
 	bool result = true;
 	if (getMapElement(actColumn, actRow) == -1)
 		return exitRoom;
@@ -88,11 +88,11 @@ char Room::getSign(int value) {
 	case 0:
 		return ' ';
 	case 1:
-		return 219;
+		return static_cast<char>(219);
 	case 2:
-		return 178;
+		return static_cast<char>(178);
 	case 10:
-		return 240;
+		return static_cast<char>(240);
 	default:
 		return ' ';
 	}

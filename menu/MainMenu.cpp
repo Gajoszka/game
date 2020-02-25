@@ -1,8 +1,8 @@
 #include "MainMenu.h"
 #include "GameManager.h"
 #include "Screen.h"
-#include <iostream>
-#include <vector>
+//#include <iostream>
+//#include <vector>
 #include <iomanip>
 
 
@@ -24,9 +24,10 @@ void MainMenu::printInside() {
 	user_choice();
 }
 
-void MainMenu::play() {
+void MainMenu::play(string name) {
 	GameManager gra;
-	gra.play();
+	Player player(name);
+	gra.play(&player);
 }
 
 void MainMenu::intro()
@@ -39,7 +40,7 @@ void MainMenu::intro()
 	cin >> name;
 	//store name, so it cann be added to database with a score
 	system("CLS");
-	play();
+	play(name);
 	
 }
 

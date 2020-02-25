@@ -11,12 +11,13 @@ public:
 	}
 	void setContent(int nr, std::string content) {
 		if (nr > 0 && nr <= 4) {
-		this->content[nr-1] = content;
-		printInside();
+			this->content[nr - 1] = content;
+			printInside();
+		}
 	}
-	}
+	
 
 private:
-	std::string content[4] = { "","","" ,""};
+	std::string content[4] = { "","","" ,"" };
 };
 

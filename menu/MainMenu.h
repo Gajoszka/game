@@ -16,7 +16,7 @@ protected:
 
 private:
 	void intro();
-	void play();
+	void play(std::string name);
 };
 
 #endif // MAINMENU_H

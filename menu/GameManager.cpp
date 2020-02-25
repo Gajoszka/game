@@ -11,19 +11,21 @@
 
 using namespace std;
 
-void GameManager::play() {
+void GameManager::play(Player *player) {
+	this->player = player;
 	shutCursor(false);
 	setFont();
 	statsFrame.print(50, 1);
 	infoFrame.print(1, 20);
+	statsFrame.printName((*player).getName());
 	infoFrame.setContent(4, "F5-new room, F10-exit");
 	createRoom();
 	keyReader();
 }
 
 void GameManager::addScore(int score) {
-	player.addScore(score);
-	statsFrame.printScore(player.getScore());
+	(*player).addScore(score);
+	statsFrame.printScore((*player).getScore());
 }
 
 void GameManager::keyReader() {
@@ -127,12 +129,12 @@ GameManager::~GameManager() {
 void GameManager::createRoom()
 {
 	RoomMapBuilder roomBuilder(45,15);
-	roomBuilder.setObstacleCount(min((rand() % (max(player.getScore(), 6))) + 1, 10));
+	roomBuilder.setObstacleCount(min((rand() % (max((*player).getScore(), 6))) + 1, 10));
 	roomBuilder.setDoorCount(1);
 	roomBuilder.setTreasure(rand() % 10);
 	(*getRoom()).setMap(roomBuilder.build());
 	mainFrame.print(1, 1);
-	(*getRoom()).setPlayer(&player);
+	(*getRoom()).setPlayer(player);
 
 
 }

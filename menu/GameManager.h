@@ -20,13 +20,13 @@
 class GameManager
 {
 public:
-	GameManager() : mainFrame(), statsFrame(), infoFrame(), player() {
+	GameManager() : mainFrame(), statsFrame(), infoFrame() {
 		
 	};
 	Room* getRoom() {
 		return mainFrame.getRoom();
 	}
-	void play();
+	void play(Player *player);
 	void exitFromRoom();
 	void runAction(GameAction action);
 	~GameManager();
@@ -40,7 +40,7 @@ private:
 	void keyReader();
 	void addScore(int s);
 	MainFrame mainFrame;
-	Stats statsFrame;
+	StatsFrame statsFrame;
 	InfoDisplay infoFrame;
-	Player player;
+	Player *player=nullptr;
 };

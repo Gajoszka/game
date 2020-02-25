@@ -5,11 +5,11 @@
 
 using namespace std;
 
-Stats::Stats() : Frame(20, 24) {
+StatsFrame::StatsFrame() : Frame(20, 24) {
 
 }
 
-void Stats::printInside() {
+void StatsFrame::printInside() {
 	for (int i = 0; i < 12; i++)
 		printLine(i + 1, content[i]);
 }
