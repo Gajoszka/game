@@ -27,7 +27,7 @@ public:
 
 	}
 
-	void printRoom(vector<vector<int>> roomMap) {
+	void printRoom(vector<vector<RoomElement>> roomMap) {
 		(*getRoom()).setMap(roomMap);
 		mainFrame.printInside();
 	}
