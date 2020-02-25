@@ -6,6 +6,11 @@
 
 using namespace std;
 
+#define sign_room_wall  static_cast<char>(219);
+#define sign_room_door static_cast<char>(32);
+#define sign_room_inside static_cast<char>(32);
+#define sign_obstacle static_cast<char>(178);
+#define sign_treasure static_cast<char>(158);
 
 class Room : public Frame
 {

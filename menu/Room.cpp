@@ -84,15 +84,15 @@ GameAction Room::runAction(GameAction action)
 char Room::getSign(int value) {
 	switch (value) {
 	case -1:
-		return ' ';
+		return sign_room_door;
 	case 0:
-		return ' ';
+		return sign_room_inside;
 	case 1:
-		return static_cast<char>(219);
+		return sign_room_wall;
 	case 2:
-		return static_cast<char>(178);
+		return sign_obstacle;
 	case 10:
-		return static_cast<char>(240);
+		return sign_treasure;
 	default:
 		return ' ';
 	}
