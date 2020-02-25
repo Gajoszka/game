@@ -1,32 +1,36 @@
 #pragma once
 #include "Point.h"
-class Creature
+#include "RoomElement.h"
+
+class Creature : public  RoomElement
 {
 public:
-	Creature();
-	virtual void print(int x, int y);
-	void clear();
+	//Creature() {};
+
 	virtual void fight();
 	virtual void takeDamage();
-	Point getLocation() {
-		return location;
+	Point getRoomLocation() {
+		return roomLocation;
 	};
 
 	void setLocation(Point l) {
-		location = l;
+		roomLocation = l;
 	};
 
-	void setLocation(int x, int y) {
-		location.setColumn(x);
-		location.setRow(y);
+	void setRoomLocation(int column, int row) {
+		roomLocation.setColumn(column);
+		roomLocation.setRow(row);
 	};
 protected:
-	Creature(char sign, int hp, int attack, int defence);
+	Creature(int id, char sign, int hp, int attack, int defence) : RoomElement(id, sign, true, 0), roomLocation(0, 0) {
+		this->hp = hp;
+		this->attack = attack;
+		this->defence = defence;
+	};
 private:
-	char icon;
 	int hp;
 	int attack;
 	int defence;
-	Point location;
+	Point roomLocation;
 };
 

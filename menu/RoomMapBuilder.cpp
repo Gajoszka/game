@@ -49,20 +49,20 @@ void RoomMapBuilder::createDoor(std::vector<std::vector<RoomElement>>* tmpRows) 
 	switch (rand() % 4)  //witch wall
 	{
 	case 0:
-		door = rand() % (width - 2);
-		(*tmpRows)[0][door + 1] = room_door;
+		door = rand() % (width - 3);
+		(*tmpRows)[0][door + 2] = room_door;
 		break;
 	case 1:
-		door = rand() % (height - 2);
-		(*tmpRows)[door + 1][width - 1] = room_door;
+		door = rand() % (height - 3);
+		(*tmpRows)[door + 2][width - 1] = room_door;
 		break;
 	case 2:
-		door = rand() % (width - 2);
-		(*tmpRows)[height - 1][door + 1] = room_door;
+		door = rand() % (width - 3);
+		(*tmpRows)[height - 1][door + 2] = room_door;
 		break;
 	case 3:
-		door = rand() % (height - 2);
-		(*tmpRows)[door + 1][0] = room_door;
+		door = rand() % (height - 3);
+		(*tmpRows)[door + 2][0] = room_door;
 		break;
 	default:
 		break;

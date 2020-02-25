@@ -5,6 +5,7 @@
 #include <vector>
 #include "RoomElement.h"
 #include "RoomMapBuilder.h"
+#include "Enemy.h"
 
 using namespace std;
 
@@ -17,6 +18,19 @@ public:
     virtual bool isInside(int row, int column);
 	void setMap(vector<vector<RoomElement>> roomMap) {
 		this->roomMap = roomMap;
+		for (Enemy enemy : enemys) {
+
+		}
+		enemys.clear();
+	}
+
+	void addEnemy(Enemy enemy) {
+		int column, row;
+		while (getMapElement(column = rand() % width, row = rand() % height).id != room_inner.id);
+		setMapElement(column, row, &enemy);
+		this->enemys.push_back(enemy);
+		
+	
 	}
 
 	void setPlayer(Player* player) {
@@ -25,13 +39,17 @@ public:
 			return;
 		int column,row;
 		while (getMapElement(column = rand() % width, row = rand() % height).id != room_inner.id);
-		(*player).print(column, row);
+		setMapElement(column, row, player);
 	}
 	GameAction runAction(GameAction action);
 private:
-	GameAction playerGoTo(int column, int row);
+	GameAction playerMove(int column, int row);
+	void enemyMove(Enemy* enemy, int columnStep, int rowStep);
+	void enemyMove();
 	RoomElement getMapElement(int column, int row);
 	void setMapElement(int column, int row, RoomElement value);
+	void setMapElement(int column, int row, Creature* value);
 	Player *player;
+	vector<Enemy> enemys;
 	vector<vector<RoomElement>> roomMap;
 };

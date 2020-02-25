@@ -7,8 +7,8 @@ public:
 	void movement();
 	void clear();
 	Player obj;
-	int x = obj.getLocation().getColumn();
-	int y = obj.getLocation().getRow();
+	int x = obj.getRoomLocation().getColumn();
+	int y = obj.getRoomLocation().getRow();
 	bool inp = true;
 };
 

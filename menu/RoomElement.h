@@ -7,6 +7,9 @@ public:
 		this->canGo = canGo;
 		this->score = score;
 	}
+	virtual int getId() {
+		return id;
+	}
 	int id = 0;
 	int score = 0;
 	char icon = ' ';

@@ -3,7 +3,13 @@
 #include "Screen.h"
 #include <iostream>
 #include "RoomMapBuilder.h"
+#include "Creature.h"
 
+using namespace std;
+template<typename Base, typename T>
+inline bool instanceof(const T*) {
+	return is_base_of<Base, T>::value;
+}
 
 void Room::printFrame()
 {
@@ -17,62 +23,92 @@ void Room::printInside() {
 	}
 }
 
-RoomElement Room::getMapElement(int column, int row) {
-	int indexColumn = column - getTopLeft().getColumn();
-	int  indexRow = row - getTopLeft().getRow();
-	if (indexRow >= 0 && indexColumn >= 0 && indexRow < height && indexColumn <= width)
-		return  roomMap[indexRow][indexColumn];
+RoomElement Room::getMapElement(int mapColumn, int mapRow) {
+	if (mapRow >= 0 && mapColumn >= 0 && mapRow < height && mapColumn <= width)
+		return  roomMap[mapRow][mapColumn];
 	return room_wall;
 }
 
-void Room::setMapElement(int column, int row, RoomElement value) {
-	int indexColumn = column - getTopLeft().getColumn();
-	int  indexRow = row - getTopLeft().getRow();
-	if (indexRow >= 0 && indexColumn >= 0 && indexRow < height && indexColumn <= width)
-		roomMap[indexRow][indexColumn] = value;
+void Room::setMapElement(int mapColumn, int mapRow, RoomElement value) {
+	if (mapRow >= 0 && mapColumn >= 0 && mapRow < height && mapColumn <= width)
+		roomMap[mapRow][mapColumn] = value;
+	printPoint(mapColumn, mapRow, value.icon);
 }
 
-bool Room::isInside(int column, int row) {
-	return getMapElement(column, row).canGo;
+
+void Room::setMapElement(int mapColumn, int mapRow, Creature* value) {
+	setMapElement(mapColumn, mapRow, *value);
+	(*value).setRoomLocation(mapColumn, mapRow);
 }
 
-GameAction Room::playerGoTo(int columnStep, int rowStep) {
-	int actColumn = (*player).getLocation().getColumn() + columnStep;
-	int actRow = (*player).getLocation().getRow() + rowStep;
-	(*player).clear();
+
+bool Room::isInside(int mapColumn, int mapRow) {
+	return getMapElement(mapColumn, mapRow).canGo;
+}
+
+void Room::enemyMove(Enemy* enemy, int columnStep, int rowStep) {
+	int actColumn = (*enemy).getRoomLocation().getColumn() + columnStep;
+	int actRow = (*enemy).getRoomLocation().getRow() + rowStep;
+	if (!isInside(actColumn, actRow)) {
+		enemyMove(enemy, -columnStep, -rowStep);
+	}
+	else {
+		setMapElement((*enemy).getRoomLocation().getColumn(), (*enemy).getRoomLocation().getRow(), room_inner);
+		Sleep(15);
+		setMapElement(actColumn, actRow, enemy);
+	}
+}
+
+
+void Room::enemyMove() {
+	if (rand() % 4 == 0) {
+		Sleep(30);
+		for (Enemy enemy : enemys) {
+			enemyMove(&enemy, 0, 1);
+		}
+	}
+}
+
+
+GameAction Room::playerMove(int columnStep, int rowStep) {
+	int actColumn = (*player).getRoomLocation().getColumn() + columnStep;
+	int actRow = (*player).getRoomLocation().getRow() + rowStep;
+	printPoint((*player).getRoomLocation().getColumn(), (*player).getRoomLocation().getRow(), ' ');
 	Sleep(15);
-	bool result = true;
 	if (getMapElement(actColumn, actRow).id == room_door.id)
 		return exitRoom;
 	if (!isInside(actColumn, actRow)) {
-		actColumn = (*player).getLocation().getColumn();
-		actRow = (*player).getLocation().getRow();
-		result = false;
+		actColumn = (*player).getRoomLocation().getColumn();
+		actRow = (*player).getRoomLocation().getRow();
 	}
 	else {
 		RoomElement rm = getMapElement(actColumn, actRow);
 		(*player).addScore(rm.score);
 		setMapElement(actColumn, actRow, room_inner);
 	}
-	(*player).print(actColumn, actRow);
+	setMapElement(actColumn, actRow, player);
 
 	return served;
 }
 
 GameAction Room::runAction(GameAction action)
 {
+	enemyMove();
 	switch (action)
 	{
 	case served:
 		return action;
 	case key_up:
-		return playerGoTo(0, -1);
+		return playerMove(0, -1);
 	case key_down:
-		return playerGoTo(0, 1);
+		return playerMove(0, 1);
 	case key_left:
-		return playerGoTo(-1, 0);
+		return playerMove(-1, 0);
 	case key_right:
-		return playerGoTo(1, 0);
+		return playerMove(1, 0);
+	case moveEnemy:
+		enemyMove();
+		return served;
 	default:
 		return action;
 	}

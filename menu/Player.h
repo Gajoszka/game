@@ -7,9 +7,8 @@
 class Player:public Creature
 {
 public:
-	Player(std::string name) :  Creature('@', 10, 4, 3) {
+	Player(std::string name) :  Creature(50,'@', 10, 4, 3) {
 		this->name = name;
-
 	};
 
 	void addScore(int s) {
