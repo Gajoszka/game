@@ -186,6 +186,7 @@
     <ClInclude Include="MainFrame.h" />
     <ClInclude Include="GameAction.h" />
     <ClInclude Include="Point.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Frame.h" />
@@ -196,6 +197,9 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="RoomMapBuilder.h" />
     <ClInclude Include="Screen.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="menu.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

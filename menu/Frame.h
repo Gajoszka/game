@@ -1,6 +1,14 @@
 #pragma once
 #include <string>
 #include "Point.h"
+
+#define sign_wall  static_cast<char>(186);
+#define sign_top_right static_cast<char>(187);
+#define sign_top_left static_cast<char>(201);
+#define sign_bottom_right static_cast<char>(188);
+#define sign_bottom_left static_cast<char>(200);
+#define sign_dash static_cast<char>(205);
+
 class Frame
 {
 public:
@@ -23,15 +31,8 @@ private:
 	void printVertical(int column,int row,int width);
 	void printHorizontal(int column, int row, int height);
 	void moveCursor(int columnStep, int rowStep);
-	char sign_wall = static_cast<char>(186);
-	char sign_top_right = static_cast<char>(187);
-	char sign_top_left = static_cast<char>(201);
-	char sign_bottom_right = static_cast<char>(188);
-	char sign_bottom_left = static_cast<char>(200);
-	char sign_dash = static_cast<char>(205);
-	//'_';
-protected:
-	
+
+protected:	
 	void printLine(int rowNr, std::string text);
 	void printCenterLine(int rowNr, std::string text);
 	int width;
