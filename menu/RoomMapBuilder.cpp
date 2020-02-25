@@ -1,66 +1,68 @@
 #include "RoomMapBuilder.h"
-#include <stdlib.h>
+#include <windows.h>
+#include <stdio.h>
 
-std::vector<int> RoomMapBuilder::build()
+
+std::vector<std::vector<int>> RoomMapBuilder::build()
 {
-
-	createRoomMap(roomMap);
-	return *roomMap;
-}
-
-
-void RoomMapBuilder::createRoomMap(int roomMap[15][45]) {
-	for (int j = 0; j < height; j++) {
+	vector<vector<int>> roomMap;
+	for (int row = 0; row < height; row++) {
+		vector<int> tmp;
 		for (int i = 0; i < width; i++) {
-			roomMap[j][i] = 0;
+			tmp.push_back(0);
 		}
-	}
-	for (int i = 0; i < width; i++) {
-		roomMap[0][i] = 1;
-		roomMap[height-1][i] = 1;
+		roomMap.push_back(move(tmp));
 	}
 
-	for (int i = 0; i < height; i++) {
-		roomMap[i][0] = 1;
-		roomMap[i][width-1] = 1;
+	//horizontal wall
+	for (int column = 0; column < width; column++) {
+		roomMap[0][column] = 1;
+		roomMap[height - 1][column] = 1;
+	}
+	//vertical wall
+	for (int row = 0; row < height; row++) {
+		roomMap[row][0] = 1;
+		roomMap[row][width - 1] = 1;
 	}
 
 
 	for (int i = 0; i < this->doorCount; i++) {
-		createDoor(roomMap);
+		createDoor(&roomMap);
 	}
 
-	for (int i = 0; i < this->obstacleCount; i++) {
-		createHObstacle(roomMap,(rand() % (height - 4))+1, (rand() % (width - 4)) + 1, (rand() % (width - 25))+1);
-		
+	for (int i = 0; i < this->obstacleCount-1; i++) {
+		createHObstacle(&roomMap);
+
 	}
 	for (int i = 0; i < this->obstacleCount; i++) {
-		createVObstacle(roomMap,(rand() % (height - 4)) + 1, (rand() % (width - 4)) + 1 ,(rand() % (height - 5))+1);
-		
+		createVObstacle(&roomMap);
+
 	}
 
-	createTreasure(roomMap);
+	createTreasure(&roomMap);
+	return roomMap;
 }
 
 
-void RoomMapBuilder::createDoor(int roomMap[15][45]) {
+void RoomMapBuilder::createDoor(std::vector<std::vector<int>>* tmpRows) {
 	int door;
-	switch (rand()%4)
-	{case 0:
-		 door = rand() % (width-2);
-		roomMap[0][door+1] = -1;
+	switch (rand() % 4)  //witch wall
+	{
+	case 0:
+		door = rand() % (width - 2);
+		(*tmpRows)[0][door + 1] = -1;
 		break;
 	case 1:
-		 door = rand() % (height-2);
-		roomMap[door+1][width-1] = -1;
+		door = rand() % (height - 2);
+		(*tmpRows)[door + 1][width - 1] = -1;
 		break;
 	case 2:
-		 door = rand() % (width-2);
-		roomMap[height-1][door+1] = -1;
+		door = rand() % (width - 2);
+		(*tmpRows)[height - 1][door + 1] = -1;
 		break;
 	case 3:
-	    door = rand() % (height-2);
-		roomMap[door+1][0] = -1;
+		door = rand() % (height - 2);
+		(*tmpRows)[door + 1][0] = -1;
 		break;
 	default:
 		break;
@@ -68,32 +70,43 @@ void RoomMapBuilder::createDoor(int roomMap[15][45]) {
 
 }
 
-void RoomMapBuilder::createHObstacle(int roomMap[15][45],int x, int y, int size)
+void RoomMapBuilder::createHObstacle(std::vector<std::vector<int>>* tmpRows)
 {
-	for (int j = x; j < x+size; j++){
-		if (roomMap[y][j] == 1)
+	int column = (rand() % (width - 5)) + 1;
+	int row = (rand() % (height - 4)) + 1;
+	int size = (rand() % max((width - column - 15), 1)) + 1;
+	for (int j = column; j < column + size; j++) {
+		if (!canObstalace(tmpRows, row, j))
 			return;
-			roomMap[y][j] = 2;
+		(*tmpRows)[row][j] = 2;
 	}
 }
 
-void RoomMapBuilder::createVObstacle(int roomMap[15][45],int x, int y, int size)
+void RoomMapBuilder::createVObstacle(std::vector<std::vector<int>>* tmpRows)
 {
-	if (roomMap[y][x - 1] == -1)
-		return;
-	for (int j = y; j < y+size; j++){
-		if (roomMap[j][x] == 1 || roomMap[j][x+1] == -1)
+	int column = (rand() % (width - 3)) + 1;
+	int row = (rand() % (height - 4)) + 1;
+	int size = (rand() % max((height - row - 5), 1)) + 1;
+
+	for (int j = row; j < row + size; j++) {
+		if (!canObstalace(tmpRows, j, column))
 			return;
-	roomMap[j][x] = 2;
-}
+		(*tmpRows)[j][column] = 2;
+	}
 }
 
+bool RoomMapBuilder::canObstalace(vector<vector<int>>* tmpRows, int row, int column) {
+	if ((*tmpRows)[row][column - 1] == -1 || (*tmpRows)[row][column] == 1 || (*tmpRows)[row][column + 1] == -1)
+		return false;
+	if ((*tmpRows)[row - 1][column] != 0 && (*tmpRows)[row + 1][column] != 0)
+		return false;
+	return true;
+}
 
-void RoomMapBuilder::createTreasure(int roomMap[15][45])
+void RoomMapBuilder::createTreasure(std::vector<std::vector<int>>* tmpRows)
 {
-	for (int j = 0; j <  treasureCount; j++) {
-		
-		roomMap[(rand() % (height - 4)) + 2][(rand()%(width-5))+2] = 10;
+	for (int j = 0; j < treasureCount; j++) {
+		(*tmpRows)[(rand() % (height - 4)) + 2][(rand() % (width - 5)) + 2] = 10;
 	}
 }
 

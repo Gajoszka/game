@@ -2,24 +2,24 @@
 class Point
 {
 public:
-	Point(int x, int y) {
-		setX( x);
-		setY(y);
+	Point(int column,int row) {
+		setColumn( column);
+		setRow(row);
 	}
-	void setX(int x) {
-		this->x = x;
+	void setColumn(int value) {
+		this->column = value;
 	}
-	void setY(int y) {
-		this->y= y;
-	}
-
-	int getX() {
-		return x;
+	void setRow(int value) {
+		this->row= value;
 	}
 
-	int getY() {
-		return y;
+	int getColumn() {
+		return column;
 	}
-private: int x=0, y=0;
+
+	int getRow() {
+		return row;
+	}
+private: int column=0, row=0;
 };
 

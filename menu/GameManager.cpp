@@ -1,8 +1,6 @@
 #include "GameManager.h"
 #include "Frame.h"
 #include "Screen.h"
-#include "KeyFunctions.h"
-#include "Game.h"
 #include "InfoDisplay.h"
 #include "Room.h"
 #include "Stats.h"
@@ -128,13 +126,11 @@ GameManager::~GameManager() {
 
 void GameManager::createRoom()
 {
-	RoomMapBuilder roomBuilder;
+	RoomMapBuilder roomBuilder(45,15);
 	roomBuilder.setObstacleCount(min((rand() % (max(player.getScore(), 6))) + 1, 10));
 	roomBuilder.setDoorCount(1);
 	roomBuilder.setTreasure(rand() % 10);
-	int map[15][45];
-	roomBuilder.build(map);
-	(*getRoom()).setMap(map);
+	(*getRoom()).setMap(roomBuilder.build());
 	mainFrame.print(1, 1);
 	(*getRoom()).setPlayer(&player);
 

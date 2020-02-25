@@ -2,6 +2,9 @@
 #include "Frame.h"
 #include "Player.h"
 #include "GameAction.h"
+#include <vector>
+
+using namespace std;
 
 
 class Room : public Frame
@@ -10,8 +13,11 @@ public:
 	Room() :Frame(45, 15) {};
 	virtual void printFrame();
 	virtual void printInside();
-    virtual bool isInside(int x, int y);
-	void setMap(int map[15][45]);
+    virtual bool isInside(int row, int column);
+	void setMap(vector<vector<int>> roomMap) {
+		this->roomMap = roomMap;
+	}
+
 	void setPlayer(Player* player) {
 		this->player = player;
 		if (this->player == NULL)
@@ -22,10 +28,10 @@ public:
 	}
 	GameAction runAction(GameAction action);
 private:
-	GameAction playerGoTo(int x, int y);
-	char getMapElement(int x, int y);
-	void setMapElement(int x, int y, int value);
+	GameAction playerGoTo(int column, int row);
+	char getMapElement(int column, int row);
+	void setMapElement(int column, int row, int value);
 	Player *player;
-	char getSign(int x);
-	int arenaMap[15][45];
+	char getSign(int value);
+	vector<vector<int>> roomMap;
 };

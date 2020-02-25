@@ -196,6 +196,7 @@
     <ClInclude Include="RoomMapBuilder.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="Stats.h" />
+    <ClInclude Include="TempleteRoomMap.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

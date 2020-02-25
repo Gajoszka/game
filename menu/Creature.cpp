@@ -15,14 +15,14 @@ void Creature::takeDamage() {
 };
 
 void Creature::clear() {
-	gotoxy(location.getX(), location.getY());
+	gotoxy(location.getColumn(), location.getRow());
 	cout << ' ';
 }
 
 void Creature::print(int x, int y)
 {
-	location.setX(x);
-	location.setY(y);
-	gotoxy(location.getX(), location.getY());
+	location.setColumn(x);
+	location.setRow(y);
+	gotoxy(location.getColumn(), location.getRow());
 	cout << icon;
 }

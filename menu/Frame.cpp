@@ -10,8 +10,8 @@ void Frame::printInside() {
 }
 
 void Frame::print(int x, int y) {
-	this->topLeft.setX(x);
-	topLeft.setY(y);
+	this->topLeft.setColumn(x);
+	topLeft.setRow(y);
 	printFrame();
 	printInside();
 };
@@ -20,74 +20,74 @@ void Frame::print(int x, int y) {
 void Frame::printFrame() {
 
 
-	printHorizontal(topLeft.getX()+1, topLeft.getY(), width-1);
-	printHorizontal(topLeft.getX() +1, topLeft.getY() + height, width-1);
-	printVertical(topLeft.getX(), topLeft.getY() +1, height-1);
-	printVertical(topLeft.getX() + width, topLeft.getY() +1, height-1);
-	gotoxy(topLeft.getX(), topLeft.getY());
-	cout << top_left;
-	gotoxy(topLeft.getX() + width, topLeft.getY());
-	cout << top_right;
-	gotoxy(topLeft.getX(), topLeft.getY() +height);
-	cout << bottom_left;
-	gotoxy(topLeft.getX() + width, topLeft.getY() +height);
-	cout << bottom_right;
+	printHorizontal(topLeft.getColumn()+1, topLeft.getRow(), width-1);
+	printHorizontal(topLeft.getColumn() +1, topLeft.getRow() + height, width-1);
+	printVertical(topLeft.getColumn(), topLeft.getRow() +1, height-1);
+	printVertical(topLeft.getColumn() + width, topLeft.getRow() +1, height-1);
+	gotoxy(topLeft.getColumn(), topLeft.getRow());
+	cout << sign_top_left;
+	gotoxy(topLeft.getColumn() + width, topLeft.getRow());
+	cout << sign_top_right;
+	gotoxy(topLeft.getColumn(), topLeft.getRow() +height);
+	cout << sign_bottom_left;
+	gotoxy(topLeft.getColumn() + width, topLeft.getRow() +height);
+	cout << sign_bottom_right;
 };
 
 void Frame::printVertical(int x, int y, int height) {
 	for (int i = 0; i < height; i++) {
 		gotoxy(x, y + i);
-		cout << wall;
+		cout << sign_wall;
 	}
 };
 
 void Frame::printHorizontal(int x, int y1, int width) {
 	gotoxy(x, y1);
 	for (int i = 0; i < width; i++) {
-		cout << dash;
+		cout << sign_dash;
 	}
 	
 };
 
-void Frame::cursor(int stepX, int stepY) {
-	gotoxy(topLeft.getX() +stepX, topLeft.getY() +stepY);
+void Frame::moveCursor(int columnStep, int rowStep) {
+	gotoxy(topLeft.getColumn() +columnStep, topLeft.getRow() +rowStep);
 }
 
-void Frame::printPoint(int x, int y, char sign) {
-	cursor(x, y);
+void Frame::printPoint(int column, int row, char sign) {
+	moveCursor(column, row);
 	cout << sign;
 }
 void Frame::clear()
 {
-	for (int j = 1; j < height - 1; j++) {
-		for (int i = 1; i < width - 1; i++) {
-			cursor(i, j);
+	for (int column = 1; column < height - 1; column++) {
+		for (int row = 1; row < width - 1; row++) {
+			moveCursor(row, column);
 			cout << ' ';
 		}
 	}
 }
 
 
-void Frame::clearLine(int nrLine)
+void Frame::clearLine(int rowNr)
 {
-	   cursor(2, nrLine);
+	   moveCursor(2, rowNr);
 		for (int i = 1; i < width - 2; i++) {
 			cout << ' ';
 		}
 }
 
-void Frame::printLine(int nrLine, string text) {
-	clearLine(nrLine);
-	cursor(2, nrLine);
+void Frame::printLine(int rowNr, string text) {
+	clearLine(rowNr);
+	moveCursor(2, rowNr);
 	cout << text;
 }
 
-void Frame::printCenterLine(int nrLine, string text) {
-	clearLine(nrLine);
-	cursor( (width-text.size())/2, nrLine);
+void Frame::printCenterLine(int rowNr, string text) {
+	clearLine(rowNr);
+	moveCursor( (width-text.size())/2, rowNr);
 	cout << text;
 }
 
-bool Frame::isInside(int x, int y) {
-	return  (x > topLeft.getX() && x <= this->topLeft.getX() +this->width) && (y >= topLeft.getY() && y < topLeft.getY() +this->height);
+bool Frame::isInside(int column, int row) {
+	return  (column > topLeft.getColumn() && column <= this->topLeft.getColumn() +this->width) && (row >= topLeft.getRow() && row < topLeft.getRow() +this->height);
 }

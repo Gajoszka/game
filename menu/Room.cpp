@@ -1,24 +1,8 @@
 #include "Room.h"
 #include "Frame.h"
-#include "keyfunctions.h"
-#include "Stats.h"
 #include "Screen.h"
-#include <vector>
 #include <iostream>
-#include "GameAction.h"
 
-
-using namespace std;
-
-void Room::setMap(int map[15][45]) {
-	if (map!=NULL)
-	for (int j = 0; j < height; j++) {
-		for (int i = 0; i < width; i++) {
-			arenaMap[j][i]=map[j][i];
-		}
-	}
-
-}
 
 void Room::printFrame()
 {
@@ -26,54 +10,54 @@ void Room::printFrame()
 
 
 void Room::printInside() {
-	for (int j = 0; j < height; j++) {
-		for (int i = 0; i < width; i++) {
-			printPoint(i , j , getSign(arenaMap[j][i]));
+	for (int row = 0; row < height; row++) {
+		for (int column = 0; column < width; column++) {
+			printPoint(column , row , getSign(roomMap[row][column]));
 		}
 	}
 }
 
 
-char Room::getMapElement(int x, int y) {
-	int indexX = x - getTop().getX();
-	int indexY = y - getTop().getY();
-	if ( indexX >= 0 && indexY >= 0 && indexX < width && indexY <= height )
-		return  arenaMap[indexY][indexX];
+char Room::getMapElement(int column, int row) {
+	int indexColumn = column - getTopLeft().getColumn();
+	int  indexRow = row  - getTopLeft().getRow();
+	if (indexRow >= 0 && indexColumn >= 0 && indexRow < height && indexColumn <= width)
+		return  roomMap[indexRow][indexColumn];
 	return -10;
 }
 
 
-void Room::setMapElement(int x, int y,int value) {
-	int indexX = x - getTop().getX();
-	int indexY = y - getTop().getY();
-	if (indexX >= 0 && indexY >= 0 && indexX < width && indexY <= height)
-		  arenaMap[indexY][indexX]=value;
+void Room::setMapElement(int column, int row, int value) {
+	int indexColumn = column - getTopLeft().getColumn();
+	int  indexRow = row - getTopLeft().getRow();
+	if (indexRow >= 0 && indexColumn >= 0 && indexRow < height && indexColumn <= width )
+		roomMap[indexRow][indexColumn]=value;
 }
 
-bool Room::isInside(int x, int y) {
-	return getMapElement(x,y) != 1 && getMapElement(x, y) != 2;
+bool Room::isInside(int column, int row) {
+	return getMapElement(column,row) != 1 && getMapElement(column,row) != 2;
 }
 
 
 
-GameAction Room::playerGoTo(int x, int y) {
-	int xAct = (*player).getLocation().getX() + x;
-	int yAct = (*player).getLocation().getY() + y;
+GameAction Room::playerGoTo(int columnStep, int rowStep) {
+	int actColumn = (*player).getLocation().getColumn() + columnStep;
+	int actRow = (*player).getLocation().getRow() + rowStep;
 	(*player).clear();
 	Sleep(20);
 	bool result = true;
-	if (getMapElement(xAct, yAct) == -1)
+	if (getMapElement(actColumn, actRow) == -1)
 		return exitRoom;
-	if (!isInside(xAct, yAct)) {
-		xAct = (*player).getLocation().getX();
-		yAct = (*player).getLocation().getY();
+	if (!isInside(actColumn, actRow)) {
+		actColumn = (*player).getLocation().getColumn();
+		actRow = (*player).getLocation().getRow();
 		result = false;
 	}
-	else if (getMapElement(xAct, yAct)==10) {
+	else if (getMapElement(actColumn, actRow)==10) {
 		(*player).addScore(2);
-		setMapElement(xAct, yAct,0);
+		setMapElement(actColumn, actRow,0);
 	}
-	(*player).print(xAct, yAct);
+	(*player).print(actColumn, actRow);
 
 	return served;
 }

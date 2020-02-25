@@ -1,12 +1,16 @@
 #pragma once
+#include <vector>
+using namespace std;
 
 class RoomMapBuilder
 {
 public:
-	RoomMapBuilder() {
-
+	RoomMapBuilder(int width,int heihgt) {
+		this->width = width;
+		this->height = height;
 	}
-	std::vector<int> build();
+	vector<vector<int>> build();
+
 	void setObstacleCount(int count){
 		this->obstacleCount = count<=0?0:count;	
 	}
@@ -23,10 +27,10 @@ private:
 	int doorCount = 1;
 	int width = 45;
 	int height = 15;
-	void createRoomMap(int roomMap[15][45]);
-	void createDoor(int roomMap[15][45]);
-	void createTreasure(int roomMap[15][45]);
-	void createHObstacle(int roomMap[15][45],int x, int y, int size);
-	void createVObstacle(int roomMap[15][45],int x, int y, int size);
+	void createDoor(std::vector<std::vector<int>> *tmpRows);
+	void createTreasure(std::vector<std::vector<int>> *tmpRows);
+	void createHObstacle(std::vector<std::vector<int>> *tmpRows);
+	void createVObstacle(vector<std::vector<int>> *tmpRows);
+	bool canObstalace(vector<std::vector<int>>* tmpRows, int row, int column);
 };
 

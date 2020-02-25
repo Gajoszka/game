@@ -2,5 +2,5 @@
 
 void MainFrame::printInside()
 {
-	(*getRoom()).print(getTop().getX()+ 2, getTop().getY() + 2);
+	(*getRoom()).print(getTopLeft().getColumn()+ 2, getTopLeft().getRow() + 2);
 }

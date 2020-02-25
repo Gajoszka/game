@@ -17,8 +17,8 @@ public:
 	};
 
 	void setLocation(int x, int y) {
-		location.setX(x);
-		location.setY(y);
+		location.setColumn(x);
+		location.setRow(y);
 	};
 protected:
 	Creature(char sign, int hp, int attack, int defence);
