@@ -2,7 +2,7 @@
 #include "Frame.h"
 #include "Screen.h"
 #include <iostream>
-#include "RoomMapBuilder.h"
+#include "RoomMap.h"
 #include "Creature.h"
 
 using namespace std;
@@ -16,38 +16,30 @@ void Room::printFrame()
 }
 
 void Room::printInside() {
-	for (int row = 0; row < roomMap.size(); row++) {
-		for (int column = 0; column < width; column++) {
-			printPoint(column, row, roomMap[row][column].icon);
+	for (int row = 0; row < roomMap.getHeight(); row++) {
+		for (int column = 0; column < roomMap.getWidth(); column++) {
+			printPoint(column, row, (*roomMap.get(column,row)).icon);
 		}
 	}
 }
 
-void Room::setMap(vector<vector<RoomElement>> roomMap) {
+void Room::setMap(RoomMap roomMap) {
 	enemys.clear();
 	this->roomMap = roomMap;
-	for (vector<RoomElement> row :this->roomMap) {
-		for (RoomElement el : row) {
-			if (el.getId() > 100) {
+	//for (vector<RoomElement> row :this->roomMap) {
+		//for (RoomElement el : row) {
+			//if (el.getId() > 100) {
 				//Enemy enemy = static_cast<Enemy>(el);
 				//enemys.push_back(enemy);
-			}
-		}
-	}
-	enemys.clear();
+			//}
+		//}
+//	}
 }
 
-
-RoomElement Room::getMapElement(int mapColumn, int mapRow) {
-	if (mapRow >= 0 && mapColumn >= 0 && mapRow < height && mapColumn <= width)
-		return  roomMap[mapRow][mapColumn];
-	return room_wall;
-}
 
 void Room::setMapElement(int mapColumn, int mapRow, RoomElement value) {
-	if (mapRow >= 0 && mapColumn >= 0 && mapRow < height && mapColumn <= width)
-		roomMap[mapRow][mapColumn] = value;
-	printPoint(mapColumn, mapRow, value.icon);
+	if (roomMap.set(mapColumn, mapRow, value))
+		printPoint(mapColumn, mapRow, value.icon);
 }
 
 
@@ -58,7 +50,7 @@ void Room::setMapElement(int mapColumn, int mapRow, Creature* value) {
 
 
 bool Room::isInside(int mapColumn, int mapRow) {
-	return getMapElement(mapColumn, mapRow).canPass;
+	return roomMap.canMove(mapColumn, mapRow);
 }
 
 void Room::enemyMove(Enemy* enemy, int columnStep, int rowStep) {
@@ -76,7 +68,7 @@ void Room::enemyMove(Enemy* enemy, int columnStep, int rowStep) {
 
 
 void Room::enemyMove() {
-	if (enemys.size()>0 && rand() % 4 == 0) {
+	if (enemys.size() > 0 && rand() % 4 == 0) {
 		Sleep(15);
 		for (Enemy enemy : enemys) {
 			enemyMove(&enemy, 0, 1);
@@ -84,22 +76,21 @@ void Room::enemyMove() {
 	}
 }
 
-
 GameAction Room::playerMove(int columnStep, int rowStep) {
 	int actColumn = (*player).getRoomLocation().getColumn() + columnStep;
 	int actRow = (*player).getRoomLocation().getRow() + rowStep;
 	printPoint((*player).getRoomLocation().getColumn(), (*player).getRoomLocation().getRow(), ' ');
 	Sleep(15);
-	if (getMapElement(actColumn, actRow).id == room_door.id)
+	if (roomMap.isDoor(actColumn, actRow))
 		return exitRoom;
 	if (!isInside(actColumn, actRow)) {
 		actColumn = (*player).getRoomLocation().getColumn();
 		actRow = (*player).getRoomLocation().getRow();
 	}
 	else {
-		RoomElement rm = getMapElement(actColumn, actRow);
-		(*player).addScore(rm.score);
-		setMapElement(actColumn, actRow, room_inner);
+
+		(*player).addScore(roomMap.getScore(actColumn, actRow));
+		roomMap.setInner(actColumn, actRow);
 	}
 	setMapElement(actColumn, actRow, player);
 

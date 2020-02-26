@@ -5,128 +5,102 @@
 
 
 
-std::vector<std::vector<RoomElement>> RoomMapBuilder::build()
+
+
+RoomMap RoomMapBuilder::build()
 {
-	vector<vector<RoomElement>> roomMap;
-	for (int row = 0; row < height; row++) {
-		vector<RoomElement> tmp;
-		for (int i = 0; i < width; i++) {
-			tmp.push_back(room_inner);
-		}
-		roomMap.push_back(move(tmp));
-	}
+	RoomMap roomMap(width, height);
+
 
 	//horizontal wall
 	for (int column = 0; column < width; column++) {
-		roomMap[0][column] = room_wall;
-		roomMap[height - 1][column] = room_wall;
+		roomMap.setWall(0, column);
+		roomMap.setWall(height - 1, column);
 	}
 	//vertical wall
 	for (int row = 0; row < height; row++) {
-		roomMap[row][0] = room_wall;
-		roomMap[row][width - 1] = room_wall;
+		roomMap.setWall(row, 0);
+		roomMap.setWall(row, width - 1);
 	}
 
 
 	for (int i = 0; i < this->doorCount; i++) {
-		createDoor(&roomMap);
+		createDoor(roomMap);
 	}
 
 	for (int i = 0; i < this->obstacleCount - 1; i++) {
-		createHObstacle(&roomMap);
+		createHInnerWall(&roomMap);
 
 	}
 	for (int i = 0; i < this->obstacleCount; i++) {
-		createVObstacle(&roomMap);
+		createVInnerWall(roomMap);
 	}
 
 	for (int i = 0; i < this->enemyCount; i++) {
-		createEnemy(&roomMap, 101 + i);
+		createEnemy(roomMap, 101 + i);
 	}
 
-	createTreasure(&roomMap);
+	createTreasure(roomMap);
 	return roomMap;
 }
 
 
-void RoomMapBuilder::createDoor(std::vector<std::vector<RoomElement>>* tmpRows) {
-	int door;
+void RoomMapBuilder::createDoor(RoomMap roomMap) {
+
 	switch (rand() % 4)  //witch wall
 	{
 	case 0:
-		door = rand() % (width - 3);
-		(*tmpRows)[0][door + 2] = room_door;
+		roomMap.setDoor(0, (rand() % (width - 3)) + 2);
 		break;
 	case 1:
-		door = rand() % (height - 3);
-		(*tmpRows)[door + 2][width - 1] = room_door;
+		roomMap.setDoor((rand() % (height - 3)) + 2, width - 1);
 		break;
 	case 2:
-		door = rand() % (width - 3);
-		(*tmpRows)[height - 1][door + 2] = room_door;
+		roomMap.setDoor(height - 1, (rand() % (width - 3) + 2));
 		break;
 	case 3:
-		door = rand() % (height - 3);
-		(*tmpRows)[door + 2][0] = room_door;
+		roomMap.setDoor((rand() % (height - 3)) + 2, 0);
 		break;
 	default:
 		break;
 	}
 }
 
-void RoomMapBuilder::createEnemy(std::vector<std::vector<RoomElement>>* tmpRows, int id)
+void RoomMapBuilder::createEnemy(RoomMap roomMap, int id)
 {
 	Enemy enemy(id);
-	while (1 == 1) {
-		int column = (rand() % (width - 2)) + 1;
-		int row = (rand() % (height - 2)) + 1;
-		if (canObstalace(tmpRows, row, column)) {
-			(*tmpRows)[row][column] = enemy;
-			return;
-		}
-	}
+	int i = 0;
+	while (i < 10 && !roomMap.setEnemy((rand() % (width - 2)) + 1, (rand() % (height - 2)) + 1, &enemy))
+	i++;
 }
 
 
-void RoomMapBuilder::createHObstacle(std::vector<std::vector<RoomElement>>* tmpRows)
+void RoomMapBuilder::createHInnerWall(RoomMap* roomMap)
 {
 	int column = (rand() % (width - 5)) + 1;
 	int row = (rand() % (height - 4)) + 1;
 	int size = (rand() % max((width - column - 15), 1)) + 1;
 	for (int j = column; j < column + size; j++) {
-		if (canObstalace(tmpRows, row, j))
-			//return;
-			(*tmpRows)[row][j] = room_obstacle;
+		(*roomMap).setScale(j,row);
 	}
 }
 
-void RoomMapBuilder::createVObstacle(std::vector<std::vector<RoomElement>>* tmpRows)
+void RoomMapBuilder::createVInnerWall(RoomMap roomMap)
 {
 	int column = (rand() % (width - 3)) + 1;
 	int row = (rand() % (height - 4)) + 1;
 	int size = (rand() % max((height - row - 5), 1)) + 1;
-
 	for (int j = row; j < row + size; j++) {
-		if (canObstalace(tmpRows, j, column))
-			//return;
-			(*tmpRows)[j][column] = room_obstacle;
+		roomMap.setScale(column,j);
 	}
 }
 
-bool RoomMapBuilder::canObstalace(vector<vector<RoomElement>>* tmpRows, int row, int column) {
-	if ((*tmpRows)[row][column - 1].id == room_door.id
-		|| (*tmpRows)[row][column].id == room_wall.id
-		|| (*tmpRows)[row][column + 1].id == room_door.id)
-		return false;
-	if ((*tmpRows)[row - 1][column].id != room_inner.id && (*tmpRows)[row + 1][column].id != room_inner.id)
-		return false;
-	return true;
-}
 
-void RoomMapBuilder::createTreasure(std::vector<std::vector<RoomElement>>* tmpRows)
+
+void RoomMapBuilder::createTreasure(RoomMap roomMap)
 {
 	for (int j = 0; j < treasureCount; j++) {
-		(*tmpRows)[(rand() % (height - 4)) + 2][(rand() % (width - 5)) + 2] = room_treasure;
+		roomMap.setTreacure((rand() % (width - 5)) + 2,(rand() % (height - 4)) + 2);
 	}
 }
 
