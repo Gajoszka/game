@@ -161,7 +161,6 @@
     <ClCompile Include="Creature.cpp" />
     <ClCompile Include="DBconnection.cpp" />
     <ClCompile Include="GameLayout.cpp" />
-    <ClCompile Include="GenericClass.cpp" />
     <ClCompile Include="MainFrame.cpp" />
     <ClCompile Include="Point.cpp" />
     <ClCompile Include="Room.cpp">
@@ -178,6 +177,7 @@
     <ClCompile Include="menu.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RoomMapBuilder.cpp" />
+    <ClCompile Include="GameManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Creature.h" />
