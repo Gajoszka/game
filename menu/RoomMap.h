@@ -59,6 +59,8 @@ public:
 	}
 
 	bool setInner(int column, int row) {
+		if ( get(column, row).id == room_door.id)
+			return true;
 		return set(column, row, room_inner);
 	}
 

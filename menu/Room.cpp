@@ -71,7 +71,7 @@ void Room::enemyMove(Enemy enemy) {
 
 void Room::enemysMove() {
 	time_t current_time = time(NULL);
-	if (clock() / CLOCKS_PER_SEC - last_move_enemy_time < 1)
+	if (clock() / CLOCKS_PER_SEC - last_move_enemy_time < 0.5)
 		return;
 	last_move_enemy_time = clock() / CLOCKS_PER_SEC;
 	for (Enemy enemy : roomMap.getEnemys()) {
@@ -83,10 +83,16 @@ void Room::enemysMove() {
 GameAction Room::playerMove(int columnStep, int rowStep) {
 	Point actLocation = (*player).getLocation();
 	GameAction action = roomMap.movePlayer(columnStep, rowStep, player);
-	printPoint(actLocation.getColumn(), actLocation.getRow(), roomMap.getIcon(actLocation.getColumn(), actLocation.getRow()));
-	Sleep(15);
-	printPoint((*player).getLocation().getColumn(), (*player).getLocation().getRow(), (*player).icon);
-	return action;
+	if (action == exitRoom) {
+		printPoint(actLocation.getColumn(), actLocation.getRow(), room_inner.icon);
+		Sleep(10);
+		printPoint(actLocation.getColumn() + columnStep, actLocation.getRow() + rowStep, (*player).icon);
+	}
+	else {
+		printPoint(actLocation.getColumn(), actLocation.getRow(), roomMap.getIcon(actLocation.getColumn(), actLocation.getRow()));
+		Sleep(15);
+		printPoint((*player).getLocation().getColumn(), (*player).getLocation().getRow(), (*player).icon);
+	}return action;
 }
 
 GameAction Room::runAction(GameAction action)

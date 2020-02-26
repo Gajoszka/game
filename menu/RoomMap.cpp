@@ -60,8 +60,8 @@ bool RoomMap::moveEnemy(int columnStep, int rowStep, Enemy enemy) {
 }
 
 GameAction RoomMap::movePlayer(int columnStep, int rowStep, Player* player) {
-	int newColumn = (*player).getLocation().getColumn() + columnStep;
-	int newRow = (*player).getLocation().getRow() + rowStep;
+	int newColumn = (*player).getLocation().getColumn()  + columnStep;
+	int newRow = (*player).getLocation().getRow()  + rowStep;
 	if (isDoor(newColumn, newRow))
 		return exitRoom;
 	if (!canMove(newColumn, newRow))

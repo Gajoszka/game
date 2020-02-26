@@ -10,6 +10,7 @@ using namespace std;
 
 void GameManager::play(Player* player) {
 	this->player = player;
+	srand(time(NULL));
 	layout.printName((*player).getName());
 	createRoom();
 	(*getRoom()).setPlayer(player);
@@ -66,7 +67,6 @@ void GameManager::keyReader() {
 		}
 		else
 			runAction(moveEnemy);
-
 	}
 }
 
@@ -97,7 +97,6 @@ void GameManager::runAction(GameAction action)
 	default:
 		break;
 	}
-
 }
 
 
@@ -108,9 +107,9 @@ GameManager::~GameManager() {
 void GameManager::createRoom()
 {
 	RoomMapBuilder roomBuilder(45, 15);
-	roomBuilder.setObstacleCount(min((rand() % (max((*player).getScore(), 6))) + 1, 10));
-	roomBuilder.setEnemyCount(min((rand() % (max((*player).getScore(), 5))) + 1, 10));
+	roomBuilder.setObstacleCount((rand() % min((*player).getScore()+1, 10)) + 1);
+	roomBuilder.setEnemyCount((rand() % min((*player).getScore()+1, 10)) + 1);
 	roomBuilder.setDoorCount(1);
-	roomBuilder.setTreasureCount(rand() % 10);
+	roomBuilder.setTreasureCount(rand() % 15);
 	layout.printRoom(roomBuilder.build());
 }
