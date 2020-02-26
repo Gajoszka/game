@@ -33,10 +33,10 @@ private:
 	int doorCount = 1;
 	int width = 45;
 	int height = 15;
-	void createDoor(RoomMap roomMap);
-	void createTreasure(RoomMap roomMap);
+	void createDoor(RoomMap* roomMap);
+	void createTreasure(RoomMap* roomMap);
 	void createHInnerWall(RoomMap* roomMap);
-	void createVInnerWall(RoomMap roomMap);
-	void createEnemy(RoomMap roomMap, int id);
+	void createVInnerWall(RoomMap* roomMap);
+	void createEnemy(RoomMap* roomMap, int id);
 };
 

@@ -18,22 +18,18 @@ void Room::printFrame()
 void Room::printInside() {
 	for (int row = 0; row < roomMap.getHeight(); row++) {
 		for (int column = 0; column < roomMap.getWidth(); column++) {
-			printPoint(column, row, (*roomMap.get(column,row)).icon);
+			printPoint(column, row, roomMap.getIcon(column, row));
 		}
 	}
 }
 
 void Room::setMap(RoomMap roomMap) {
-	enemys.clear();
 	this->roomMap = roomMap;
-	//for (vector<RoomElement> row :this->roomMap) {
-		//for (RoomElement el : row) {
-			//if (el.getId() > 100) {
-				//Enemy enemy = static_cast<Enemy>(el);
-				//enemys.push_back(enemy);
-			//}
-		//}
-//	}
+	if (player != NULL) {
+		int i = 0;
+		while (i < 50 && !roomMap.setPlayer((rand() % (width - 2)) + 1, (rand() % (height - 2)) + 1, player))
+			i++;
+	}
 }
 
 
@@ -45,7 +41,7 @@ void Room::setMapElement(int mapColumn, int mapRow, RoomElement value) {
 
 void Room::setMapElement(int mapColumn, int mapRow, Creature* value) {
 	setMapElement(mapColumn, mapRow, *value);
-	(*value).setRoomLocation(mapColumn, mapRow);
+	(*value).setLocation(mapColumn, mapRow);
 }
 
 
@@ -53,53 +49,48 @@ bool Room::isInside(int mapColumn, int mapRow) {
 	return roomMap.canMove(mapColumn, mapRow);
 }
 
-void Room::enemyMove(Enemy* enemy, int columnStep, int rowStep) {
-	int actColumn = (*enemy).getRoomLocation().getColumn() + columnStep;
-	int actRow = (*enemy).getRoomLocation().getRow() + rowStep;
-	if (!isInside(actColumn, actRow)) {
-		enemyMove(enemy, -columnStep, -rowStep);
+void Room::enemyMove(Enemy enemy) {
+	int columnStep, rowStep;
+	Point actLocation = enemy.getLocation();
+	int i = 0;
+	bool ok = false;
+	while (i < 6 && !ok) {
+		rowStep = (rand() % 3) - 1;
+		columnStep = (rand() % 3) - 1;
+		ok = roomMap.moveEnemy(columnStep, rowStep, enemy);
+		i++;
 	}
-	else {
-		setMapElement((*enemy).getRoomLocation().getColumn(), (*enemy).getRoomLocation().getRow(), room_inner);
+	if (ok) {
+		printPoint(actLocation.getColumn(), actLocation.getRow(), roomMap.getIcon(actLocation.getColumn(), actLocation.getRow()));
 		Sleep(15);
-		setMapElement(actColumn, actRow, enemy);
+		enemy = roomMap.getEnemy(enemy.id);
+		printPoint(enemy.getLocation().getColumn(), enemy.getLocation().getRow(), enemy.icon);
 	}
 }
 
 
-void Room::enemyMove() {
-	if (enemys.size() > 0 && rand() % 4 == 0) {
+void Room::enemysMove() {
+	time_t current_time = time(NULL);
+	if (clock() / CLOCKS_PER_SEC - last_move_enemy_time < 1)
+		return;
+	last_move_enemy_time = clock() / CLOCKS_PER_SEC;
+	for (Enemy enemy : roomMap.getEnemys()) {
+		enemyMove(enemy);
 		Sleep(15);
-		for (Enemy enemy : enemys) {
-			enemyMove(&enemy, 0, 1);
-		}
 	}
 }
 
 GameAction Room::playerMove(int columnStep, int rowStep) {
-	int actColumn = (*player).getRoomLocation().getColumn() + columnStep;
-	int actRow = (*player).getRoomLocation().getRow() + rowStep;
-	printPoint((*player).getRoomLocation().getColumn(), (*player).getRoomLocation().getRow(), ' ');
+	Point actLocation = (*player).getLocation();
+	GameAction action = roomMap.movePlayer(columnStep, rowStep, player);
+	printPoint(actLocation.getColumn(), actLocation.getRow(), roomMap.getIcon(actLocation.getColumn(), actLocation.getRow()));
 	Sleep(15);
-	if (roomMap.isDoor(actColumn, actRow))
-		return exitRoom;
-	if (!isInside(actColumn, actRow)) {
-		actColumn = (*player).getRoomLocation().getColumn();
-		actRow = (*player).getRoomLocation().getRow();
-	}
-	else {
-
-		(*player).addScore(roomMap.getScore(actColumn, actRow));
-		roomMap.setInner(actColumn, actRow);
-	}
-	setMapElement(actColumn, actRow, player);
-
-	return served;
+	printPoint((*player).getLocation().getColumn(), (*player).getLocation().getRow(), (*player).icon);
+	return action;
 }
 
 GameAction Room::runAction(GameAction action)
 {
-	enemyMove();
 	switch (action)
 	{
 	case served:
@@ -113,7 +104,7 @@ GameAction Room::runAction(GameAction action)
 	case key_right:
 		return playerMove(1, 0);
 	case moveEnemy:
-		enemyMove();
+		enemysMove();
 		return served;
 	default:
 		return action;
