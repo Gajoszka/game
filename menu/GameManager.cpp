@@ -109,10 +109,8 @@ void GameManager::createRoom()
 {
 	RoomMapBuilder roomBuilder(45, 15);
 	roomBuilder.setObstacleCount(min((rand() % (max((*player).getScore(), 6))) + 1, 10));
+	roomBuilder.setEnemyCount(min((rand() % (max((*player).getScore(), 5))) + 1, 10));
 	roomBuilder.setDoorCount(1);
-	roomBuilder.setTreasure(rand() % 10);
+	roomBuilder.setTreasureCount(rand() % 10);
 	layout.printRoom(roomBuilder.build());
-	Enemy enemy(101);
-	(*getRoom()).addEnemy(enemy);
-
 }

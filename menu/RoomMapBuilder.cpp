@@ -5,7 +5,7 @@
 
 
 
-std::vector<std::vector<GenericClass>> RoomMapBuilder::build()
+std::vector<std::vector<RoomElement>> RoomMapBuilder::build()
 {
 	vector<vector<RoomElement>> roomMap;
 	for (int row = 0; row < height; row++) {

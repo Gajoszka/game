@@ -5,6 +5,8 @@
 
 using namespace std;
 
+
+
 const RoomElement room_wall = RoomElement(1, 219, false, 0);
 const RoomElement room_door = RoomElement(-1, ' ', true, 5);
 const RoomElement room_obstacle = RoomElement(2, 178, false, 0);
@@ -19,7 +21,7 @@ public:
 		this->width = width;
 		this->height = height;
 	}
-	vector<vector<GenericClass>> build();
+	vector<vector<RoomElement>> build();
 
 	void setObstacleCount(int count) {
 		this->obstacleCount = count <= 0 ? 0 : count;

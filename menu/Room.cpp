@@ -23,6 +23,21 @@ void Room::printInside() {
 	}
 }
 
+void Room::setMap(vector<vector<RoomElement>> roomMap) {
+	enemys.clear();
+	this->roomMap = roomMap;
+	for (vector<RoomElement> row :this->roomMap) {
+		for (RoomElement el : row) {
+			if (el.getId() > 100) {
+				//Enemy enemy = static_cast<Enemy>(el);
+				//enemys.push_back(enemy);
+			}
+		}
+	}
+	enemys.clear();
+}
+
+
 RoomElement Room::getMapElement(int mapColumn, int mapRow) {
 	if (mapRow >= 0 && mapColumn >= 0 && mapRow < height && mapColumn <= width)
 		return  roomMap[mapRow][mapColumn];
@@ -43,7 +58,7 @@ void Room::setMapElement(int mapColumn, int mapRow, Creature* value) {
 
 
 bool Room::isInside(int mapColumn, int mapRow) {
-	return getMapElement(mapColumn, mapRow).canGo;
+	return getMapElement(mapColumn, mapRow).canPass;
 }
 
 void Room::enemyMove(Enemy* enemy, int columnStep, int rowStep) {
@@ -61,8 +76,8 @@ void Room::enemyMove(Enemy* enemy, int columnStep, int rowStep) {
 
 
 void Room::enemyMove() {
-	if (rand() % 4 == 0) {
-		Sleep(30);
+	if (enemys.size()>0 && rand() % 4 == 0) {
+		Sleep(15);
 		for (Enemy enemy : enemys) {
 			enemyMove(&enemy, 0, 1);
 		}

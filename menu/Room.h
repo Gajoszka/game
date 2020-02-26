@@ -16,22 +16,7 @@ public:
 	virtual void printFrame();
 	virtual void printInside();
     virtual bool isInside(int row, int column);
-	void setMap(vector<vector<RoomElement>> roomMap) {
-		this->roomMap = roomMap;
-		for (Enemy enemy : enemys) {
-
-		}
-		enemys.clear();
-	}
-
-	void addEnemy(Enemy enemy) {
-		int column, row;
-		while (getMapElement(column = rand() % width, row = rand() % height).id != room_inner.id);
-		setMapElement(column, row, &enemy);
-		this->enemys.push_back(enemy);
-		
-	
-	}
+	void setMap(vector<vector<RoomElement>> roomMap);
 
 	void setPlayer(Player* player) {
 		this->player = player;
