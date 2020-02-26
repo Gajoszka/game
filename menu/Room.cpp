@@ -11,8 +11,30 @@ inline bool instanceof(const T*) {
 	return is_base_of<Base, T>::value;
 }
 
+template<typename T, typename std::enable_if<std::is_base_of<RoomElement, T>::value>::type * = nullptr>
+T Foo(T bar)
+{
+	return T();
+}
+
 void Room::printFrame()
 {
+}
+
+void Room::setMap(vector<vector<RoomElement>> roomMap) {
+	this->roomMap = roomMap;
+	enemys.clear();
+	for (vector<RoomElement> v : roomMap) {
+		for (RoomElement el : v) {
+			//if (instanceof<Enemy>(&el)) {
+			if (el.getId() > 100) {
+				//Enemy enemy = (Enemy)(el);
+				//Enemy* enemy = dynamic_cast<Enemy*>(&el);
+				Enemy* enemy = static_cast<Enemy*>(&el);
+					enemys.push_back(enemy);
+			}
+		}
+	}
 }
 
 void Room::printInside() {
@@ -43,7 +65,7 @@ void Room::setMapElement(int mapColumn, int mapRow, Creature* value) {
 
 
 bool Room::isInside(int mapColumn, int mapRow) {
-	return getMapElement(mapColumn, mapRow).canGo;
+	return getMapElement(mapColumn, mapRow).canPass;
 }
 
 void Room::enemyMove(Enemy* enemy, int columnStep, int rowStep) {
@@ -61,10 +83,10 @@ void Room::enemyMove(Enemy* enemy, int columnStep, int rowStep) {
 
 
 void Room::enemyMove() {
-	if (rand() % 4 == 0) {
-		Sleep(30);
-		for (Enemy enemy : enemys) {
-			enemyMove(&enemy, 0, 1);
+	if (enemys.size() > 0 && rand() % 2 == 0) {
+		Sleep(15);
+		for (Enemy* enemy : enemys) {
+			enemyMove(enemy, 0, 1);
 		}
 	}
 }

@@ -1,6 +1,8 @@
 #pragma once
 #include <vector>
 #include "RoomElement.h"
+#include "GenericClass.h"
+
 using namespace std;
 
 const RoomElement room_wall = RoomElement(1, 219, false, 0);
@@ -17,7 +19,7 @@ public:
 		this->width = width;
 		this->height = height;
 	}
-	vector<vector<RoomElement>> build();
+	vector<vector<GenericClass>> build();
 
 	void setObstacleCount(int count) {
 		this->obstacleCount = count <= 0 ? 0 : count;
@@ -25,13 +27,16 @@ public:
 	void setDoorCount(int count) {
 		this->doorCount = count <= 0 ? 1 : count;
 	}
-	void setTreasure(int count) {
+	void setTreasureCount(int count) {
 		this->treasureCount = count <= 0 ? 0 : count;
 	}
-
+	void setEnemyCount(int count) {
+		this->enemyCount = count <= 0 ? 0 : count;
+	}
 
 private:
 	int obstacleCount = 0;
+	int enemyCount = 0;
 	int treasureCount = 0;
 	int doorCount = 1;
 	int width = 45;
@@ -41,5 +46,6 @@ private:
 	void createHObstacle(std::vector<std::vector<RoomElement>>* tmpRows);
 	void createVObstacle(vector<std::vector<RoomElement>>* tmpRows);
 	bool canObstalace(vector<std::vector<RoomElement>>* tmpRows, int row, int column);
+	void createEnemy(std::vector<std::vector<RoomElement>>* tmpRows,  int id);
 };
 

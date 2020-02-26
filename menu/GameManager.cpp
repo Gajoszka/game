@@ -8,7 +8,7 @@
 
 using namespace std;
 
-void GameManager::play(Player *player) {
+void GameManager::play(Player* player) {
 	this->player = player;
 	layout.printName((*player).getName());
 	createRoom();
@@ -107,7 +107,7 @@ GameManager::~GameManager() {
 
 void GameManager::createRoom()
 {
-	RoomMapBuilder roomBuilder(45,15);
+	RoomMapBuilder roomBuilder(45, 15);
 	roomBuilder.setObstacleCount(min((rand() % (max((*player).getScore(), 6))) + 1, 10));
 	roomBuilder.setDoorCount(1);
 	roomBuilder.setTreasure(rand() % 10);

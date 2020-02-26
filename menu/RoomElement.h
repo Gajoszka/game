@@ -1,10 +1,10 @@
 #pragma once
 class RoomElement {
 public:
-	RoomElement(int id, char icon, bool canGo,int score) {
+	RoomElement(int id, char icon, bool canPass,int score) {
 		this->id = id;
 		this->icon = icon;
-		this->canGo = canGo;
+		this->canPass = canPass;
 		this->score = score;
 	}
 	virtual int getId() {
@@ -13,6 +13,6 @@ public:
 	int id = 0;
 	int score = 0;
 	char icon = ' ';
-	bool canGo=true;
+	bool canPass=true;
 };
 

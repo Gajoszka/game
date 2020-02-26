@@ -1,9 +1,11 @@
 #include "RoomMapBuilder.h"
 #include <windows.h>
 #include <stdio.h>
+#include "Enemy.h"
 
 
-std::vector<std::vector<RoomElement>> RoomMapBuilder::build()
+
+std::vector<std::vector<GenericClass>> RoomMapBuilder::build()
 {
 	vector<vector<RoomElement>> roomMap;
 	for (int row = 0; row < height; row++) {
@@ -30,13 +32,16 @@ std::vector<std::vector<RoomElement>> RoomMapBuilder::build()
 		createDoor(&roomMap);
 	}
 
-	for (int i = 0; i < this->obstacleCount-1; i++) {
+	for (int i = 0; i < this->obstacleCount - 1; i++) {
 		createHObstacle(&roomMap);
 
 	}
 	for (int i = 0; i < this->obstacleCount; i++) {
 		createVObstacle(&roomMap);
+	}
 
+	for (int i = 0; i < this->enemyCount; i++) {
+		createEnemy(&roomMap, 101 + i);
 	}
 
 	createTreasure(&roomMap);
@@ -67,8 +72,21 @@ void RoomMapBuilder::createDoor(std::vector<std::vector<RoomElement>>* tmpRows) 
 	default:
 		break;
 	}
-
 }
+
+void RoomMapBuilder::createEnemy(std::vector<std::vector<RoomElement>>* tmpRows, int id)
+{
+	Enemy enemy(id);
+	while (1 == 1) {
+		int column = (rand() % (width - 2)) + 1;
+		int row = (rand() % (height - 2)) + 1;
+		if (canObstalace(tmpRows, row, column)) {
+			(*tmpRows)[row][column] = enemy;
+			return;
+		}
+	}
+}
+
 
 void RoomMapBuilder::createHObstacle(std::vector<std::vector<RoomElement>>* tmpRows)
 {
@@ -78,7 +96,7 @@ void RoomMapBuilder::createHObstacle(std::vector<std::vector<RoomElement>>* tmpR
 	for (int j = column; j < column + size; j++) {
 		if (canObstalace(tmpRows, row, j))
 			//return;
-		(*tmpRows)[row][j] = room_obstacle;
+			(*tmpRows)[row][j] = room_obstacle;
 	}
 }
 
@@ -91,13 +109,13 @@ void RoomMapBuilder::createVObstacle(std::vector<std::vector<RoomElement>>* tmpR
 	for (int j = row; j < row + size; j++) {
 		if (canObstalace(tmpRows, j, column))
 			//return;
-		(*tmpRows)[j][column] = room_obstacle;
+			(*tmpRows)[j][column] = room_obstacle;
 	}
 }
 
 bool RoomMapBuilder::canObstalace(vector<vector<RoomElement>>* tmpRows, int row, int column) {
-	if ((*tmpRows)[row][column - 1].id == room_door.id 
-		|| (*tmpRows)[row][column].id == room_wall.id 
+	if ((*tmpRows)[row][column - 1].id == room_door.id
+		|| (*tmpRows)[row][column].id == room_wall.id
 		|| (*tmpRows)[row][column + 1].id == room_door.id)
 		return false;
 	if ((*tmpRows)[row - 1][column].id != room_inner.id && (*tmpRows)[row + 1][column].id != room_inner.id)
