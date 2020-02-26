@@ -107,9 +107,9 @@ GameManager::~GameManager() {
 void GameManager::createRoom()
 {
 	RoomMapBuilder roomBuilder(45, 15);
-	roomBuilder.setObstacleCount((rand() % min((*player).getScore()+1, 10)) + 1);
-	roomBuilder.setEnemyCount((rand() % min((*player).getScore()+1, 10)) + 1);
+	roomBuilder.setObstacleCount((rand() % min((*player).getScore()+4, 12)) + 1);
+	roomBuilder.setEnemyCount((rand() % min((*player).getScore()+2, 10)) + 1);
 	roomBuilder.setDoorCount(1);
-	roomBuilder.setTreasureCount(rand() % 15);
+	roomBuilder.setTreasureCount(rand() % 12);
 	layout.printRoom(roomBuilder.build());
 }
