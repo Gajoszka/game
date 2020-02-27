@@ -10,13 +10,12 @@
 
 //using namespace std;
 
-class Room : public Frame
+class RoomFrame : public Frame
 {
 public:
-	Room() :Frame(45, 15) , roomMap(1, 1) {
+	RoomFrame(int width, int height) :Frame(width,height) , roomMap(1, 1) {
 		last_move_enemy_time = clock() / CLOCKS_PER_SEC;
 	};
-	virtual void printFrame();
 	virtual void printInside();
     virtual bool isInside(int row, int column);
 	void setMap(RoomMap roomMap);
@@ -29,6 +28,8 @@ public:
 		setMapElement(player->getLocation().getColumn(),player->getLocation().getRow(),player);
 	}
 	GameAction runAction(GameAction action);
+protected:
+	virtual void moveCursor(int column, int row);
 private:
 	GameAction playerMove(int column, int row);
 	void enemyMove(Enemy enemy);

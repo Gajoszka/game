@@ -1,6 +1,5 @@
 #include "GameManager.h"
 #include "Screen.h"
-#include "Room.h"
 #include <iostream>
 #include <windows.h>
 #include <stdio.h>
@@ -107,8 +106,8 @@ GameManager::~GameManager() {
 void GameManager::createRoom()
 {
 	RoomMapBuilder roomBuilder(45, 15);
-	roomBuilder.setObstacleCount((rand() % min((*player).getScore()+4, 12)) + 1);
-	roomBuilder.setEnemyCount((rand() % min((*player).getScore()+2, 10)) + 1);
+	roomBuilder.setScaleCount((rand() % min(max(8,(*player).getScore()), 15)) + 1);
+	roomBuilder.setEnemyCount((rand() % min(max(3,(*player).getScore()), 10)) + 1);
 	roomBuilder.setDoorCount(1);
 	roomBuilder.setTreasureCount(rand() % 12);
 	layout.printRoom(roomBuilder.build());

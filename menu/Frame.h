@@ -30,9 +30,9 @@ public:
 private:
 	void printVertical(int column,int row,int width);
 	void printHorizontal(int column, int row, int height);
-	void moveCursor(int columnStep, int rowStep);
 
 protected:	
+	virtual void moveCursor(int column, int row);
 	void printLine(int rowNr, std::string text);
 	void printCenterLine(int rowNr, std::string text);
 	int width;

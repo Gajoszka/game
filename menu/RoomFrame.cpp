@@ -1,5 +1,4 @@
-#include "Room.h"
-#include "Frame.h"
+#include "RoomFrame.h"
 #include "Screen.h"
 #include <iostream>
 #include "RoomMap.h"
@@ -11,11 +10,10 @@ inline bool instanceof(const T*) {
 	return is_base_of<Base, T>::value;
 }
 
-void Room::printFrame()
-{
+void RoomFrame::moveCursor(int column, int row) {
+	gotoxy(topLeft.getColumn() +2+column, 2+topLeft.getRow() + row);
 }
-
-void Room::printInside() {
+void RoomFrame::printInside() {
 	for (int row = 0; row < roomMap.getHeight(); row++) {
 		for (int column = 0; column < roomMap.getWidth(); column++) {
 			printPoint(column, row, roomMap.getIcon(column, row));
@@ -23,7 +21,7 @@ void Room::printInside() {
 	}
 }
 
-void Room::setMap(RoomMap roomMap) {
+void RoomFrame::setMap(RoomMap roomMap) {
 	this->roomMap = roomMap;
 	if (player != NULL) {
 		int i = 0;
@@ -33,23 +31,23 @@ void Room::setMap(RoomMap roomMap) {
 }
 
 
-void Room::setMapElement(int mapColumn, int mapRow, RoomElement value) {
+void RoomFrame::setMapElement(int mapColumn, int mapRow, RoomElement value) {
 	if (roomMap.set(mapColumn, mapRow, value))
 		printPoint(mapColumn, mapRow, value.icon);
 }
 
 
-void Room::setMapElement(int mapColumn, int mapRow, Creature* value) {
+void RoomFrame::setMapElement(int mapColumn, int mapRow, Creature* value) {
 	setMapElement(mapColumn, mapRow, *value);
 	(*value).setLocation(mapColumn, mapRow);
 }
 
 
-bool Room::isInside(int mapColumn, int mapRow) {
+bool RoomFrame::isInside(int mapColumn, int mapRow) {
 	return roomMap.canMove(mapColumn, mapRow);
 }
 
-void Room::enemyMove(Enemy enemy) {
+void RoomFrame::enemyMove(Enemy enemy) {
 	int columnStep, rowStep;
 	Point actLocation = enemy.getLocation();
 	int i = 0;
@@ -69,7 +67,7 @@ void Room::enemyMove(Enemy enemy) {
 }
 
 
-void Room::enemysMove() {
+void RoomFrame::enemysMove() {
 	time_t current_time = time(NULL);
 	if (clock() / CLOCKS_PER_SEC - last_move_enemy_time < 0.5)
 		return;
@@ -80,7 +78,7 @@ void Room::enemysMove() {
 	}
 }
 
-GameAction Room::playerMove(int columnStep, int rowStep) {
+GameAction RoomFrame::playerMove(int columnStep, int rowStep) {
 	Point actLocation = (*player).getLocation();
 	GameAction action = roomMap.movePlayer(columnStep, rowStep, player);
 	if (action == exitRoom) {
@@ -95,7 +93,7 @@ GameAction Room::playerMove(int columnStep, int rowStep) {
 	}return action;
 }
 
-GameAction Room::runAction(GameAction action)
+GameAction RoomFrame::runAction(GameAction action)
 {
 	switch (action)
 	{

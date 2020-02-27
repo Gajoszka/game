@@ -27,7 +27,7 @@ RoomMap RoomMapBuilder::build()
 		createDoor(&roomMap);
 	}
 
-	for (int i = 0; i < this->obstacleCount - 1; i++) {
+	for (int i = 0; i < this->obstacleCount - 5; i++) {
 		createHInnerWall(&roomMap);
 
 	}
@@ -75,7 +75,6 @@ void RoomMapBuilder::createEnemy(RoomMap* roomMap, int id)
 	while (i < 10 && !(*roomMap).setEnemy((rand() % (width - 2)) + 1, (rand() % (height - 2)) + 1, enemy))
 		i++;
 }
-
 
 void RoomMapBuilder::createHInnerWall(RoomMap* roomMap)
 {

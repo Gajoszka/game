@@ -161,9 +161,8 @@
     <ClCompile Include="Creature.cpp" />
     <ClCompile Include="DBconnection.cpp" />
     <ClCompile Include="GameLayout.cpp" />
-    <ClCompile Include="MainFrame.cpp" />
     <ClCompile Include="Point.cpp" />
-    <ClCompile Include="Room.cpp">
+    <ClCompile Include="RoomFrame.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -185,11 +184,10 @@
     <ClInclude Include="DBconnection.h" />
     <ClInclude Include="GameLayout.h" />
     <ClInclude Include="RoomMap.h" />
-    <ClInclude Include="MainFrame.h" />
     <ClInclude Include="GameAction.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="Room.h" />
+    <ClInclude Include="RoomFrame.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Frame.h" />
     <ClInclude Include="Game.h" />

@@ -13,7 +13,7 @@ public:
 	}
 	RoomMap build();
 
-	void setObstacleCount(int count) {
+	void setScaleCount(int count) {
 		this->obstacleCount = count <= 0 ? 0 : count;
 	}
 	void setDoorCount(int count) {
