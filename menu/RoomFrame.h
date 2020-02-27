@@ -4,37 +4,39 @@
 #include "GameAction.h"
 #include <vector>
 #include "RoomElement.h"
-#include "RoomMapBuilder.h"
+#include "RoomMap.h"
 #include "Enemy.h"
+#include <ctime>
 
-using namespace std;
+//using namespace std;
 
-class Room : public Frame
+class RoomFrame : public Frame
 {
 public:
-	Room() :Frame(45, 15) {};
-	virtual void printFrame();
+	RoomFrame(int width, int height) :Frame(width,height) , roomMap(1, 1) {
+		last_move_enemy_time = clock() / CLOCKS_PER_SEC;
+	};
 	virtual void printInside();
     virtual bool isInside(int row, int column);
-	void setMap(vector<vector<RoomElement>> roomMap);
+	void setMap(RoomMap roomMap);
 
 	void setPlayer(Player* player) {
 		this->player = player;
 		if (this->player == NULL)
 			return;
-		int column,row;
-		while (getMapElement(column = rand() % width, row = rand() % height).id != room_inner.id);
-		setMapElement(column, row, player);
+		roomMap.setPlayer(player);
+		setMapElement(player->getLocation().getColumn(),player->getLocation().getRow(),player);
 	}
 	GameAction runAction(GameAction action);
+protected:
+	virtual void moveCursor(int column, int row);
 private:
 	GameAction playerMove(int column, int row);
-	void enemyMove(Enemy* enemy, int columnStep, int rowStep);
-	void enemyMove();
-	RoomElement getMapElement(int column, int row);
+	void enemyMove(Enemy enemy);
+	void enemysMove();
 	void setMapElement(int column, int row, RoomElement value);
 	void setMapElement(int column, int row, Creature* value);
 	Player *player;
-	vector<Enemy> enemys;
-	vector<vector<RoomElement>> roomMap;
+	RoomMap roomMap;
+	clock_t last_move_enemy_time;
 };

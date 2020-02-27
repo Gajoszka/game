@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "Frame.h"
 #include "Player.h"
-#include "Room.h"
+#include "RoomFrame.h"
 
 #include "GameAction.h"
 #include "GameLayout.h"
@@ -22,7 +22,7 @@ public:
 	GameManager() : layout() {
 		
 	};
-	Room* getRoom() {
+	RoomFrame* getRoom() {
 		return layout.getRoom();
 	}
 	void play(Player *player);

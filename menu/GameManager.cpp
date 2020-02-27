@@ -1,6 +1,5 @@
 #include "GameManager.h"
 #include "Screen.h"
-#include "Room.h"
 #include <iostream>
 #include <windows.h>
 #include <stdio.h>
@@ -10,6 +9,7 @@ using namespace std;
 
 void GameManager::play(Player* player) {
 	this->player = player;
+	srand(time(NULL));
 	layout.printName((*player).getName());
 	createRoom();
 	(*getRoom()).setPlayer(player);
@@ -66,7 +66,6 @@ void GameManager::keyReader() {
 		}
 		else
 			runAction(moveEnemy);
-
 	}
 }
 
@@ -76,7 +75,7 @@ void GameManager::exitFromRoom()
 	this->layout.printInfo("zmiana pokoju");
 	Sleep(1000);
 	createRoom();
-	this->layout.printInfo("Nowy pokoj");
+	this->layout.printInfo("  ");
 	Sleep(1000);
 	this->layout.printInfo("");
 }
@@ -97,7 +96,6 @@ void GameManager::runAction(GameAction action)
 	default:
 		break;
 	}
-
 }
 
 
@@ -108,9 +106,9 @@ GameManager::~GameManager() {
 void GameManager::createRoom()
 {
 	RoomMapBuilder roomBuilder(45, 15);
-	roomBuilder.setObstacleCount(min((rand() % (max((*player).getScore(), 6))) + 1, 10));
-	roomBuilder.setEnemyCount(min((rand() % (max((*player).getScore(), 5))) + 1, 10));
+	roomBuilder.setScaleCount((rand() % min(max(8,(*player).getScore()), 15)) + 1);
+	roomBuilder.setEnemyCount((rand() % min(max(3,(*player).getScore()), 10)) + 1);
 	roomBuilder.setDoorCount(1);
-	roomBuilder.setTreasureCount(rand() % 10);
+	roomBuilder.setTreasureCount(rand() % 12);
 	layout.printRoom(roomBuilder.build());
 }

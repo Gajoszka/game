@@ -9,7 +9,7 @@ public:
 
 	virtual void fight();
 	virtual void takeDamage();
-	Point getRoomLocation() {
+	Point getLocation() {
 		return roomLocation;
 	};
 
@@ -17,7 +17,7 @@ public:
 		roomLocation = l;
 	};
 
-	void setRoomLocation(int column, int row) {
+	void setLocation(int column, int row) {
 		roomLocation.setColumn(column);
 		roomLocation.setRow(row);
 	};

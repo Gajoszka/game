@@ -1,18 +1,8 @@
 #pragma once
 #include <vector>
-#include "RoomElement.h"
-#include "GenericClass.h"
+#include "RoomMap.h"
 
-using namespace std;
-
-
-
-const RoomElement room_wall = RoomElement(1, 219, false, 0);
-const RoomElement room_door = RoomElement(-1, ' ', true, 5);
-const RoomElement room_obstacle = RoomElement(2, 178, false, 0);
-const RoomElement room_treasure = RoomElement(3, 158, true, 2);
-const RoomElement room_inner = RoomElement(0, ' ', true, 0);
-const RoomElement room_enemy= RoomElement(4, 172, false, 10);
+//using namespace std;
 
 class RoomMapBuilder
 {
@@ -21,9 +11,9 @@ public:
 		this->width = width;
 		this->height = height;
 	}
-	vector<vector<RoomElement>> build();
+	RoomMap build();
 
-	void setObstacleCount(int count) {
+	void setScaleCount(int count) {
 		this->obstacleCount = count <= 0 ? 0 : count;
 	}
 	void setDoorCount(int count) {
@@ -43,11 +33,10 @@ private:
 	int doorCount = 1;
 	int width = 45;
 	int height = 15;
-	void createDoor(std::vector<std::vector<RoomElement>>* tmpRows);
-	void createTreasure(std::vector<std::vector<RoomElement>>* tmpRows);
-	void createHObstacle(std::vector<std::vector<RoomElement>>* tmpRows);
-	void createVObstacle(vector<std::vector<RoomElement>>* tmpRows);
-	bool canObstalace(vector<std::vector<RoomElement>>* tmpRows, int row, int column);
-	void createEnemy(std::vector<std::vector<RoomElement>>* tmpRows,  int id);
+	void createDoor(RoomMap* roomMap);
+	void createTreasure(RoomMap* roomMap);
+	void createHInnerWall(RoomMap* roomMap);
+	void createVInnerWall(RoomMap* roomMap);
+	void createEnemy(RoomMap* roomMap, int id);
 };
 
