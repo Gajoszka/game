@@ -76,7 +76,7 @@ void GameManager::exitFromRoom()
 	this->layout.printInfo("zmiana pokoju");
 	Sleep(1000);
 	createRoom();
-	this->layout.printInfo("Nowy pokoj");
+	this->layout.printInfo("  ");
 	Sleep(1000);
 	this->layout.printInfo("");
 }
