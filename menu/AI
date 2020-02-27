@@ -1,0 +1,567 @@
+#include <iostream>
+#include <array>
+#include <vector>
+#include <map>
+#include <algorithm>
+
+
+using namespace std;
+
+const int r = 5;
+
+const int c = 5;
+
+/* THIS FUNCTION BASICALLY CREATES A MAP FOR THE EDGE VALUES AND THEIR VALID NEIGHBOURS E.G. 5 HAS NEIGHBOURS 10 AND 4 */
+
+multimap<int,int> valid_edge_neighbours (int game_map[r][c],vector <int> left_edge,
+                                        vector <int> right_edge,vector <int> top_edge,vector <int> bot_edge) 
+{   
+  multimap <int,int> edge_neighbour_nodes ={};
+
+  int last_right_edge = right_edge.back();
+  int first_right_edge = right_edge.front(); 
+  int last_left_edge = left_edge.back();
+  int first_left_edge = left_edge.front();
+  int last_top_edge = top_edge.back();
+  int first_top_edge = top_edge.front();
+  int last_bot_edge = bot_edge.back();
+  int first_bot_edge = bot_edge.front();
+  
+  
+  int rcounter = 0;
+  int lcounter = 0;
+  int tcounter = 0;
+  int bcounter = 0;
+  
+  for(int i = 0 ;i<r;++i)
+  {
+  
+    for(int j = 0 ;j<c;++j)
+    
+      {
+         if (game_map[i][j] == right_edge[rcounter] && game_map[i][j] != last_right_edge && game_map[i][j] != first_right_edge)
+         {
+           edge_neighbour_nodes.emplace(game_map[i][j],game_map[i+1][j]);
+           edge_neighbour_nodes.emplace(game_map[i][j],game_map[i-1][j]);
+           edge_neighbour_nodes.emplace(game_map[i][j],game_map[i][j-1]); 
+           rcounter = rcounter +1;
+         }
+        
+         if (game_map[i][j] == last_right_edge)
+           {
+              edge_neighbour_nodes.emplace(game_map[i][j],game_map[i-1][j]);
+              edge_neighbour_nodes.emplace(game_map[i][j],game_map[i][j-1]); 
+           }
+                
+        if (game_map[i][j] == first_right_edge) 
+            {
+             edge_neighbour_nodes.emplace(game_map[i][j],game_map[i+1][j]);
+             edge_neighbour_nodes.emplace(game_map[i][j],game_map[i][j-1]);
+             rcounter = rcounter +1;
+            }
+        
+        
+        
+        
+        if (game_map[i][j] == left_edge[lcounter] && game_map[i][j] != last_left_edge && game_map[i][j] != first_left_edge)
+         {
+           edge_neighbour_nodes.emplace(game_map[i][j],game_map[i+1][j]);
+           edge_neighbour_nodes.emplace(game_map[i][j],game_map[i-1][j]);
+           edge_neighbour_nodes.emplace(game_map[i][j],game_map[i][j+1]); 
+           lcounter = lcounter +1;
+         }
+        
+         if (game_map[i][j] == last_left_edge)
+           {
+              edge_neighbour_nodes.emplace(game_map[i][j],game_map[i-1][j]);
+              edge_neighbour_nodes.emplace(game_map[i][j],game_map[i][j+1]); 
+           }
+                
+        if (game_map[i][j] == first_left_edge) 
+            {
+             edge_neighbour_nodes.emplace(game_map[i][j],game_map[i+1][j]);
+             edge_neighbour_nodes.emplace(game_map[i][j],game_map[i][j+1]);
+             lcounter = lcounter +1;
+            }
+        
+        
+        
+        if (game_map[i][j] == top_edge[tcounter] && game_map[i][j] != last_top_edge && game_map[i][j] != first_top_edge)
+         {
+           edge_neighbour_nodes.emplace(game_map[i][j],game_map[i+1][j]);
+           edge_neighbour_nodes.emplace(game_map[i][j],game_map[i][j-1]);
+           edge_neighbour_nodes.emplace(game_map[i][j],game_map[i][j+1]); 
+           tcounter = tcounter +1;
+         }
+        
+         if (game_map[i][j] == last_top_edge)
+           {
+              break;
+           }
+                
+        if (game_map[i][j] == first_top_edge) 
+            {
+             tcounter = tcounter +1;
+            }
+        
+        
+        
+        
+         if (game_map[i][j] == bot_edge[bcounter] && game_map[i][j] != last_bot_edge && game_map[i][j] != first_bot_edge)
+         {
+           edge_neighbour_nodes.emplace(game_map[i][j],game_map[i-1][j]);
+           edge_neighbour_nodes.emplace(game_map[i][j],game_map[i][j-1]);
+           edge_neighbour_nodes.emplace(game_map[i][j],game_map[i][j+1]); 
+           bcounter = bcounter +1;
+         }
+        
+         if (game_map[i][j] == last_bot_edge)
+           {
+              break;
+           }
+                
+        if (game_map[i][j] == first_bot_edge) 
+            {
+             bcounter = bcounter +1;
+            }
+        
+        
+        
+        
+        
+      }
+      
+  } 
+  
+
+    
+  return edge_neighbour_nodes;
+ 
+}
+  
+
+/* THIS FUNCTION GETS ALL THE NEIGHBOURS OF A NODE EVEN IF THEY ARE INCORRECT FOR EXAMPLE HERE 5 WOULD HAVE NEIGHBOURS OF : SOME RANDOM NUMBER, 10 , 4, SOME RANDOM NUMBER 
+ * THE FUNCTION WILL THEN REMOVE THE INCORRECT NEIGHBOURS AND REPLACE THEM WITH THE CORRECT NEIGHBOURS WHICH WERE OBTAINED FROM THE ABOVE FUNCTION */
+  
+ 
+multimap<int,int> full_neighbours (int game_map[r][c],multimap<int,int>valid_edges,vector<int>left_edge,vector<int>right_edge,vector<int>top_edge,vector<int>bot_edge) 
+{   
+  multimap <int,int> full_neighbour_nodes ={};
+  
+  for(int i = 0 ;i<r;++i)
+  {
+  
+    for(int j = 0 ;j<c;++j)
+    
+      {
+         
+          full_neighbour_nodes.emplace(game_map[i][j],game_map[i][j+1]);
+          full_neighbour_nodes.emplace(game_map[i][j],game_map[i][j-1]);
+          full_neighbour_nodes.emplace(game_map[i][j],game_map[i+1][j]);
+          full_neighbour_nodes.emplace(game_map[i][j],game_map[i-1][j]);
+           
+ 
+      }
+      
+  } 
+  
+ int counter = 0;
+    
+    
+  counter = 0;
+  for (auto && kv :full_neighbour_nodes) 
+      {
+         if(kv.first == top_edge[counter])
+         {
+           full_neighbour_nodes.erase(kv.first);
+           counter = counter +1;
+         }
+      
+         
+      } 
+  
+  counter = 0;
+  for (auto && kv :full_neighbour_nodes) 
+      {
+         if(kv.first == left_edge[counter+1])
+         {
+           full_neighbour_nodes.erase(kv.first);
+           counter = counter +1;
+         }
+      
+      }
+      
+  counter = 0;
+  for (auto && kv :full_neighbour_nodes) 
+      {
+         if(kv.first == right_edge[counter+1])
+         {
+           full_neighbour_nodes.erase(kv.first);
+           counter = counter +1;
+         }
+      
+      }
+    
+    counter = 0;
+  for (auto && kv :full_neighbour_nodes) 
+      {
+         if(kv.first == bot_edge[counter+1])
+         {
+           full_neighbour_nodes.erase(kv.first);
+           counter = counter +1;
+         }
+      
+      }
+      
+   
+  counter = 0;
+  for (auto && kv :valid_edges) 
+      {
+           full_neighbour_nodes.emplace(kv.first,kv.second);
+       }
+      
+           
+    
+    
+    
+  return full_neighbour_nodes;
+ 
+}
+
+
+
+
+/* THESE TWO FUNCTION GET THE START HUERISITC AND THE START TOTAL */
+
+int start_hueristic(int start_node, int goal_node)
+{
+  int start_hueristic_distance = abs(goal_node - start_node);
+    
+   cout<<start_hueristic_distance<<" startheuristic"<<endl;
+    
+   return start_hueristic_distance;
+    
+} 
+
+
+int start_total(int zero, int start_hueristic_distance_result )
+{   
+  int start_total_cost = zero + start_hueristic_distance_result;
+    
+   cout<<start_total_cost<<" starttotal"<<endl;
+   
+   return start_total_cost;
+}
+
+
+/* THIS IS THE A* IT WORKS IN THE SENSE THAT IT WILL ALWAYS FIND A PATH TO THE PLAYER HOWEVER IT DOES NOT ALWAYS FIND THE OPTIMAL PATH SOMETIMES IT DOES SOMETIMES IT DOESNT
+ * FOR THE MAP I HAVE CREATED A 2D ARRAY THAT USES THE VALUES STORED IN THE POSITION EXAMPLE  [0][0] IN THE GAME MAP ARRAY IS EQUAL TO 1 
+ * THE REASON AS TO WHY THE A* ALGORITHM IS NOT OPTIMAL IS THAT I NEED COORDINATES BUT I DO NOT KNOW HOW TO OBTAIN THEM FROM WHAT I HAVE CURRENTLY WRITTEN 
+ * THE REASON AS TO WHY I NEED THE COORDINATES IS FOR MORE ACCURACTE CALCULATIONS OF THE TOTAL COST TO GET TO THE POSITION - THE CALCULATIONS CAN BE FOUND WHERE THE WHILE LOOPS
+ * CONTAIN THE COUNTERS FS_COUNTER HV_COUNTER AND TF_COUNTER
+ * AN EXAMPLE OF MORE ACCUARCY  IS THAT IN THE CURRENT SYSTEM THE DIFFERENCE BETWEEN 5 AND 6 IS AROUND 2 TILES WHEN IT SHOULD BE AROUND 5  TILES 
+ * IF I CAN OBTAIN COORDINATES FROM WHAT I HAVE ALREADY WRITTEN E.G  14 = (2,3) THE A* ALGORITHM WILL ALWAYS BE OPTIMAL AND NOT RANDOM 
+ * THIS FUNCTION IS RECURSIVE */ 
+
+
+vector<int> search (int start_node, int goal_node,multimap <int,int> full_neighbours_result,vector<int>visited,vector<int>non_visited)
+{
+ 
+  
+ visited.emplace_back(start_node);
+    
+ vector<int> elite_path ={};
+ elite_path.emplace_back(start_node);
+    
+ 
+  cout<<start_node<<" IS BEING VISITED CHECK THIS PRINT STATEMENT TO SEE THE ORDER TO THE DESTINATION "<<endl;
+    
+  multimap <int,int> iterate_current_node_neighbours = {};
+    
+  multimap <int,int> iterate_current_node_neighbours2 = {};
+    
+  int counter = 0 ; 
+  int fs_counter = 0;
+  int hv_counter = 0;
+  int tf_counter = 0;
+    
+  vector <int> from_start_neighbours = {};
+    
+  vector <int> vector_fsn_result = {};
+    
+  vector<float> vector_h = {};
+    
+  vector<float> total_cost = {};
+    
+  float tie_break = 1+(float(1)/float(1000));
+    
+  map<int,float> node_and_f_value = {};
+    
+  map<int,int> node_and_parent = {};
+    
+  map<int,float> comparison_of_f = {};
+    
+  vector <float> lowest_f_current_node = {};
+    
+  vector <int> new_node = {};
+    
+  vector <int> optimal_path = {};
+    
+
+      
+ 
+    if(start_node == goal_node)
+    {
+    return   elite_path;
+    } 
+    
+     
+  
+    
+    
+  for (auto && kv :full_neighbours_result)                                   /* This for loop gets the neighbour nodes of the currenly being visited 
+                                                                              * node */
+      {
+         
+        if (kv.first == start_node)
+        {
+            
+            iterate_current_node_neighbours.emplace(kv.first,kv.second);
+            
+        }
+         
+      }
+
+  
+  
+      
+  
+  for (auto && kv :iterate_current_node_neighbours)                  /* This for loop checks if any of the neighbour nodes have already been visited
+                                                                      * if they have been they are not included in the calculations later on  */
+    {
+        
+        if (count(visited.begin(),visited.end(),kv.second ))
+        {
+            
+            cout<<"THIS IS TO SHOW THAT THE NEIGHBOUR "<< kv.second <<" OF " << kv.first << " HAS ALREADY BEEN VISITED" <<endl;
+        
+        }
+      
+      else
+      {
+          iterate_current_node_neighbours2.emplace(kv.first,kv.second);
+      }
+      
+      
+    }           
+      
+    
+  
+         
+  
+    
+for (auto && kv :iterate_current_node_neighbours2) /* This for loop iterates through the neighbours which have not been visited */
+ {
+           
+ 
+  non_visited.emplace_back(kv.second); 
+
+  from_start_neighbours.emplace_back(kv.second);
+
+
+  while(fs_counter < from_start_neighbours.size())                           /* This while loop gets the cost from the neighbour node to the start node   */
+  {
+   int fsn_result =  abs (from_start_neighbours[fs_counter] - start_node) ;
+
+
+   vector_fsn_result.emplace_back(fsn_result);
+   fs_counter = fs_counter +1;
+
+
+   }
+
+
+ while(hv_counter < from_start_neighbours.size())                          /* This while loop gets the estimate/hueristic cost to the goal node */
+  {
+  int h_result = abs(goal_node - from_start_neighbours[hv_counter]);
+
+  float scale_h = float(h_result) * (tie_break);
+  vector_h.emplace_back(scale_h);
+  hv_counter = hv_counter +1;
+  }
+
+
+ while (tf_counter < from_start_neighbours.size())                          /* This while loop is the sum of the esitmate cost to the goal and the cost from the 
+                                                                             * neighbour to the start node */
+  {
+   float f_value= vector_h[tf_counter] +  vector_fsn_result[tf_counter]; 
+   total_cost.emplace_back(f_value);
+
+
+   node_and_parent.emplace (from_start_neighbours[tf_counter],start_node);
+
+   comparison_of_f.emplace(from_start_neighbours[tf_counter],total_cost[tf_counter]);
+
+   tf_counter = tf_counter +1;
+  }
+
+              
+
+ }
+   
+    
+  if (node_and_f_value.empty())                              /* If the map node_and_f_value is empty put in the map values of comparison_of_f */
+  {
+    for  (auto && kv :comparison_of_f) 
+      {
+          node_and_f_value.emplace(kv.first,kv.second);
+        
+      }
+  }
+    
+    
+ 
+ for  (auto && kv :node_and_f_value)                          /* Nested for loops here shows if the F value within comparison_of_f is less than the F value
+                                                               * of node_and_f_value with the same number then the nodes F value is updated and its parent node 
+                                                               * is updated - This for loop might be potentially redundant but it might not be depending on
+                                                               * what is stored in the node_and_f_value per each recursion */
+      {
+    
+         for (auto && kp: comparison_of_f)
+         {
+             if (kp.first == kv.first && kp.second<kv.second)
+             {
+                node_and_f_value.emplace(kp.first,kp.second);
+                node_and_parent.emplace(kp.first,start_node);
+                
+                
+             }
+             
+             
+         }
+               
+      }
+ 
+ 
+ 
+ for  (auto &&kv :node_and_f_value)                    /* For loop which gets the F values of the node to be later used to see which is the lowest F value 
+                                                        * as to decide which node to visit next */
+     {
+      
+      lowest_f_current_node.emplace_back(kv.second);
+     }
+
+ 
+ float the_lowest_f_value = *min_element(lowest_f_current_node.begin(),lowest_f_current_node.end()); /* Gets the lowest F value from the lowest_f_current_node vector */
+     
+ cout<<the_lowest_f_value<<" is the lowest f value"<<endl;
+    
+  
+ for  (auto &&kv :node_and_f_value)                  /* If the F value in node_and_f_value is equal to the lowest F value in node_and_f_value
+                                                      * then the node with thaat F value is going to be visited next*/
+     {
+      if(kv.second == the_lowest_f_value)
+      {
+         cout<<kv.first<<" has the lowest f "<<endl;
+         new_node.emplace_back(kv.first);
+          
+      }
+     }    
+  
+    
+    
+ int next_in_line = new_node[0];  
+  
+    
+ optimal_path.emplace_back(next_in_line);
+    
+ cout<<next_in_line<<"is to be the next king"<<endl;
+ 
+    
+   
+    
+    
+ 
+
+for (auto && kv :node_and_f_value) 
+      {
+         cout<<kv.first<<" has F value "<<kv.second<<endl;
+      }
+
+for (auto && kv :node_and_parent) 
+      {
+         cout<<kv.first<<" has parent value "<<kv.second<<endl;
+      } 
+    
+ 
+    
+  
+  
+  search(next_in_line,goal_node,full_neighbours_result,visited,non_visited); 
+    
+  
+ 
+   
+}
+
+
+
+/* HERE I AM TRYING TO VIEW THE RETURN VALUE FROM THE A* WHICH IS MEANT TO BE A VECTOR OF ALL THE VISITED NODE
+ * HOWEVER THE RETURN VALUE OF THE A* ALGORITHM ONLY CONTAINS ONE ELEMENT OF THE PATH INSTEAD OF MULTIPLE */
+ 
+void check_path_function (vector<int>result_of_astar)
+{
+ int counter = 0;
+ while (counter < result_of_astar.size())
+  {
+     cout<<result_of_astar[counter]<<" Is the optimal path "<< endl;
+     counter = counter + 1 ;
+  }
+  
+        
+        
+}
+
+
+
+
+
+int main()
+{
+  int game_map [5][5] = { {1,2,3,4,5},
+                         {6,7,8,9,10},
+                         {11,12,13,14,15},
+                         {16,17,18,19,20},
+                         {21,22,23,24,25}};
+  
+  vector <int> obstacle_positions = {14,24,21};
+  
+  int enemy_position = 6;
+  
+  int player_current_tile = 10;
+  
+  int zero = 0;
+
+  vector <int> visited = {};
+  
+  vector <int> non_visited = {};
+  
+  vector <int> left_edge = {1,6,11,16,21};
+  vector <int> right_edge ={5,10,15,20,25};
+  vector <int> top_edge = {1,2,3,4,5};
+  vector <int> bot_edge = {21,22,23,24,25};
+ 
+  
+    
+ start_total(zero,start_hueristic(enemy_position,player_current_tile));
+  
+  
+   
+                               
+    
+ check_path_function(search(enemy_position,player_current_tile,full_neighbours (game_map,valid_edge_neighbours(game_map,left_edge,right_edge,top_edge,bot_edge)
+                                                              ,left_edge,right_edge,top_edge,bot_edge),visited,non_visited));
+    
+    
+    
+}
