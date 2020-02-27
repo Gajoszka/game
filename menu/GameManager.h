@@ -1,13 +1,12 @@
 #pragma once
-#include <stdlib.h>
+/* Controls game flow */
 #include "Frame.h"
 #include "Player.h"
 #include "RoomFrame.h"
-
 #include "GameAction.h"
 #include "GameLayout.h"
 
-
+// defining special keys
 #define KEY_UP 72
 #define KEY_DOWN 80
 #define KEY_LEFT 75

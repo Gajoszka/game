@@ -1,22 +1,21 @@
-#ifndef MAINMENU_H
-#define MAINMENU_H
+#pragma once
+/* Creating the opening menu*/
+#include "KeyFunctions.h"
 #include "Frame.h"
-
+#include <string>
+using namespace std;
 
 class MainMenu : public Frame
 {
 public:
 	MainMenu();
 	void user_choice();
-//	virtual void print(int x,int y);
-	//virtual void printFrame();
 	virtual void printInside();
 
 protected:
 
 private:
+	KeyFunctions obj;
 	void intro();
-	void play(std::string name);
+	void play(string name);
 };
-
-#endif // MAINMENU_H

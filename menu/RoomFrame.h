@@ -1,4 +1,6 @@
 #pragma once
+/* Manage what's inside room walls,
+controls movements of creatures*/
 #include "Frame.h"
 #include "Player.h"
 #include "GameAction.h"
@@ -8,7 +10,7 @@
 #include "Enemy.h"
 #include <ctime>
 
-//using namespace std;
+using namespace std;
 
 class RoomFrame : public Frame
 {
@@ -19,14 +21,7 @@ public:
 	virtual void printInside();
     virtual bool isInside(int row, int column);
 	void setMap(RoomMap roomMap);
-
-	void setPlayer(Player* player) {
-		this->player = player;
-		if (this->player == NULL)
-			return;
-		roomMap.setPlayer(player);
-		setMapElement(player->getLocation().getColumn(),player->getLocation().getRow(),player);
-	}
+	void setPlayer(Player* player);
 	GameAction runAction(GameAction action);
 protected:
 	virtual void moveCursor(int column, int row);

@@ -3,10 +3,23 @@
 #include <stdio.h>
 #include "Enemy.h"
 
+RoomMapBuilder::RoomMapBuilder(int width, int heihgt) {
+	this->width = width;
+	this->height = height;
+}
 
-
-
-
+void RoomMapBuilder::setScaleCount(int count) {
+	this->obstacleCount = count <= 0 ? 0 : count; // like if statement, right after ? if true, after if false
+}
+void RoomMapBuilder::setDoorCount(int count) {
+	this->doorCount = count <= 0 ? 1 : count;
+}
+void RoomMapBuilder::setTreasureCount(int count) {
+	this->treasureCount = count <= 0 ? 0 : count;
+}
+void RoomMapBuilder::setEnemyCount(int count) {
+	this->enemyCount = count <= 0 ? 0 : count;
+}
 RoomMap RoomMapBuilder::build()
 {
 	RoomMap roomMap(width, height);

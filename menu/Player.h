@@ -1,8 +1,10 @@
 #pragma once
+/*Player class defining players point, health...*/
 #include <math.h>
 #include <string>
 #include "Creature.h"
-
+#include <string>
+using namespace std;
 
 class Player:public Creature
 {
@@ -11,21 +13,12 @@ public:
 		this->name = name;
 	};
 
-	void addScore(int s) {
-		score = score + s;
-	}
-	int getScore() {
-		return score;
-	}
-	std::string getName() {
-		return name;
-	}
+	void addScore(int s);
+	int getScore();
+	string getName();
 
 private:
 	int score = 0;
 	std::string name;
-	
-
-	
 };
 

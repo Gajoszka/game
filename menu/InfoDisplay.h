@@ -1,6 +1,8 @@
 #pragma once
+/*Class for all frames that are used to display information*/
 #include "Frame.h"
 #include <vector>
+#include <string>
 using namespace std;
 
 class InfoDisplay : public Frame
@@ -11,16 +13,9 @@ public:
 			content.push_back("");
 	}
 	virtual void printInside();
-
-	void printLine(int rowNr, std::string content) {
-		if (rowNr > 0 && rowNr < content.size()) {
-			this->content[rowNr - 1] = content;
-			printInside();
-		}
-	}
-
+	void printLine(int rowNr, std::string content);
 
 private:
-	vector<std::string> content;
+	vector<string> content;
 };
 

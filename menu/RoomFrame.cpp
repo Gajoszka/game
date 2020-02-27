@@ -5,14 +5,17 @@
 #include "Creature.h"
 
 using namespace std;
-template<typename Base, typename T>
-inline bool instanceof(const T*) {
-	return is_base_of<Base, T>::value;
-}
+//template<typename Base, typename T>
+//inline bool instanceof(const T*) {
+//	return is_base_of<Base, T>::value;
+//}
 
+// setting cursor position
 void RoomFrame::moveCursor(int column, int row) {
 	gotoxy(topLeft.getColumn() +2+column, 2+topLeft.getRow() + row);
 }
+
+// pritning map elements
 void RoomFrame::printInside() {
 	for (int row = 0; row < roomMap.getHeight(); row++) {
 		for (int column = 0; column < roomMap.getWidth(); column++) {
@@ -47,15 +50,16 @@ bool RoomFrame::isInside(int mapColumn, int mapRow) {
 	return roomMap.canMove(mapColumn, mapRow);
 }
 
+// enemy movement
 void RoomFrame::enemyMove(Enemy enemy) {
 	int columnStep, rowStep;
 	Point actLocation = enemy.getLocation();
 	int i = 0;
 	bool ok = false;
-	while (i < 6 && !ok) {
+	while (i < 6 && !ok) { // i < 6 so the loop is not infinite
 		rowStep = (rand() % 3) - 1;
 		columnStep = (rand() % 3) - 1;
-		ok = roomMap.moveEnemy(columnStep, rowStep, enemy);
+		ok = roomMap.moveEnemy(columnStep, rowStep, enemy); //enemy is within room walls
 		i++;
 	}
 	if (ok) {
@@ -66,7 +70,7 @@ void RoomFrame::enemyMove(Enemy enemy) {
 	}
 }
 
-
+// time between enemies moves
 void RoomFrame::enemysMove() {
 	time_t current_time = time(NULL);
 	if (clock() / CLOCKS_PER_SEC - last_move_enemy_time < 0.5)
@@ -78,21 +82,34 @@ void RoomFrame::enemysMove() {
 	}
 }
 
+
+// setting player position on a map
+void RoomFrame::setPlayer(Player* player) {
+	this->player = player;
+	if (this->player == NULL)
+		return;
+	roomMap.setPlayer(player);
+	setMapElement(player->getLocation().getColumn(), player->getLocation().getRow(), player);
+}
+
+// player movement
 GameAction RoomFrame::playerMove(int columnStep, int rowStep) {
 	Point actLocation = (*player).getLocation();
 	GameAction action = roomMap.movePlayer(columnStep, rowStep, player);
-	if (action == exitRoom) {
+	if (action == exitRoom) { // checking if player left the room, if so setting his position in a new one
 		printPoint(actLocation.getColumn(), actLocation.getRow(), room_inner.icon);
 		Sleep(10);
 		printPoint(actLocation.getColumn() + columnStep, actLocation.getRow() + rowStep, (*player).icon);
 	}
-	else {
+	else { // if not, canging his position
 		printPoint(actLocation.getColumn(), actLocation.getRow(), roomMap.getIcon(actLocation.getColumn(), actLocation.getRow()));
 		Sleep(15);
 		printPoint((*player).getLocation().getColumn(), (*player).getLocation().getRow(), (*player).icon);
 	}return action;
 }
 
+
+// defining arrow keys
 GameAction RoomFrame::runAction(GameAction action)
 {
 	switch (action)

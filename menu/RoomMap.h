@@ -34,71 +34,22 @@ const RoomElement failed = RoomElement(-11, ' ', false, 0);
 
 class RoomMap {
 public:
-	RoomMap(int width, int height) {
-		this->width = width;
-		this->height = height;;
-		for (int row = 0; row < height; row++) {
-			vector<RoomElement> tmp;
-			for (int i = 0; i < width; i++) {
-				tmp.push_back(room_inner);
-			}
-			roomMap.push_back(move(tmp));
-		}
-	}
-	
+	RoomMap(int width, int height);	
 	bool set(int column, int row, RoomElement el);
-
-	RoomElement get(int column, int row) {
-		if (row >= 0 && row < height && column >= 0 && column < width) {
-			return roomMap[row][column];
-		}
-		return failed;
-	}
-	bool setWall(int column, int row) {
-		return set(column, row, room_wall);
-	}
-
-	bool setInner(int column, int row) {
-		if ( get(column, row).id == room_door.id)
-			return true;
-		return set(column, row, room_inner);
-	}
-
+	RoomElement get(int column, int row);
+	bool setWall(int column, int row);
+	bool setInner(int column, int row);
 	bool setDoor(int column, int row);
-
 	bool setEnemy(int column, int row, Enemy enemy);
-
 	bool moveEnemy(int columnStep, int rowStep, Enemy enemy);
-
 	bool setPlayer(int column, int row, Player* player);
-
 	bool setPlayer(Player* player);
-
-	bool setScale(int column, int row) {
-		if (canPut(column, row))
-			return set(column, row, room_scale);
-		return false;
-	}
-
-	bool setTreacure(int column, int row) {
-		if (canPut(column, row))
-			return set(column, row, room_treasure);
-		return false;
-	}
-
-	bool canMove(int column, int row) {
-		return get(column, row).canPass;
-	}
-
-	bool isDoor(int column, int row) {
-		return get(column, row).id == room_door.id;
-	}
-	bool isEnemy(int column, int row) {
-		return get(column, row).id >10000;
-	}
-
+	bool setScale(int column, int row);
+	bool setTreacure(int column, int row);
+	bool canMove(int column, int row);
+	bool isDoor(int column, int row);
+	bool isEnemy(int column, int row);
 	Enemy getEnemy(int column, int row);
-	
 	Enemy getEnemy(int id);
 
 	int getScore(int column, int row) {

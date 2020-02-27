@@ -1,5 +1,7 @@
 #include "GameLayout.h"
 #include "Screen.h"
+#include <string>
+using namespace std;
 
 void GameLayout::setFont() {
 	CONSOLE_FONT_INFOEX cfi;
@@ -14,6 +16,7 @@ void GameLayout::setFont() {
 	//SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
 }
 
+// cursor disappearance
 void GameLayout::shutCursor(bool visible) {
 	HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_CURSOR_INFO ccur;
@@ -22,6 +25,28 @@ void GameLayout::shutCursor(bool visible) {
 	SetConsoleCursorInfo(hStdOut, &ccur);
 }
 
+// destructor - cursor appearance
 GameLayout::~GameLayout() {
 	shutCursor(true);
+}
+
+// displays current score
+void GameLayout::printScore(int score) {
+	statsFrame.printLine(2, "Score: " + to_string(score));
+}
+
+// displays players username
+void GameLayout::printName(string name) {
+	statsFrame.printLine(1, "Player: " + name);
+}
+
+// displays additional information
+void GameLayout::printInfo(string value) {
+	infoFrame.printLine(1, value);
+}
+
+// displays room
+void GameLayout::printRoom(RoomMap roomMap) {
+	room.setMap(roomMap);
+	room.printInside();
 }

@@ -7,6 +7,7 @@
 
 using namespace std;
 
+// 
 void GameManager::play(Player* player) {
 	this->player = player;
 	srand(time(NULL));
@@ -16,20 +17,22 @@ void GameManager::play(Player* player) {
 	keyReader();
 }
 
+// score counter, adding score to current game
 void GameManager::addScore(int score) {
 	if (score == 0)
-		return;
+		return; // escaping if statement
 	(*player).addScore(score);
 	layout.printScore((*player).getScore());
 }
 
+// reading user input
 void GameManager::keyReader() {
 	GameAction action = served;
 	char key;
 	while (action != endGame) {
-		if (_kbhit()) {
-			key = _getch();
-			if (key == 0) {
+		if (_kbhit()) { // 
+			key = _getch(); // receiving key input
+			if (key == 0) { 
 				key = _getch();
 				switch (key) {
 				case KEY_F10:
@@ -69,10 +72,11 @@ void GameManager::keyReader() {
 	}
 }
 
+// escaping room and creating a new one
 void GameManager::exitFromRoom()
 {
 	addScore(5);
-	this->layout.printInfo("zmiana pokoju");
+	this->layout.printInfo("room change");
 	Sleep(1000);
 	createRoom();
 	this->layout.printInfo("  ");
@@ -80,6 +84,7 @@ void GameManager::exitFromRoom()
 	this->layout.printInfo("");
 }
 
+// manage occuring actions
 void GameManager::runAction(GameAction action)
 {
 	action = (*getRoom()).runAction(action);

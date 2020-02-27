@@ -1,5 +1,54 @@
 #include "RoomMap.h"
+RoomMap::RoomMap(int width, int height) {
+	this->width = width;
+	this->height = height;;
+	for (int row = 0; row < height; row++) {
+		vector<RoomElement> tmp;
+		for (int i = 0; i < width; i++) {
+			tmp.push_back(room_inner);
+		}
+		roomMap.push_back(move(tmp));
+	}
+}
 
+RoomElement RoomMap::get(int column, int row) {
+	if (row >= 0 && row < height && column >= 0 && column < width) {
+		return roomMap[row][column];
+	}
+	return failed;
+}
+bool RoomMap::setWall(int column, int row) {
+	return set(column, row, room_wall);
+}
+
+bool RoomMap::setScale(int column, int row) {
+	if (canPut(column, row))
+		return set(column, row, room_scale);
+	return false;
+}
+
+bool RoomMap::setTreacure(int column, int row) {
+	if (canPut(column, row))
+		return set(column, row, room_treasure);
+	return false;
+}
+
+bool RoomMap::canMove(int column, int row) {
+	return get(column, row).canPass;
+}
+
+bool RoomMap::isDoor(int column, int row) {
+	return get(column, row).id == room_door.id;
+}
+bool RoomMap::isEnemy(int column, int row) {
+	return get(column, row).id > 10000;
+}
+
+bool RoomMap::setInner(int column, int row) {
+	if (get(column, row).id == room_door.id)
+		return true;
+	return set(column, row, room_inner);
+}
 
 RoomMap::~RoomMap()
 {

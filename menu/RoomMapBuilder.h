@@ -1,30 +1,19 @@
 #pragma once
+/*Sets oom walls, set items, enemies, doors, obstacles amount*/
 #include <vector>
 #include "RoomMap.h"
 
-//using namespace std;
+using namespace std;
 
 class RoomMapBuilder
 {
 public:
-	RoomMapBuilder(int width, int heihgt) {
-		this->width = width;
-		this->height = height;
-	}
+	RoomMapBuilder(int width, int heihgt);
 	RoomMap build();
-
-	void setScaleCount(int count) {
-		this->obstacleCount = count <= 0 ? 0 : count;
-	}
-	void setDoorCount(int count) {
-		this->doorCount = count <= 0 ? 1 : count;
-	}
-	void setTreasureCount(int count) {
-		this->treasureCount = count <= 0 ? 0 : count;
-	}
-	void setEnemyCount(int count) {
-		this->enemyCount = count <= 0 ? 0 : count;
-	}
+	void setScaleCount(int count);
+	void setDoorCount(int count);
+	void setTreasureCount(int count);
+	void setEnemyCount(int count);
 
 private:
 	int obstacleCount = 0;
