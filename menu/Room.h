@@ -45,11 +45,12 @@ public:
 	bool setPlayer(Player* player);
 	bool setScale(int column, int row);
 	bool setTreacure(int column, int row);
-	bool canMove(int column, int row);
+	bool canPlayerMove(int column, int row);
+	bool canEnemyMove(int column, int row);
 	bool isDoor(int column, int row);
 	bool isEnemy(int column, int row);
 	Enemy* getEnemy(int column, int row);
-	Enemy* getEnemy(int id);
+	Enemy* getEnemyById(int id);
 
 	int getScore(int column, int row) {
 		return get(column, row).score;

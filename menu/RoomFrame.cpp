@@ -49,7 +49,7 @@ void RoomFrame::setMapElement(int mapColumn, int mapRow, Creature* value) {
 }
 
 bool RoomFrame::isInside(int mapColumn, int mapRow) {
-	return room.canMove(mapColumn, mapRow);
+	return room.canPlayerMove(mapColumn, mapRow);
 }
 
 
