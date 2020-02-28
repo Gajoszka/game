@@ -54,7 +54,7 @@ void MainMenu::user_choice()
 	case 1: intro();
 		break;
 	case 2:
-		obj.connection();
+		db.key_functions();
 		break;
 	case 3: cout << "Score board" << endl;
 		break;
