@@ -22,7 +22,7 @@ public:
 		
 	};
 	RoomFrame* getRoom() {
-		return layout.getRoom();
+		return layout.getRoomFrame();
 	}
 	void play(Player *player);
 	void exitFromRoom();

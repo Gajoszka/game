@@ -1,4 +1,6 @@
 #pragma once
+
+
 class RoomElement {
 public:
 	RoomElement(int id, char icon, bool canPass,int score) {
@@ -14,5 +16,6 @@ public:
 	int score = 0;
 	char icon = ' ';
 	bool canPass=true;
+	
 };
 

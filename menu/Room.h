@@ -2,46 +2,45 @@
 #include <type_traits>
 #include <xiosbase>
 #include <vector>
+#include <functional>
 #include "RoomElement.h"
 #include "Enemy.h"
 #include "Player.h"
 #include "GameAction.h"
+#include <ctime>
+
+const RoomElement room_wall = RoomElement(1, static_cast<char>(219), false, 0);
+const RoomElement room_door = RoomElement(-1, ' ', true, 5);
+const RoomElement room_scale = RoomElement(2, static_cast<char>(178), false, 0);
+const RoomElement room_treasure = RoomElement(3, static_cast<char>(158), true, 2);
+const RoomElement room_inner = RoomElement(0, ' ', true, 0);
+const RoomElement room_enemy = RoomElement(4, static_cast<char>(172), false, 10);
+const RoomElement failed = RoomElement(-11, ' ', false, 0);
+
+//typedef void (*printElement)(int column, int row,char icon);
+
+typedef std::function<void(int column, int row, char icon)> printElement;
 
 using namespace std;
 
-const RoomElement room_wall = RoomElement(1, 219, false, 0);
-const RoomElement room_door = RoomElement(-1, ' ', true, 5);
-const RoomElement room_scale = RoomElement(2, 178, false, 0);
-const RoomElement room_treasure = RoomElement(3, 158, true, 2);
-const RoomElement room_inner = RoomElement(0, ' ', true, 0);
-const RoomElement room_enemy = RoomElement(4, 172, false, 10);
-const RoomElement failed = RoomElement(-11, ' ', false, 0);
-
-//template<typename Base>
-//class GenericClass
-//{
-//	static_assert(std::is_base_of<RoomElement, T>::value, "T must inherit from SomeBase");
-//	void set(RoomElement el) {
-//		this.el = el;
-//	}
-//	bool isEnemy() {
-//		el.getId > 100;
-//	}
-//private:
-//	RoomElement el;
-//
-//};
-
-class RoomMap {
+class Room {
 public:
-	RoomMap(int width, int height);	
+	Room(int width, int height);	
+	/*void addObserver(Observer* observer) {
+		this->observers.push_back(observer);
+	}*/
+	void setPrinter(printElement printer) {
+		this->printer=printer;
+	}
 	bool set(int column, int row, RoomElement el);
 	RoomElement get(int column, int row);
 	bool setWall(int column, int row);
 	bool setInner(int column, int row);
 	bool setDoor(int column, int row);
 	bool setEnemy(int column, int row, Enemy enemy);
-	bool moveEnemy(int columnStep, int rowStep, Enemy enemy);
+	void moveEnemys();
+	void moveEnemy(Enemy* enemy);
+	bool moveEnemy(int columnStep, int rowStep, Enemy* enemy);
 	bool setPlayer(int column, int row, Player* player);
 	bool setPlayer(Player* player);
 	bool setScale(int column, int row);
@@ -49,8 +48,8 @@ public:
 	bool canMove(int column, int row);
 	bool isDoor(int column, int row);
 	bool isEnemy(int column, int row);
-	Enemy getEnemy(int column, int row);
-	Enemy getEnemy(int id);
+	Enemy* getEnemy(int column, int row);
+	Enemy* getEnemy(int id);
 
 	int getScore(int column, int row) {
 		return get(column, row).score;
@@ -68,21 +67,25 @@ public:
 		return height;
 	}
 
-	vector<Enemy> getEnemys() {
-		return enemys;
+	vector<Enemy>* getEnemys() {
+		return &enemys;
 	}
 
-	int getEnemyCount() {
+	size_t getEnemyCount() {
 		return enemys.size();
 	}
 	GameAction movePlayer(int columnStep, int rowStep, Player* player);
-	~RoomMap();
+	~Room();
 private:
 	int width;
 	int height;
 	vector<vector<RoomElement>> roomMap;
 	bool canPut(int row, int column);
 	vector<Enemy> enemys;
+	//vector<Observer*> observers;
+	printElement printer=nullptr;
+	clock_t last_move_enemy_time;
+	//void notify(RoomElement* roomelement);
 };
 
 

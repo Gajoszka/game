@@ -55,7 +55,7 @@ void Frame::moveCursor(int columnStep, int rowStep) {
 }
 
 // printing individual characters
-void Frame::printPoint(int column, int row, char sign) {
+ void  Frame::printPoint(int column, int row, char sign) {
 	moveCursor(column, row);
 	cout << sign;
 }
@@ -90,7 +90,7 @@ void Frame::printLine(int rowNr, string text) {
 // printing text so its centered in the frame
 void Frame::printCenterLine(int rowNr, string text) {
 	clearLine(rowNr);
-	moveCursor( (width-text.size())/2, rowNr);
+	moveCursor( (width-(int)text.size())/2, rowNr);
 	cout << text;
 }
 

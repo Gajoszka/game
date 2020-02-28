@@ -6,7 +6,7 @@ using namespace std;
 
 int main()
 {
-    DBconnection connect;
+   // DBconnection connect;
     Game game;
     game.start();
     return 0;

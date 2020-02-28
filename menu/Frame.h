@@ -28,19 +28,19 @@ public:
 	Point getTopLeft() {
 		return topLeft;
 	}
-	
+
 private:
-	void printVertical(int column,int row,int width);
+	void printVertical(int column, int row, int width);
 	void printHorizontal(int column, int row, int height);
 
-protected:	
+protected:
 	virtual void moveCursor(int column, int row);
 	void printLine(int rowNr, std::string text);
 	void printCenterLine(int rowNr, std::string text);
 	int width;
 	int height;
 	Point topLeft;
-	
-	
+
+
 };
 

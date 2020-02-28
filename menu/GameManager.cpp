@@ -3,7 +3,7 @@
 #include <iostream>
 #include <windows.h>
 #include <stdio.h>
-#include "RoomMapBuilder.h"
+#include "RoomBuilder.h"
 
 using namespace std;
 
@@ -110,7 +110,7 @@ GameManager::~GameManager() {
 
 void GameManager::createRoom()
 {
-	RoomMapBuilder roomBuilder(45, 15);
+	RoomBuilder roomBuilder(45, 15);
 	roomBuilder.setScaleCount((rand() % min(max(8,(*player).getScore()), 15)) + 1);
 	roomBuilder.setEnemyCount((rand() % min(max(3,(*player).getScore()), 10)) + 1);
 	roomBuilder.setDoorCount(1);

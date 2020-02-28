@@ -46,7 +46,7 @@ void GameLayout::printInfo(string value) {
 }
 
 // displays room
-void GameLayout::printRoom(RoomMap roomMap) {
-	room.setMap(roomMap);
-	room.printInside();
+void GameLayout::printRoom(Room room) {
+	roomFrame.setRoom(room);
+	roomFrame.printInside();
 }

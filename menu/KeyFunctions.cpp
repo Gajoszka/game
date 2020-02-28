@@ -1,13 +1,13 @@
 #include "KeyFunctions.h"
-#include "DBconnection.h"
-#include <mysql.h>
-#include <iostream>
-#include <string>
-using namespace std;
-
+//#include "DBconnection.h"
+//#include <mysql.h>
+//#include <iostream>
+//#include <string>
+//using namespace std;
+//
 void KeyFunctions::connection() {
 
-	DBconnection db;
+	/*DBconnection db;
 		string query = "SELECT * FROM keyFun";
 		const char* q = query.c_str();
 		db.qstate = mysql_query(db.conn, q);
@@ -18,6 +18,6 @@ void KeyFunctions::connection() {
 			}
 		} else {
 			cout << "Query failed: " << mysql_error(db.conn) << endl;
-		}
+		}*/
 
 	}
