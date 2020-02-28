@@ -1,6 +1,6 @@
 #pragma once
 /* Creating the opening menu*/
-#include "KeyFunctions.h"
+#include "DBconnection.h"
 #include "Frame.h"
 #include <string>
 using namespace std;
@@ -15,7 +15,7 @@ public:
 protected:
 
 private:
-	KeyFunctions obj;
+	DBconnection db;
 	void intro();
 	void play(string name);
 };
