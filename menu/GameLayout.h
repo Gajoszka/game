@@ -1,7 +1,7 @@
 #pragma once
 /* Creating game layout, creating frames in desired places
 and controlling their inputs*/
-#include "InfoDisplay.h"
+#include "InfoFrame.h"
 #include "RoomFrame.h"
 #include "GameDef.h"
 #include <string>
@@ -33,10 +33,10 @@ public:
 	~GameLayout();
 private:
 	RoomFrame roomFrame;
-	InfoDisplay statsFrame;
-	InfoDisplay infoFrame;
-	InfoDisplay mapFrame;
-	InfoDisplay activeItemFrame;
+	InfoFrame statsFrame;
+	InfoFrame infoFrame;
+	InfoFrame mapFrame;
+	InfoFrame activeItemFrame;
 	void setFont();
 	
 	

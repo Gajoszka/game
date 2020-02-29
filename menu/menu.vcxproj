@@ -174,7 +174,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Frame.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="InfoDisplay.cpp" />
+    <ClCompile Include="InfoFrame.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="menu.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -196,7 +196,7 @@
     <ClInclude Include="Frame.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameManager.h" />
-    <ClInclude Include="InfoDisplay.h" />
+    <ClInclude Include="InfoFrame.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RoomElement.h" />
