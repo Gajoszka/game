@@ -12,7 +12,7 @@ using namespace std;
 void GameManager::play(Player* player) {
 	this->player = player;
 	(*player).setPrinterMessage(std::bind(&GameLayout::print, layout, std::placeholders::_1, std::placeholders::_2));
-	srand(time(NULL));
+	srand(time(NULL)); // make rand more randomise
 	layout.printName((*player).getName());
 	createRoom();
 	keyReader();
@@ -63,7 +63,7 @@ void GameManager::keyReader() {
 			runAction(action);
 		}
 		else
-			runAction(moveEnemy);
+			runAction(moveEnemy); // if nothing pressed - enemy move
 	}
 }
 
@@ -109,7 +109,7 @@ void GameManager::createRoom()
 	roomBuilder.setTreasureCount(rand() % 12);
 	Room room = roomBuilder.build();
 	room.setPlayer(player);
-	room.setPrinterMessage(std::bind(&GameLayout::print, layout, std::placeholders::_1, std::placeholders::_2));
+	room.setPrinterMessage(bind(&GameLayout::print, layout, placeholders::_1, placeholders::_2));
 	layout.setRoom(&room);
 	
 	

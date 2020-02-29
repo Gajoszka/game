@@ -6,7 +6,7 @@
 #include <string>
 using namespace std;
 
+// creating new types - functions
+typedef function<void(int column, int row, char icon)> printElement;
 
-typedef std::function<void(int column, int row, char icon)> printElement;
-
-typedef std::function<void(messageType type, string msg)> printMessage;
+typedef function<void(messageType type, string msg)> printMessage; //messageType - in which frame/window

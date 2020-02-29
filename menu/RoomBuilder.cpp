@@ -60,7 +60,7 @@ void RoomBuilder::createDoor(Room* room) {
 
 	bool ok = false;
 	while (!ok) {
-		switch (rand() % 4)  //witch wall
+		switch (rand() % 4)  //which wall
 		{
 		case 0:
 			ok = (*room).setDoor( (rand() % (width - 3)) + 2,0);

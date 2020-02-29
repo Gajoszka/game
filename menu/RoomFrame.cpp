@@ -27,8 +27,8 @@ void RoomFrame::printInside() {
 void RoomFrame::setRoom(Room* room) {
 	this->room = *room;
 	
-	using namespace std::placeholders;
-	this->room.setPrinter(std::bind(&RoomFrame::printPoint, this, _1, _2, _3));
+	using namespace placeholders;
+	this->room.setPrinter(bind(&RoomFrame::printPoint, this, _1, _2, _3)); //bind - dostosowanie parametrów
 	
 }
 

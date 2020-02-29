@@ -129,7 +129,7 @@ void Room::moveEnemy(Enemy* enemy) {
 	while (i < 10 && !ok) { // i < 10 so the loop is not infinite
 		// najpierw w poprzednim kierunku, a jak siê nieda to zmiana
 		if (!(ok = moveEnemy((*enemy).getMoveDirection().getColumn(), (*enemy).getMoveDirection().getRow(), enemy))) {
-			int s = (((*enemy).getMoveDirection().getColumn() + 2) % 3) - 1;
+			int s = (((*enemy).getMoveDirection().getColumn() + 2) % 3) - 1; // choosing new direction, where the player can move
 			(*enemy).setMoveDirection(s, (((*enemy).getMoveDirection().getRow() + 2+s) % 3) - 1);
 		}
 		i++;
@@ -143,6 +143,7 @@ bool Room::moveEnemy(int columnStep, int rowStep, Enemy* enemy) {
 	if ((0 == columnStep && 0 == rowStep) || !canEnemyMove(actColumn + columnStep, actRow + rowStep))
 		return false;
 	setInner(actColumn, actRow);
+	// conflict 
 	if ((*player).getLocation().getColumn() == actColumn + columnStep && (*player).getLocation().getRow() + rowStep == actRow) {
 		conflict(enemy, -50);
 		for (int i=0;i<enemys.size();i++)
@@ -157,23 +158,23 @@ bool Room::moveEnemy(int columnStep, int rowStep, Enemy* enemy) {
 
 
 // time between enemies moves
-void Room::moveEnemys() {
-	if (clock() / CLOCKS_PER_SEC - last_move_enemy_time < 0.3)
+void Room::moveEnemys() { 
+	if (clock() / CLOCKS_PER_SEC - last_move_enemy_time < 0.3) // for enemies not to move to fast, every 0.3s
 		return;
 	last_move_enemy_time = clock() / CLOCKS_PER_SEC;
-	int selectedEnemy = rand() % enemys.size();
-	moveEnemy(&enemys[selectedEnemy]);
+	int selectedEnemy = rand() % enemys.size(); // chooses only one enemy to move
+	moveEnemy(&enemys[selectedEnemy]); 
 	delay(4);
 	shotEnemys();
 }
 
 
 void Room::shotEnemys() {
-	int selectedEnemy = rand() % enemys.size();
+	int selectedEnemy = rand() % enemys.size(); //choose one enemy to shot
 	int actColumn = enemys[selectedEnemy].getLocation().getColumn();
 	int actRow = enemys[selectedEnemy].getLocation().getRow();
 	for (int i = 1; i < 4; i++) {
-		actColumn = actColumn + enemys[selectedEnemy].getMoveDirection().getColumn();
+		actColumn = actColumn + enemys[selectedEnemy].getMoveDirection().getColumn(); // shots in moving direction
 		actRow = actRow + enemys[selectedEnemy].getMoveDirection().getRow();
 		if (!canEnemyMove(actColumn, actRow))
 			return;
@@ -184,7 +185,7 @@ void Room::shotEnemys() {
 		}else
 		delay(100);
 		//if((*player).)
-		printer(actColumn, actRow, actEl.icon);
+		printer(actColumn, actRow, actEl.icon); // to remove shots from previous postition
 	}
 }
 
