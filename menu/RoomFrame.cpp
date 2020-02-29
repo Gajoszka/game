@@ -32,8 +32,8 @@ void RoomFrame::setRoom(Room room) {
 			i++;
 	}
 	using namespace std::placeholders;
-	//printElement p = std::bind(&RoomFrame::printPoint, this, _1, _2, _3);
 	this->room.setPrinter(std::bind(&RoomFrame::printPoint, this, _1, _2, _3));
+	
 }
 
 

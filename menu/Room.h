@@ -1,12 +1,10 @@
 #pragma once
-#include <type_traits>
 #include <xiosbase>
 #include <vector>
-#include <functional>
 #include "RoomElement.h"
 #include "Enemy.h"
 #include "Player.h"
-#include "GameAction.h"
+#include "GameDef.h"
 #include <ctime>
 
 const RoomElement room_wall = RoomElement(1, static_cast<char>(219), false, 0);
@@ -17,20 +15,19 @@ const RoomElement room_inner = RoomElement(0, ' ', true, 0);
 const RoomElement room_enemy = RoomElement(4, static_cast<char>(172), false, 10);
 const RoomElement failed = RoomElement(-11, ' ', false, 0);
 
-//typedef void (*printElement)(int column, int row,char icon);
-
-typedef std::function<void(int column, int row, char icon)> printElement;
-
 using namespace std;
 
 class Room {
 public:
-	Room(int width, int height);	
+	Room(int width, int height);
 	/*void addObserver(Observer* observer) {
 		this->observers.push_back(observer);
 	}*/
 	void setPrinter(printElement printer) {
-		this->printer=printer;
+		this->printer = printer;
+	}
+	void setPrinterMessage(printMessage printer) {
+		this->printerMsg = printer;
 	}
 	bool set(int column, int row, RoomElement el);
 	RoomElement get(int column, int row);
@@ -38,6 +35,7 @@ public:
 	bool setInner(int column, int row);
 	bool setDoor(int column, int row);
 	bool setEnemy(int column, int row, Enemy enemy);
+	void shotEnemys();
 	void moveEnemys();
 	void moveEnemy(Enemy* enemy);
 	bool moveEnemy(int columnStep, int rowStep, Enemy* enemy);
@@ -83,10 +81,9 @@ private:
 	vector<vector<RoomElement>> roomMap;
 	bool canPut(int row, int column);
 	vector<Enemy> enemys;
-	//vector<Observer*> observers;
-	printElement printer=nullptr;
+	printElement printer = nullptr;
+	printMessage printerMsg = nullptr;
 	clock_t last_move_enemy_time;
-	//void notify(RoomElement* roomelement);
 };
 
 

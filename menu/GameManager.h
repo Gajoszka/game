@@ -3,7 +3,7 @@
 #include "Frame.h"
 #include "Player.h"
 #include "RoomFrame.h"
-#include "GameAction.h"
+#include "GameDef.h"
 #include "GameLayout.h"
 
 // defining special keys
@@ -33,9 +33,7 @@ protected:
 	void createRoom();
 
 private:
-	
 	void keyReader();
-	void addScore(int s);
 	GameLayout layout;
 	Player *player=nullptr;
 };

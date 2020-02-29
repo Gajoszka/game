@@ -1,9 +1,9 @@
 #pragma once
 /* Creating game layout, creating frames in desired places
 and controlling their inputs*/
-#include "Stats.h"
 #include "InfoDisplay.h"
 #include "RoomFrame.h"
+#include "GameDef.h"
 #include <string>
 using namespace std;
 
@@ -21,11 +21,12 @@ public:
 		roomFrame.print(1, 1);
 		infoFrame.printLine(4, "F5-new room, F10-exit");
 	};
-	void printScore(int score);
+	void printScore(string score);
 	void printName(string name);
 	void printInfo(string value);
 	void printRoom(Room room);
-	
+	void print(messageType type, string msg);
+	void shutCursor(bool visible);
 	RoomFrame* getRoomFrame() {
 		return &roomFrame;
 	}
@@ -37,7 +38,7 @@ private:
 	InfoDisplay mapFrame;
 	InfoDisplay activeItemFrame;
 	void setFont();
-	void shutCursor(bool visible);
+	
 	
 };
 

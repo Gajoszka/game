@@ -122,20 +122,19 @@ void Room::moveEnemy(Enemy* enemy) {
 	while (i < 10 && !ok) { // i < 10 so the loop is not infinite
 		// najpierw w poprzednim kierunku, a jak siê nieda to zmiana
 		if (!(ok = moveEnemy((*enemy).getMoveDirection().getColumn(), (*enemy).getMoveDirection().getRow(), enemy))) {
-			(*enemy).setMoveDirection((((*enemy).getMoveDirection().getColumn() + 2) % 3) - 1, (((*enemy).getMoveDirection().getRow() + 2) % 3) - 1);
+			int s = (((*enemy).getMoveDirection().getColumn() + 2) % 3) - 1;
+			(*enemy).setMoveDirection(s, (((*enemy).getMoveDirection().getRow() + 2+s) % 3) - 1);
 		}
 		i++;
 	}
-
 }
 
 bool Room::moveEnemy(int columnStep, int rowStep, Enemy* enemy) {
 	int actColumn = (*enemy).getLocation().getColumn();
 	int actRow = (*enemy).getLocation().getRow();
-	if (( 0 == columnStep && 0==rowStep) || !canEnemyMove(actColumn + columnStep, actRow + rowStep))
+	if ((0 == columnStep && 0 == rowStep) || !canEnemyMove(actColumn + columnStep, actRow + rowStep))
 		return false;
 	setInner(actColumn, actRow);
-	delay(12);
 	setEnemy(actColumn + columnStep, actRow + rowStep, *enemy);
 	return true;
 }
@@ -143,12 +142,29 @@ bool Room::moveEnemy(int columnStep, int rowStep, Enemy* enemy) {
 
 // time between enemies moves
 void Room::moveEnemys() {
-	if (clock() / CLOCKS_PER_SEC - last_move_enemy_time < 0.5)
+	if (clock() / CLOCKS_PER_SEC - last_move_enemy_time < 0.3)
 		return;
 	last_move_enemy_time = clock() / CLOCKS_PER_SEC;
-	for (int i = 0; i < enemys.size(); ++i) {
-		moveEnemy(&enemys[i]);
-		delay(5);
+	int selectedEnemy = rand() % enemys.size();
+	moveEnemy(&enemys[selectedEnemy]);
+	shotEnemys();
+}
+
+
+void Room::shotEnemys() {
+	int selectedEnemy = rand() % enemys.size();
+	int actColumn = enemys[selectedEnemy].getLocation().getColumn();
+	int actRow = enemys[selectedEnemy].getLocation().getRow();
+	for (int i = 1; i < 3; i++) {
+		delay(50);
+		actColumn = actColumn + enemys[selectedEnemy].getMoveDirection().getColumn();
+		actRow = actRow + enemys[selectedEnemy].getMoveDirection().getRow();
+		if (!canEnemyMove(actColumn, actRow))
+			return;
+		RoomElement actEl = get(actColumn, actRow);
+		printer(actColumn, actRow, '.');
+		delay(250);
+		printer(actColumn, actRow, actEl.icon);
 	}
 }
 
@@ -156,14 +172,17 @@ void Room::moveEnemys() {
 GameAction Room::movePlayer(int columnStep, int rowStep, Player* player) {
 	int actColumn = (*player).getLocation().getColumn();
 	int actRow = (*player).getLocation().getRow();
+	RoomElement actEl = get(actColumn + columnStep, actRow + rowStep);
 	setInner(actColumn, actRow);
-	delay(12);
+	//delay(100);
 	if (isDoor(actColumn + columnStep, actRow + rowStep)) {
+		(*player).addScore(actEl.score);
 		//udawanie ruchu
 		printer(actColumn + columnStep, actRow + rowStep, (*player).icon);
 		return exitRoom;
 	}
 	if (canPlayerMove(actColumn + columnStep, actRow + rowStep)) {
+		(*player).addScore(actEl.score);
 		setPlayer(actColumn + columnStep, actRow + rowStep, player);
 	}
 	else
@@ -209,12 +228,6 @@ bool Room::canPut(int column, int row) {
 		return false;
 	return true;
 }
-//
-//void RoomMap::notify(RoomElement* roomelement)
-//{
-//	for (int i = 0; i < observers.size(); i++) {
-//		observers[i].
-//	}
-//}
+
 
 

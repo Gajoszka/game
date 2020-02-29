@@ -3,7 +3,7 @@
 controls movements of creatures*/
 #include "Frame.h"
 #include "Player.h"
-#include "GameAction.h"
+#include "GameDef.h"
 #include <vector>
 #include "RoomElement.h"
 #include "Room.h"

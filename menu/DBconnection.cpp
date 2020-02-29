@@ -1,12 +1,12 @@
 #include "DBconnection.h"
-#include <mysql.h>
+//#include <mysql.h>
 #include <string>
 #include <iostream>
 using namespace std;
 
 DBconnection::DBconnection() {
 
-	conn = mysql_init(0);
+	/*conn = mysql_init(0);
 
 	conn = mysql_real_connect(conn, "localhost", "agata", "DanonkI09", "roguelike", 3306, NULL, 0);
 
@@ -14,11 +14,15 @@ DBconnection::DBconnection() {
 		puts("Successful connection to databse");
 	} else {
  puts("Connection to database failed");
-	}
+	}*/
+}
+
+void DBconnection::add_username(string username)
+{
 }
 
 void DBconnection::key_functions() {
-	string query = "SELECT * FROM keyFun";
+	/*string query = "SELECT * FROM keyFun";
 	const char* q = query.c_str();
 	qstate = mysql_query(conn, q); 
 	if (!qstate) {
@@ -29,5 +33,5 @@ void DBconnection::key_functions() {
 	}
 	else {
 		cout << "Query failed: " << mysql_error(conn) << endl;
-	}
+	}*/
 }

@@ -3,6 +3,7 @@
 #include <iostream>
 #include <windows.h>
 #include <stdio.h>
+#include "GameDef.h"
 #include "RoomBuilder.h"
 
 using namespace std;
@@ -13,17 +14,12 @@ void GameManager::play(Player* player) {
 	srand(time(NULL));
 	layout.printName((*player).getName());
 	createRoom();
+	(*player).setPrinterMessage(std::bind(&GameLayout::print, layout, std::placeholders::_1, std::placeholders::_2));
+
 	(*getRoom()).setPlayer(player);
 	keyReader();
 }
 
-// score counter, adding score to current game
-void GameManager::addScore(int score) {
-	if (score == 0)
-		return; // escaping if statement
-	(*player).addScore(score);
-	layout.printScore((*player).getScore());
-}
 
 // reading user input
 void GameManager::keyReader() {
@@ -40,7 +36,8 @@ void GameManager::keyReader() {
 					system("CLS");
 					break;
 				case KEY_F5:
-					addScore(-10);
+					(*player).addScore(-10);
+					layout.print(score,to_string((*player).getScore()));
 					action = exitRoom;
 					break;
 				default:
@@ -75,7 +72,6 @@ void GameManager::keyReader() {
 // escaping room and creating a new one
 void GameManager::exitFromRoom()
 {
-	addScore(5);
 	this->layout.printInfo("room change");
 	Sleep(1000);
 	createRoom();
@@ -91,7 +87,6 @@ void GameManager::runAction(GameAction action)
 	switch (action)
 	{
 	case served:
-		addScore(0);
 		break;
 	case exitRoom:
 		exitFromRoom();
@@ -105,7 +100,7 @@ void GameManager::runAction(GameAction action)
 
 
 GameManager::~GameManager() {
-
+	layout.shutCursor(true);
 }
 
 void GameManager::createRoom()
@@ -115,5 +110,8 @@ void GameManager::createRoom()
 	roomBuilder.setEnemyCount((rand() % min(max(3,(*player).getScore()), 10)) + 1);
 	roomBuilder.setDoorCount(1);
 	roomBuilder.setTreasureCount(rand() % 12);
-	layout.printRoom(roomBuilder.build());
+	Room room = roomBuilder.build();
+	room.setPrinterMessage(std::bind(&GameLayout::print, layout, std::placeholders::_1, std::placeholders::_2));
+	layout.printRoom(room);
+	
 }
