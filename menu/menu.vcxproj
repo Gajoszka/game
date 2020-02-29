@@ -111,8 +111,12 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Program Files\MySQL\Connector C++ 8.0\lib64\vs14;C:\Program Files\MySQL\MySQL Server 8.0\lib;D:\Development\SDL2\SDL2-2.0.10\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libmysql.lib;mysqlcppconn.lib;</AdditionalDependencies>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
     </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -174,16 +178,17 @@
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="menu.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="RoomMap.cpp" />
-    <ClCompile Include="RoomMapBuilder.cpp" />
+    <ClCompile Include="Room.cpp" />
+    <ClCompile Include="RoomBuilder.cpp" />
     <ClCompile Include="GameManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Creature.h" />
     <ClInclude Include="DBconnection.h" />
     <ClInclude Include="GameLayout.h" />
-    <ClInclude Include="RoomMap.h" />
-    <ClInclude Include="GameAction.h" />
+    <ClInclude Include="GameType.h" />
+    <ClInclude Include="Room.h" />
+    <ClInclude Include="GameDef.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="RoomFrame.h" />
@@ -195,7 +200,7 @@
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RoomElement.h" />
-    <ClInclude Include="RoomMapBuilder.h" />
+    <ClInclude Include="RoomBuilder.h" />
     <ClInclude Include="Screen.h" />
   </ItemGroup>
   <ItemGroup>

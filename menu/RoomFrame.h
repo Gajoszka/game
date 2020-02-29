@@ -3,35 +3,33 @@
 controls movements of creatures*/
 #include "Frame.h"
 #include "Player.h"
-#include "GameAction.h"
+#include "GameDef.h"
 #include <vector>
 #include "RoomElement.h"
-#include "RoomMap.h"
+#include "Room.h"
 #include "Enemy.h"
-#include <ctime>
+
 
 using namespace std;
 
 class RoomFrame : public Frame
 {
 public:
-	RoomFrame(int width, int height) :Frame(width,height) , roomMap(1, 1) {
-		last_move_enemy_time = clock() / CLOCKS_PER_SEC;
+	RoomFrame(int width, int height) :Frame(width,height) , room(1, 1) {
+	
 	};
 	virtual void printInside();
     virtual bool isInside(int row, int column);
-	void setMap(RoomMap roomMap);
+	void setRoom(Room room);
 	void setPlayer(Player* player);
 	GameAction runAction(GameAction action);
 protected:
 	virtual void moveCursor(int column, int row);
 private:
 	GameAction playerMove(int column, int row);
-	void enemyMove(Enemy enemy);
-	void enemysMove();
 	void setMapElement(int column, int row, RoomElement value);
 	void setMapElement(int column, int row, Creature* value);
 	Player *player;
-	RoomMap roomMap;
-	clock_t last_move_enemy_time;
+	Room room;
+	
 };

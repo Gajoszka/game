@@ -27,12 +27,12 @@ void GameLayout::shutCursor(bool visible) {
 
 // destructor - cursor appearance
 GameLayout::~GameLayout() {
-	shutCursor(true);
+	
 }
 
 // displays current score
-void GameLayout::printScore(int score) {
-	statsFrame.printLine(2, "Score: " + to_string(score));
+void GameLayout::printScore(string score) {
+	statsFrame.printLine(2, "Score: " + score);
 }
 
 // displays players username
@@ -46,7 +46,19 @@ void GameLayout::printInfo(string value) {
 }
 
 // displays room
-void GameLayout::printRoom(RoomMap roomMap) {
-	room.setMap(roomMap);
-	room.printInside();
+void GameLayout::printRoom(Room room) {
+	roomFrame.setRoom(room);
+	roomFrame.printInside();
+}
+
+void GameLayout::print(messageType type, string msg)
+{
+	switch (type)
+	{
+	case messageType::score:
+		printScore(msg);
+		break;
+	default:
+		break;
+	}
 }
