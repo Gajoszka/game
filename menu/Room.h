@@ -81,6 +81,7 @@ private:
 	Player* player;
 	vector<vector<RoomElement>> roomMap;
 	bool canPut(int row, int column);
+	void conflict(Enemy* enemy, int score);
 	vector<Enemy> enemys;
 	printElement printer = nullptr;
 	printMessage printerMsg = nullptr;

@@ -13,7 +13,6 @@ void InfoFrame::printInside() {
 //
 void InfoFrame::printLine(int rowNr, string content) {
 	if (rowNr > 0 && rowNr < content.size()) {
-		this->content[rowNr - 1] = content;
-		printInside();
+		Frame::printLine(rowNr, content);
 	}
 }

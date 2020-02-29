@@ -22,6 +22,7 @@ public:
 	Point getTopLeft() {
 		return topLeft;
 	}
+	void printCenterLine(int rowNr, std::string text);
 
 private:
 	void printVertical(int column, int row, int width);
@@ -30,7 +31,7 @@ private:
 protected:
 	virtual void moveCursor(int column, int row);
 	void printLine(int rowNr, std::string text);
-	void printCenterLine(int rowNr, std::string text);
+	
 	int width;
 	int height;
 	Point topLeft;

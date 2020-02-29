@@ -114,6 +114,12 @@ bool Room::setEnemy(int column, int row, Enemy enemy) {
 	}
 	return false;
 }
+void Room::conflict(Enemy* enemy,int score) {
+		printerMsg(info, "booom");
+		(*player).addScore(score);
+		delay(1500);
+		printerMsg(info, " ");
+}
 
 // automatic setup
 void Room::moveEnemy(Enemy* enemy) {
@@ -137,7 +143,15 @@ bool Room::moveEnemy(int columnStep, int rowStep, Enemy* enemy) {
 	if ((0 == columnStep && 0 == rowStep) || !canEnemyMove(actColumn + columnStep, actRow + rowStep))
 		return false;
 	setInner(actColumn, actRow);
+	if ((*player).getLocation().getColumn() == actColumn + columnStep && (*player).getLocation().getRow() + rowStep == actRow) {
+		conflict(enemy, -50);
+		for (int i=0;i<enemys.size();i++)
+			if ((*enemy).id=enemys[i].id)
+		enemys.erase(enemys.begin()+i);
+	}
+	else
 	setEnemy(actColumn + columnStep, actRow + rowStep, *enemy);
+	
 	return true;
 }
 
@@ -149,6 +163,7 @@ void Room::moveEnemys() {
 	last_move_enemy_time = clock() / CLOCKS_PER_SEC;
 	int selectedEnemy = rand() % enemys.size();
 	moveEnemy(&enemys[selectedEnemy]);
+	delay(4);
 	shotEnemys();
 }
 
@@ -157,15 +172,17 @@ void Room::shotEnemys() {
 	int selectedEnemy = rand() % enemys.size();
 	int actColumn = enemys[selectedEnemy].getLocation().getColumn();
 	int actRow = enemys[selectedEnemy].getLocation().getRow();
-	for (int i = 1; i < 3; i++) {
-		delay(50);
+	for (int i = 1; i < 4; i++) {
 		actColumn = actColumn + enemys[selectedEnemy].getMoveDirection().getColumn();
 		actRow = actRow + enemys[selectedEnemy].getMoveDirection().getRow();
 		if (!canEnemyMove(actColumn, actRow))
 			return;
 		RoomElement actEl = get(actColumn, actRow);
 		printer(actColumn, actRow, sign_shot);
-		delay(250);
+		if ((*player).getLocation().getColumn() == actColumn && (*player).getLocation().getRow() == actRow) {
+			conflict(&enemys[selectedEnemy], -10);
+		}else
+		delay(100);
 		//if((*player).)
 		printer(actColumn, actRow, actEl.icon);
 	}
