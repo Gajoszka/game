@@ -103,6 +103,7 @@ GameManager::~GameManager() {
 void GameManager::createRoom()
 {
 	RoomBuilder roomBuilder(45, 15);
+	//the higher score, the more obstacles
 	roomBuilder.setScaleCount((rand() % min(max(8,(*player).getScore()), 15)) + 1);
 	roomBuilder.setEnemyCount((rand() % min(max(3,(*player).getScore()), 10)) + 1);
 	roomBuilder.setDoorCount(1);
