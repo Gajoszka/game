@@ -18,4 +18,5 @@ private:
 	DBconnection db;
 	void intro();
 	void play(string name);
+	void key_fun();
 };
