@@ -9,8 +9,8 @@ class DBconnection
 	public:
 		DBconnection();
 		void add_username(string username);
-	private:
 		void key_functions();
+	private:	
 		int qstate;
 		MYSQL* conn;
 		MYSQL_ROW row;

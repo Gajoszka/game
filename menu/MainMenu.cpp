@@ -45,6 +45,13 @@ void MainMenu::intro()
 	play(name);	
 }
 
+void MainMenu::key_fun()
+{
+	system("CLS");
+	printFrame();
+	db.key_functions();
+}
+
 // taking user input and proceeding chosen action
 void MainMenu::user_choice()
 {
@@ -54,7 +61,7 @@ void MainMenu::user_choice()
 	case 1: intro();
 		break;
 	case 2:
-		db.key_functions();
+		key_fun();
 		break;
 	case 3: cout << "Score board" << endl;
 		break;
