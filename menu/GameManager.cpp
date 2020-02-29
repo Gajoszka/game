@@ -11,12 +11,10 @@ using namespace std;
 // 
 void GameManager::play(Player* player) {
 	this->player = player;
+	(*player).setPrinterMessage(std::bind(&GameLayout::print, layout, std::placeholders::_1, std::placeholders::_2));
 	srand(time(NULL));
 	layout.printName((*player).getName());
 	createRoom();
-	(*player).setPrinterMessage(std::bind(&GameLayout::print, layout, std::placeholders::_1, std::placeholders::_2));
-
-	(*getRoom()).setPlayer(player);
 	keyReader();
 }
 
@@ -98,7 +96,6 @@ void GameManager::runAction(GameAction action)
 	}
 }
 
-
 GameManager::~GameManager() {
 	layout.shutCursor(true);
 }
@@ -111,7 +108,9 @@ void GameManager::createRoom()
 	roomBuilder.setDoorCount(1);
 	roomBuilder.setTreasureCount(rand() % 12);
 	Room room = roomBuilder.build();
+	room.setPlayer(player);
 	room.setPrinterMessage(std::bind(&GameLayout::print, layout, std::placeholders::_1, std::placeholders::_2));
-	layout.printRoom(room);
+	layout.setRoom(&room);
+	
 	
 }

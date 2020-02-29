@@ -164,14 +164,15 @@ void Room::shotEnemys() {
 		if (!canEnemyMove(actColumn, actRow))
 			return;
 		RoomElement actEl = get(actColumn, actRow);
-		printer(actColumn, actRow, '.');
+		printer(actColumn, actRow, sign_shot);
 		delay(250);
+		//if((*player).)
 		printer(actColumn, actRow, actEl.icon);
 	}
 }
 
 
-GameAction Room::movePlayer(int columnStep, int rowStep, Player* player) {
+GameAction Room::movePlayer(int columnStep, int rowStep) {
 	int actColumn = (*player).getLocation().getColumn();
 	int actRow = (*player).getLocation().getRow();
 	RoomElement actEl = get(actColumn + columnStep, actRow + rowStep);
@@ -194,8 +195,13 @@ GameAction Room::movePlayer(int columnStep, int rowStep, Player* player) {
 
 
 bool Room::setPlayer(Player* player) {
-
-	while (!setPlayer(rand() % width, rand() % height, player));
+	if (player != NULL) {
+		this->player = player;
+		int i = 0;
+		while (i < 40 && !setPlayer((rand() % (width - 2)) + 1, (rand() % (height - 2)) + 1, player))
+			i++;
+	}
+	//while (!setPlayer(rand() % width, rand() % height, player));
 	return true;
 }
 
@@ -204,6 +210,7 @@ bool Room::setPlayer(int column, int row, Player* player) {
 	if (canPlayerMove(column, row))
 		if (set(column, row, *player)) {
 			(*player).setLocation(column, row);
+			this->player = player;
 			return true;
 		}
 	return false;

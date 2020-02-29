@@ -73,11 +73,12 @@ public:
 	size_t getEnemyCount() {
 		return enemys.size();
 	}
-	GameAction movePlayer(int columnStep, int rowStep, Player* player);
+	GameAction movePlayer(int columnStep, int rowStep);
 	~Room();
 private:
 	int width;
 	int height;
+	Player* player;
 	vector<vector<RoomElement>> roomMap;
 	bool canPut(int row, int column);
 	vector<Enemy> enemys;

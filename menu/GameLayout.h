@@ -24,7 +24,8 @@ public:
 	void printScore(string score);
 	void printName(string name);
 	void printInfo(string value);
-	void printRoom(Room room);
+
+	void setRoom(Room* room);
 	void print(messageType type, string msg);
 	void shutCursor(bool visible);
 	RoomFrame* getRoomFrame() {
