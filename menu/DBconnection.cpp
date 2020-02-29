@@ -28,9 +28,6 @@ void DBconnection::key_functions() {
 	if (!qstate) {
 		res = mysql_store_result(conn);
 		while (row = mysql_fetch_row(res)) {
-		/*	for (int i = 0; i < 11; i++) {
-				printf("Key: %s- %s\t\n", row[i]);
-			}*/
 			printf("Key: %s- %s\t\n", row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10]);
 		}
 	}

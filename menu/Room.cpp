@@ -115,6 +115,7 @@ bool Room::setEnemy(int column, int row, Enemy enemy) {
 	return false;
 }
 
+// automatic setup
 void Room::moveEnemy(Enemy* enemy) {
 	Point actLocation = (*enemy).getLocation();
 	int i = 0;
@@ -129,6 +130,7 @@ void Room::moveEnemy(Enemy* enemy) {
 	}
 }
 
+//manual setup
 bool Room::moveEnemy(int columnStep, int rowStep, Enemy* enemy) {
 	int actColumn = (*enemy).getLocation().getColumn();
 	int actRow = (*enemy).getLocation().getRow();
