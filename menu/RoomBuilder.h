@@ -16,7 +16,7 @@ public:
 	void setEnemyCount(int count);
 
 private:
-	int obstacleCount = 0;
+	int scaleCount = 0;
 	int enemyCount = 0;
 	int treasureCount = 0;
 	int doorCount = 1;
