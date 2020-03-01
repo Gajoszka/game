@@ -11,7 +11,7 @@ using namespace std;
 class Player:public Creature
 {
 public:
-	Player(std::string name) :  Creature(50,sign_player, 10, 4, 3) {
+	Player(string name) :  Creature(50,sign_player, 10, 4, 3) {
 		this->name = name;
 	};
 	void setPrinterMessage(printMessage printer) {
