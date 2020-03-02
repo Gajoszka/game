@@ -23,10 +23,10 @@ public:
 	/*void addObserver(Observer* observer) {
 		this->observers.push_back(observer);
 	}*/
-	void setPrinter(printElement printer) { //œledzenie punktu na ekranie
+	void setPrinter(printElement printer) { //following the point on the screen
 		this->printer = printer;
 	}
-	void setPrinterMessage(printMessage printer) { //wyœwietlanie informacji w odpowiednim miejscu
+	void setPrinterMessage(printMessage printer) { //displaying info in specified place
 		this->printerMsg = printer;
 	}
 	bool set(int column, int row, RoomElement el);

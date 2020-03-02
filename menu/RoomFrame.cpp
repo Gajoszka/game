@@ -28,7 +28,7 @@ void RoomFrame::setRoom(Room* room) {
 	this->room = *room;
 	
 	using namespace placeholders;
-	this->room.setPrinter(bind(&RoomFrame::printPoint, this, _1, _2, _3)); //bind - dostosowanie parametrów
+	this->room.setPrinter(bind(&RoomFrame::printPoint, this, _1, _2, _3)); //bind - adjusting parameters
 	
 }
 

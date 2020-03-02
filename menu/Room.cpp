@@ -127,9 +127,9 @@ void Room::moveEnemy(Enemy* enemy) {
 	int i = 0;
 	bool ok = false;
 	while (i < 10 && !ok) { // i < 10 so the loop is not infinite
-		// najpierw w poprzednim kierunku, a jak siê nieda to zmiana
+		// first in current direction, if impossible - change
 		if (!(ok = moveEnemy((*enemy).getMoveDirection().getColumn(), (*enemy).getMoveDirection().getRow(), enemy))) {
-			int s = (((*enemy).getMoveDirection().getColumn() + 2) % 3) - 1; // choosing new direction, where the player can move
+			int s = (((*enemy).getMoveDirection().getColumn() + 2) % 3) - 1; // choosing new direction, where the enemy can move
 			(*enemy).setMoveDirection(s, (((*enemy).getMoveDirection().getRow() + 2+s) % 3) - 1);
 		}
 		i++;
@@ -174,17 +174,18 @@ void Room::shotEnemys() {
 	int actColumn = enemys[selectedEnemy].getLocation().getColumn();
 	int actRow = enemys[selectedEnemy].getLocation().getRow();
 	for (int i = 1; i < 4; i++) {
-		actColumn = actColumn + enemys[selectedEnemy].getMoveDirection().getColumn(); // shots in moving direction
+		actColumn = actColumn + enemys[selectedEnemy].getMoveDirection().getColumn(); // shoots in moving direction
 		actRow = actRow + enemys[selectedEnemy].getMoveDirection().getRow();
+		// if enemy can no longer move forward, escape
 		if (!canEnemyMove(actColumn, actRow))
 			return;
 		RoomElement actEl = get(actColumn, actRow);
 		printer(actColumn, actRow, sign_shot);
+		//affecting player
 		if ((*player).getLocation().getColumn() == actColumn && (*player).getLocation().getRow() == actRow) {
 			conflict(&enemys[selectedEnemy], -10);
 		}else
 		delay(100);
-		//if((*player).)
 		printer(actColumn, actRow, actEl.icon); // to remove shots from previous postition
 	}
 }
@@ -198,7 +199,7 @@ GameAction Room::movePlayer(int columnStep, int rowStep) {
 	//delay(100);
 	if (isDoor(actColumn + columnStep, actRow + rowStep)) {
 		(*player).addScore(actEl.score);
-		//udawanie ruchu
+		// imitating movement
 		printer(actColumn + columnStep, actRow + rowStep, (*player).icon);
 		return exitRoom;
 	}
