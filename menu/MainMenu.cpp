@@ -85,7 +85,7 @@ int MainMenu::menuDisplay(string head, vector<string>options) {
 		nameDisplay(head);
 	}
 	for (int index = 0; index < options.size(); index++) {
-		showMenuLine(index + 1, options[index]);
+		printLine(index + 1, options[index]);
 	}
 
 	return options.size();
