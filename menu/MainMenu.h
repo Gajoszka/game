@@ -27,6 +27,8 @@ private:
 	void nameDisplay(string name);
 	void showMenuLine(int index, string text);
 	int getValidInput(string prompt, int highestNum);
+	void showMenu();
+	vector<string> menu_options;
 	string new_game = "Start new game";
 	string keys = "Key functions";
 	string scores = "Score board";

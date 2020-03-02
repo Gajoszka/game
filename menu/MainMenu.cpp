@@ -11,7 +11,6 @@ MainMenu::MainMenu() :Frame(40,10) {
 
 // manu options
 void MainMenu::printInside() {
-	vector<string> menu_options;
 	menu_options.push_back("1. Start new game");
 	menu_options.push_back("2. Key functions");
 	menu_options.push_back("3. Score board");
@@ -122,4 +121,22 @@ int MainMenu::getValidInput(string prompt, int highestNum) {
 	}
 
 	return answer;
+}
+
+void MainMenu::showMenu() {
+	while (active) {
+		string choice = chooseOption("Menu", menu_options, "Please choose option ");
+		if (choice == new_game) {
+			intro();
+		}
+		else if (choice == keys) {
+			key_fun();
+		}
+		else if (choice == scores) {
+			cout << "Score board" << endl;
+		}
+		else if (choice == exit) {
+			cout << "Exit" << endl;
+		}
+	}
 }
