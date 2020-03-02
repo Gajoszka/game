@@ -9,7 +9,7 @@ RoomBuilder::RoomBuilder(int width, int heihgt) {
 }
 
 void RoomBuilder::setScaleCount(int count) {
-	this->obstacleCount = count <= 0 ? 0 : count; // like if statement, right after ? if true, after if false
+	this->scaleCount = count <= 0 ? 0 : count; // like if statement, right after ? if true, after if false
 }
 void RoomBuilder::setDoorCount(int count) {
 	this->doorCount = count <= 0 ? 1 : count;
@@ -39,16 +39,16 @@ Room RoomBuilder::build()
 		createDoor(&room);
 	}
 
-	for (int i = 0; i < this->obstacleCount - 5; i++) {
+	for (int i = 0; i < this->scaleCount - 5; i++) {
 		createHInnerWall(&room);
 
 	}
-	for (int i = 0; i < this->obstacleCount; i++) {
+	for (int i = 0; i < this->scaleCount; i++) {
 		createVInnerWall(&room);
 	}
 
 	for (int i = 0; i < this->enemyCount; i++) {
-		createEnemy(&room, 101 + i);
+		createEnemy(&room,  i);
 	}
 
 	createTreasure(&room);
