@@ -18,6 +18,7 @@ protected:
 private:
 	DBconnection db;
 	int answer;
+	bool active = true;
 	void intro();
 	void play(string name);
 	void key_fun();

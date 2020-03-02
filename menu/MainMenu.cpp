@@ -70,13 +70,13 @@ void MainMenu::user_choice()
 
 int MainMenu::chooseIndex(string head, vector<string> options, string prompt) {
 	int highestNumber = menuDisplay(head, options);
-	int choice = getValidInput(prompt + " (from 1 to " + highestNumber + "): ", highestNumber);
+	int choice = getValidInput(prompt + " (from 1 to " + to_string(highestNumber) + "): ", highestNumber);
 	return choice;
 }
 
 string MainMenu::chooseOption(string head, vector<string> options, string prompt) {
 	int highestNumber = menuDisplay(head, options);
-	int choice = getValidInput(prompt + " (from 1 to " + highestNumber + "): ", highestNumber);
+	int choice = getValidInput(prompt + " (from 1 to " + to_string(highestNumber) + "): ", highestNumber);
 	return options[choice - 1];
 }
 
@@ -123,8 +123,8 @@ int MainMenu::getValidInput(string prompt, int highestNum) {
 	return answer;
 }
 
-void MainMenu::showMenu() {
-	while (active) {
+void MainMenu::showMenu() {  // self ?????
+	while (active) {  
 		string choice = chooseOption("Menu", menu_options, "Please choose option ");
 		if (choice == new_game) {
 			intro();
@@ -137,6 +137,7 @@ void MainMenu::showMenu() {
 		}
 		else if (choice == exit) {
 			cout << "Exit" << endl;
+			active = false;
 		}
 	}
 }
