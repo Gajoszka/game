@@ -80,12 +80,12 @@ string MainMenu::chooseOption(string head, vector<string> options, string prompt
 	return options[choice - 1];
 }
 
-int MainMenu::menuDisplay(string head, vector<string>options) {
+int MainMenu::menuDisplay(string head, vector<string> options) {
 	if (head.size() > 0) {
 		nameDisplay(head);
 	}
 	for (int index = 0; index < options.size(); index++) {
-		printLine(index + 1, options[index]);
+		printLine(index + 2, options[index]);
 	}
 
 	return options.size();
@@ -93,7 +93,8 @@ int MainMenu::menuDisplay(string head, vector<string>options) {
 
 void MainMenu::nameDisplay(string name) {
 	if (name != " ") {
-		cout << "\t" + name + "\n";
+		//cout << "\t" + name + "\n";
+		printLine(1, name);
 	}
 }
 
@@ -119,23 +120,24 @@ int MainMenu::getValidInput(string prompt, int highestNum) {
 			invalid_answer = answer > 0 and answer <= highestNum;
 		}
 	}
-
 	return answer;
 }
 
 void MainMenu::showMenu() {  // self ?????
 	while (active) {  
 		string choice = chooseOption("Menu", menu_options, "Please choose option ");
-		if (choice == new_game) {
+		string choose;
+		cin >> choose;
+		if (choose == new_game) {
 			intro();
 		}
-		else if (choice == keys) {
+		else if (choose == keys) {
 			key_fun();
 		}
-		else if (choice == scores) {
+		else if (choose == scores) {
 			cout << "Score board" << endl;
 		}
-		else if (choice == exit) {
+		else if (choose == exit) {
 			cout << "Exit" << endl;
 			active = false;
 		}
