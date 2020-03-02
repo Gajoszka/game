@@ -68,3 +68,58 @@ void MainMenu::user_choice()
 	case 4: cout << "Exit" << endl;
 	}
 }
+
+int MainMenu::chooseIndex(string head, vector<string> options, string prompt) {
+	int highestNumber = menuDisplay(head, options);
+	int choice = getValidInput(prompt + " (from 1 to " + highestNumber + "): ", highestNumber);
+	return choice;
+}
+
+string MainMenu::chooseOption(string head, vector<string> options, string prompt) {
+	int highestNumber = menuDisplay(head, options);
+	int choice = getValidInput(prompt + " (from 1 to " + highestNumber + "): ", highestNumber);
+	return options[choice - 1];
+}
+
+int MainMenu::menuDisplay(string head, vector<string>options) {
+	if (head.size() > 0) {
+		nameDisplay(head);
+	}
+	for (int index = 0; index < options.size(); index++) {
+		showMenuLine(index + 1, options[index]);
+	}
+
+	return options.size();
+}
+
+void MainMenu::nameDisplay(string name) {
+	if (name != " ") {
+		cout << "\t" + name + "\n";
+	}
+}
+
+
+void MainMenu::showMenuLine(int index, string text) {
+	cout << index + ". " + text;
+}
+
+int MainMenu::getValidInput(string prompt, int highestNum) {
+	bool invalid_answer = false;
+	while (invalid_answer == false) {
+		string user_choice = prompt;
+		cin >> prompt;
+		try {
+			if (user_choice.size() > 0) { // takes first character from user input
+				answer = int(user_choice[0]);
+			} else {
+				answer = -1;
+			}
+		}
+		catch (exception) {
+			answer = -1;
+			invalid_answer = answer > 0 and answer <= highestNum;
+		}
+	}
+
+	return answer;
+}
