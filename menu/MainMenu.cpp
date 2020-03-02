@@ -11,15 +11,15 @@ MainMenu::MainMenu() :Frame(40,10) {
 
 // manu options
 void MainMenu::printInside() {
-	menu_options.push_back("1. Start new game");
-	menu_options.push_back("2. Key functions");
-	menu_options.push_back("3. Score board");
-	menu_options.push_back("4. Exit");
-	for (int i = 0; i < menu_options.size(); i++) {
+	menu_options.push_back(new_game);
+	menu_options.push_back(keys);
+	menu_options.push_back(scores);
+	menu_options.push_back(exit);
+	/*for (int i = 0; i < menu_options.size(); i++) {
 		printLine(i+2, menu_options[i]);
 	}
-	printLine(8, "Which option do you choose? ");
-	user_choice();
+	printLine(8, "Which option do you choose? ");*/
+	showMenu();
 }
 
 // creating user for a current game
