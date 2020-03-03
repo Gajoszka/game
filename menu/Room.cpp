@@ -142,11 +142,12 @@ bool Room::moveEnemy(int columnStep, int rowStep, Enemy* enemy) {
 
 // time between enemies moves
 void Room::moveEnemys() {
-	if (clock() / CLOCKS_PER_SEC - last_move_enemy_time < 0.3)
+	if (clock() / CLOCKS_PER_SEC - last_move_enemy_time < 0.1)
 		return;
 	last_move_enemy_time = clock() / CLOCKS_PER_SEC;
 	int selectedEnemy = rand() % enemys.size();
 	moveEnemy(&enemys[selectedEnemy]);
+	delay(40);
 	shotEnemys();
 }
 
@@ -155,14 +156,15 @@ void Room::shotEnemys() {
 	int selectedEnemy = rand() % enemys.size();
 	int actColumn = enemys[selectedEnemy].getLocation().getColumn();
 	int actRow = enemys[selectedEnemy].getLocation().getRow();
-	for (int i = 1; i < 3; i++) {
-		delay(50);
+	
+	for (int i = 1; i < 4; i++) {
 		actColumn = actColumn + enemys[selectedEnemy].getMoveDirection().getColumn();
 		actRow = actRow + enemys[selectedEnemy].getMoveDirection().getRow();
 		if (!canEnemyMove(actColumn, actRow))
 			return;
 		RoomElement actEl = get(actColumn, actRow);
 		printer(actColumn, actRow, '.');
+		//if ((*player).getl)
 		delay(250);
 		printer(actColumn, actRow, actEl.icon);
 	}
