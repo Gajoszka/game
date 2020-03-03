@@ -20,16 +20,14 @@ public:
 	};
 	virtual void printInside();
     virtual bool isInside(int row, int column);
-	void setRoom(Room room);
-	void setPlayer(Player* player);
+	void setRoom(Room* room);
 	GameAction runAction(GameAction action);
 protected:
 	virtual void moveCursor(int column, int row);
 private:
-	GameAction playerMove(int column, int row);
 	void setMapElement(int column, int row, RoomElement value);
 	void setMapElement(int column, int row, Creature* value);
-	Player *player;
+	
 	Room room;
 	
 };

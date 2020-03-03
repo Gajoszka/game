@@ -5,10 +5,10 @@
 #include <string>
 using namespace std;
 
-class InfoDisplay : public Frame
+class InfoFrame : public Frame
 {
 public:
-	InfoDisplay(int width, int height) : Frame(width, height) {
+	InfoFrame(int width, int height) : Frame(width, height) {
 		for (int i = 0; i < height - 1; i++)
 			content.push_back("");
 	}

@@ -24,15 +24,11 @@ void RoomFrame::printInside() {
 	}
 }
 
-void RoomFrame::setRoom(Room room) {
-	this->room = room;
-	if (player != NULL) {
-		int i = 0;
-		while (i < 50 && !room.setPlayer((rand() % (width - 2)) + 1, (rand() % (height - 2)) + 1, player))
-			i++;
-	}
-	using namespace std::placeholders;
-	this->room.setPrinter(std::bind(&RoomFrame::printPoint, this, _1, _2, _3));
+void RoomFrame::setRoom(Room* room) {
+	this->room = *room;
+	
+	using namespace placeholders;
+	this->room.setPrinter(bind(&RoomFrame::printPoint, this, _1, _2, _3)); //bind - adjusting parameters
 	
 }
 
@@ -54,22 +50,6 @@ bool RoomFrame::isInside(int mapColumn, int mapRow) {
 
 
 
-// setting player position on a map
-void RoomFrame::setPlayer(Player* player) {
-	this->player = player;
-	if (this->player == NULL)
-		return;
-	room.setPlayer(player);
-	setMapElement(player->getLocation().getColumn(), player->getLocation().getRow(), player);
-}
-
-// player movement
-GameAction RoomFrame::playerMove(int columnStep, int rowStep) {
-	Point actLocation = (*player).getLocation();
-	return room.movePlayer(columnStep, rowStep, player);
-}
-
-
 // defining arrow keys
 GameAction RoomFrame::runAction(GameAction action)
 {
@@ -78,13 +58,13 @@ GameAction RoomFrame::runAction(GameAction action)
 	case served:
 		return action;
 	case key_up:
-		return playerMove(0, -1);
+		return room.movePlayer(0, -1);
 	case key_down:
-		return playerMove(0, 1);
+		return room.movePlayer(0, 1);
 	case key_left:
-		return playerMove(-1, 0);
+		return room.movePlayer(-1, 0);
 	case key_right:
-		return playerMove(1, 0);
+		return room.movePlayer(1, 0);
 	case moveEnemy:
 		room.moveEnemys();
 		return served;

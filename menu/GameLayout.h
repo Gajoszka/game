@@ -1,7 +1,7 @@
 #pragma once
 /* Creating game layout, creating frames in desired places
 and controlling their inputs*/
-#include "InfoDisplay.h"
+#include "InfoFrame.h"
 #include "RoomFrame.h"
 #include "GameDef.h"
 #include <string>
@@ -24,7 +24,8 @@ public:
 	void printScore(string score);
 	void printName(string name);
 	void printInfo(string value);
-	void printRoom(Room room);
+
+	void setRoom(Room* room);
 	void print(messageType type, string msg);
 	void shutCursor(bool visible);
 	RoomFrame* getRoomFrame() {
@@ -33,10 +34,10 @@ public:
 	~GameLayout();
 private:
 	RoomFrame roomFrame;
-	InfoDisplay statsFrame;
-	InfoDisplay infoFrame;
-	InfoDisplay mapFrame;
-	InfoDisplay activeItemFrame;
+	InfoFrame statsFrame;
+	InfoFrame infoFrame;
+	InfoFrame mapFrame;
+	InfoFrame activeItemFrame;
 	void setFont();
 	
 	

@@ -42,11 +42,11 @@ void GameLayout::printName(string name) {
 
 // displays additional information
 void GameLayout::printInfo(string value) {
-	infoFrame.printLine(1, value);
+	infoFrame.printCenterLine(1, value);
 }
 
 // displays room
-void GameLayout::printRoom(Room room) {
+void GameLayout::setRoom(Room* room) {
 	roomFrame.setRoom(room);
 	roomFrame.printInside();
 }
@@ -57,6 +57,9 @@ void GameLayout::print(messageType type, string msg)
 	{
 	case messageType::score:
 		printScore(msg);
+		break;
+	case messageType::info:
+		printInfo(msg);
 		break;
 	default:
 		break;

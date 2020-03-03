@@ -11,16 +11,15 @@ MainMenu::MainMenu() :Frame(40,10) {
 
 // manu options
 void MainMenu::printInside() {
-	vector<string> menu_options;
-	menu_options.push_back("1. Start new game");
-	menu_options.push_back("2. Key functions");
-	menu_options.push_back("3. Score board");
-	menu_options.push_back("4. Exit");
-	for (int i = 0; i < menu_options.size(); i++) {
+	menu_options.push_back(new_game);
+	menu_options.push_back(keys);
+	menu_options.push_back(scores);
+	menu_options.push_back(exit);
+	/*for (int i = 0; i < menu_options.size(); i++) {
 		printLine(i+2, menu_options[i]);
 	}
-	printLine(8, "Which option do you choose? ");
-	user_choice();
+	printLine(8, "Which option do you choose? ");*/
+	showMenu();
 }
 
 // creating user for a current game
@@ -45,6 +44,13 @@ void MainMenu::intro()
 	play(name);	
 }
 
+void MainMenu::key_fun()
+{
+	system("CLS");
+	printFrame();
+	db.key_functions();
+}
+
 // taking user input and proceeding chosen action
 void MainMenu::user_choice()
 {
@@ -54,10 +60,86 @@ void MainMenu::user_choice()
 	case 1: intro();
 		break;
 	case 2:
-		db.key_functions();
+		key_fun();
 		break;
 	case 3: cout << "Score board" << endl;
 		break;
 	case 4: cout << "Exit" << endl;
+	}
+}
+
+int MainMenu::chooseIndex(string head, vector<string> options, string prompt) {
+	int highestNumber = menuDisplay(head, options);
+	int choice = getValidInput(prompt + " (from 1 to " + to_string(highestNumber) + "): ", highestNumber);
+	return choice;
+}
+
+string MainMenu::chooseOption(string head, vector<string> options, string prompt) {
+	int highestNumber = menuDisplay(head, options);
+	int choice = getValidInput(prompt + " (from 1 to " + to_string(highestNumber) + "): ", highestNumber);
+	return options[choice - 1];
+}
+
+int MainMenu::menuDisplay(string head, vector<string> options) {
+	if (head.size() > 0) {
+		nameDisplay(head);
+	}
+	for (int index = 0; index < options.size(); index++) {
+		printLine(index + 2, options[index]);
+	}
+
+	return options.size();
+}
+
+void MainMenu::nameDisplay(string name) {
+	if (name != " ") {
+		//cout << "\t" + name + "\n";
+		printLine(1, name);
+	}
+}
+
+
+void MainMenu::showMenuLine(int index, string text) {
+	cout << index + ". " + text;
+}
+
+int MainMenu::getValidInput(string prompt, int highestNum) {
+	bool invalid_answer = false;
+	while (invalid_answer == false) {
+		string user_choice = prompt;
+		cin >> prompt;
+		try {
+			if (user_choice.size() > 0) { // takes first character from user input
+				answer = int(user_choice[0]);
+			} else {
+				answer = -1;
+			}
+		}
+		catch (exception) {
+			answer = -1;
+			invalid_answer = answer > 0 and answer <= highestNum;
+		}
+	}
+	return answer;
+}
+
+void MainMenu::showMenu() {  // self ?????
+	while (active) {  
+		string choice = chooseOption("Menu", menu_options, "Please choose option ");
+		string choose;
+		cin >> choose;
+		if (choose == new_game) {
+			intro();
+		}
+		else if (choose == keys) {
+			key_fun();
+		}
+		else if (choose == scores) {
+			cout << "Score board" << endl;
+		}
+		else if (choose == exit) {
+			cout << "Exit" << endl;
+			active = false;
+		}
 	}
 }

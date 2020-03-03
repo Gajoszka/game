@@ -114,64 +114,84 @@ bool Room::setEnemy(int column, int row, Enemy enemy) {
 	}
 	return false;
 }
+void Room::conflict(Enemy* enemy,int score) {
+		printerMsg(info, "booom");
+		(*player).addScore(score);
+		delay(1500);
+		printerMsg(info, " ");
+}
 
+// automatic setup
 void Room::moveEnemy(Enemy* enemy) {
 	Point actLocation = (*enemy).getLocation();
 	int i = 0;
 	bool ok = false;
 	while (i < 10 && !ok) { // i < 10 so the loop is not infinite
-		// najpierw w poprzednim kierunku, a jak siê nieda to zmiana
+		// first in current direction, if impossible - change
 		if (!(ok = moveEnemy((*enemy).getMoveDirection().getColumn(), (*enemy).getMoveDirection().getRow(), enemy))) {
-			int s = (((*enemy).getMoveDirection().getColumn() + 2) % 3) - 1;
+			int s = (((*enemy).getMoveDirection().getColumn() + 2) % 3) - 1; // choosing new direction, where the enemy can move
 			(*enemy).setMoveDirection(s, (((*enemy).getMoveDirection().getRow() + 2+s) % 3) - 1);
 		}
 		i++;
 	}
 }
 
+//manual setup
 bool Room::moveEnemy(int columnStep, int rowStep, Enemy* enemy) {
 	int actColumn = (*enemy).getLocation().getColumn();
 	int actRow = (*enemy).getLocation().getRow();
 	if ((0 == columnStep && 0 == rowStep) || !canEnemyMove(actColumn + columnStep, actRow + rowStep))
 		return false;
 	setInner(actColumn, actRow);
+	// conflict 
+	if ((*player).getLocation().getColumn() == actColumn + columnStep && (*player).getLocation().getRow() + rowStep == actRow) {
+		conflict(enemy, -50);
+		for (int i=0;i<enemys.size();i++)
+			if ((*enemy).id=enemys[i].id)
+		enemys.erase(enemys.begin()+i);
+	}
+	else
 	setEnemy(actColumn + columnStep, actRow + rowStep, *enemy);
+	
 	return true;
 }
 
 
 // time between enemies moves
-void Room::moveEnemys() {
-	if (clock() / CLOCKS_PER_SEC - last_move_enemy_time < 0.1)
+void Room::moveEnemys() { 
+	if (clock() / CLOCKS_PER_SEC - last_move_enemy_time < 0.3) // for enemies not to move to fast, every 0.3s
 		return;
 	last_move_enemy_time = clock() / CLOCKS_PER_SEC;
-	int selectedEnemy = rand() % enemys.size();
-	moveEnemy(&enemys[selectedEnemy]);
-	delay(40);
+	int selectedEnemy = rand() % enemys.size(); // chooses only one enemy to move
+	moveEnemy(&enemys[selectedEnemy]); 
+	delay(4);
 	shotEnemys();
 }
 
 
 void Room::shotEnemys() {
-	int selectedEnemy = rand() % enemys.size();
+	int selectedEnemy = rand() % enemys.size(); //choose one enemy to shot
 	int actColumn = enemys[selectedEnemy].getLocation().getColumn();
 	int actRow = enemys[selectedEnemy].getLocation().getRow();
-	
 	for (int i = 1; i < 4; i++) {
-		actColumn = actColumn + enemys[selectedEnemy].getMoveDirection().getColumn();
+		actColumn = actColumn + enemys[selectedEnemy].getMoveDirection().getColumn(); // shoots in moving direction
 		actRow = actRow + enemys[selectedEnemy].getMoveDirection().getRow();
+		// if enemy can no longer move forward, escape
 		if (!canEnemyMove(actColumn, actRow))
 			return;
 		RoomElement actEl = get(actColumn, actRow);
-		printer(actColumn, actRow, '.');
-		//if ((*player).getl)
-		delay(250);
-		printer(actColumn, actRow, actEl.icon);
+		printer(actColumn, actRow, sign_shot);
+		//affecting player
+		if ((*player).getLocation().getColumn() == actColumn && (*player).getLocation().getRow() == actRow) {
+			conflict(&enemys[selectedEnemy], -10);
+		}else
+		delay(100);
+		printer(actColumn, actRow, actEl.icon); // to remove shots from previous postition
 	}
 }
 
 
-GameAction Room::movePlayer(int columnStep, int rowStep, Player* player) {
+GameAction Room::movePlayer(int columnStep, int rowStep) {
 	int actColumn = (*player).getLocation().getColumn();
 	int actRow = (*player).getLocation().getRow();
 	RoomElement actEl = get(actColumn + columnStep, actRow + rowStep);
@@ -179,7 +199,7 @@ GameAction Room::movePlayer(int columnStep, int rowStep, Player* player) {
 	//delay(100);
 	if (isDoor(actColumn + columnStep, actRow + rowStep)) {
 		(*player).addScore(actEl.score);
-		//udawanie ruchu
+		// imitating movement
 		printer(actColumn + columnStep, actRow + rowStep, (*player).icon);
 		return exitRoom;
 	}
@@ -194,8 +214,13 @@ GameAction Room::movePlayer(int columnStep, int rowStep, Player* player) {
 
 
 bool Room::setPlayer(Player* player) {
-
-	while (!setPlayer(rand() % width, rand() % height, player));
+	if (player != NULL) {
+		this->player = player;
+		int i = 0;
+		while (i < 40 && !setPlayer((rand() % (width - 2)) + 1, (rand() % (height - 2)) + 1, player))
+			i++;
+	}
+	//while (!setPlayer(rand() % width, rand() % height, player));
 	return true;
 }
 
@@ -204,6 +229,7 @@ bool Room::setPlayer(int column, int row, Player* player) {
 	if (canPlayerMove(column, row))
 		if (set(column, row, *player)) {
 			(*player).setLocation(column, row);
+			this->player = player;
 			return true;
 		}
 	return false;

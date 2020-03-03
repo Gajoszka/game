@@ -2,6 +2,7 @@
 #include "Screen.h"
 #include <iostream>
 #include <string>
+#include "GameDef.h"
 
 using namespace std;
 

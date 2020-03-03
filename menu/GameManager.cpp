@@ -11,12 +11,10 @@ using namespace std;
 // 
 void GameManager::play(Player* player) {
 	this->player = player;
-	srand(time(NULL));
+	(*player).setPrinterMessage(std::bind(&GameLayout::print, layout, std::placeholders::_1, std::placeholders::_2));
+	srand(time(NULL)); // make rand more randomise
 	layout.printName((*player).getName());
 	createRoom();
-	(*player).setPrinterMessage(std::bind(&GameLayout::print, layout, std::placeholders::_1, std::placeholders::_2));
-
-	(*getRoom()).setPlayer(player);
 	keyReader();
 }
 
@@ -65,7 +63,7 @@ void GameManager::keyReader() {
 			runAction(action);
 		}
 		else
-			runAction(moveEnemy);
+			runAction(moveEnemy); // if nothing pressed - enemy move
 	}
 }
 
@@ -98,7 +96,6 @@ void GameManager::runAction(GameAction action)
 	}
 }
 
-
 GameManager::~GameManager() {
 	layout.shutCursor(true);
 }
@@ -106,12 +103,15 @@ GameManager::~GameManager() {
 void GameManager::createRoom()
 {
 	RoomBuilder roomBuilder(45, 15);
+	//the higher score, the more obstacles
 	roomBuilder.setScaleCount((rand() % min(max(8,(*player).getScore()), 15)) + 1);
 	roomBuilder.setEnemyCount((rand() % min(max(3,(*player).getScore()), 10)) + 1);
 	roomBuilder.setDoorCount(1);
 	roomBuilder.setTreasureCount(rand() % 12);
 	Room room = roomBuilder.build();
-	room.setPrinterMessage(std::bind(&GameLayout::print, layout, std::placeholders::_1, std::placeholders::_2));
-	layout.printRoom(room);
+	room.setPlayer(player);
+	room.setPrinterMessage(bind(&GameLayout::print, layout, placeholders::_1, placeholders::_2));
+	layout.setRoom(&room);
+	
 	
 }

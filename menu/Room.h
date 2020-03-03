@@ -23,10 +23,10 @@ public:
 	/*void addObserver(Observer* observer) {
 		this->observers.push_back(observer);
 	}*/
-	void setPrinter(printElement printer) {
+	void setPrinter(printElement printer) { //following the point on the screen
 		this->printer = printer;
 	}
-	void setPrinterMessage(printMessage printer) {
+	void setPrinterMessage(printMessage printer) { //displaying info in specified place
 		this->printerMsg = printer;
 	}
 	bool set(int column, int row, RoomElement el);
@@ -73,13 +73,15 @@ public:
 	size_t getEnemyCount() {
 		return enemys.size();
 	}
-	GameAction movePlayer(int columnStep, int rowStep, Player* player);
+	GameAction movePlayer(int columnStep, int rowStep);
 	~Room();
 private:
 	int width;
 	int height;
-	vector<vector<RoomElement>> roomMap;
+	Player* player;
+	vector<vector<RoomElement>> roomMap; //2d vector
 	bool canPut(int row, int column);
+	void conflict(Enemy* enemy, int score);
 	vector<Enemy> enemys;
 	printElement printer = nullptr;
 	printMessage printerMsg = nullptr;
