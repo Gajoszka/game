@@ -70,13 +70,13 @@ void MainMenu::user_choice()
 
 int MainMenu::chooseIndex(string head, vector<string> options, string prompt) {
 	int highestNumber = menuDisplay(head, options);
+	printLine(options.size() + 3, prompt);
 	int choice = getValidInput(prompt + " (from 1 to " + to_string(highestNumber) + "): ", highestNumber);
 	return choice;
 }
 
 string MainMenu::chooseOption(string head, vector<string> options, string prompt) {
-	int highestNumber = menuDisplay(head, options);
-	int choice = getValidInput(prompt + " (from 1 to " + to_string(highestNumber) + "): ", highestNumber);
+	int choice = chooseIndex( head,  options,  prompt);
 	return options[choice - 1];
 }
 
@@ -85,7 +85,7 @@ int MainMenu::menuDisplay(string head, vector<string> options) {
 		nameDisplay(head);
 	}
 	for (int index = 0; index < options.size(); index++) {
-		printLine(index + 2, options[index]);
+		printLine(index + 2, to_string(index+1)+". "+options[index]);
 	}
 
 	return options.size();
@@ -104,20 +104,19 @@ void MainMenu::showMenuLine(int index, string text) {
 }
 
 int MainMenu::getValidInput(string prompt, int highestNum) {
-	bool invalid_answer = false;
-	while (invalid_answer == false) {
+	int answer = 0;
+	while (answer <= 0 or answer > highestNum) {
 		string user_choice = prompt;
-		cin >> prompt;
+		cin >> user_choice;
 		try {
 			if (user_choice.size() > 0) { // takes first character from user input
-				answer = int(user_choice[0]);
+				answer = stoi(user_choice);
 			} else {
 				answer = -1;
 			}
 		}
 		catch (exception) {
 			answer = -1;
-			invalid_answer = answer > 0 and answer <= highestNum;
 		}
 	}
 	return answer;
@@ -125,9 +124,7 @@ int MainMenu::getValidInput(string prompt, int highestNum) {
 
 void MainMenu::showMenu() {  // self ?????
 	while (active) {  
-		string choice = chooseOption("Menu", menu_options, "Please choose option ");
-		string choose;
-		cin >> choose;
+		string choose = chooseOption("Menu", menu_options, "Please choose option: ");
 		if (choose == new_game) {
 			intro();
 		}
