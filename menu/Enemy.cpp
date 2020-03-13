@@ -1,4 +1,10 @@
 #include "Enemy.h"
+#include "Player.h"
+
+//void Enemy::conflict(Player* player)
+//{
+//	player->addScore(score);
+//}
 
 void Enemy::setMoveDirection(int column, int row) {
 	moveDirection.setColumn(column);

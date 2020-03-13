@@ -6,6 +6,7 @@
 #include <string>
 #include "GameDef.h"
 #include "GameType.h"
+#include "Room.h"
 using namespace std;
 
 class Player:public Creature
@@ -17,6 +18,12 @@ public:
 	void setPrinterMessage(printMessage printer) {
 		this->printMsg = printer;
 	}
+	void setRoom(Room* room);
+	Room* getRoom() {
+		return room;
+	}
+	GameAction runAction(GameAction action);
+	GameAction move(int columnStep, int rowStep);
 	void addScore(int s);
 	int getScore();
 	string getName();
@@ -25,5 +32,6 @@ private:
 	int score = 0;
 	std::string name;
 	printMessage printMsg=nullptr;
+	Room* room;
 };
 

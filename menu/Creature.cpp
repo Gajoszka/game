@@ -1,6 +1,5 @@
 #include "Creature.h"
 #include "Screen.h"
-#include "RoomElement.h"
 
 void Creature::fight() {
 };

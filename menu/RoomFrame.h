@@ -15,7 +15,7 @@ using namespace std;
 class RoomFrame : public Frame
 {
 public:
-	RoomFrame(int width, int height) :Frame(width,height) , room(1, 1) {
+	RoomFrame(int width, int height) :Frame(width,height)  {
 	
 	};
 	virtual void printInside();
@@ -25,9 +25,6 @@ public:
 protected:
 	virtual void moveCursor(int column, int row);
 private:
-	void setMapElement(int column, int row, RoomElement value);
-	void setMapElement(int column, int row, Creature* value);
-	
-	Room room;
+	Room* room=nullptr;
 	
 };

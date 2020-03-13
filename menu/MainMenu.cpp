@@ -1,5 +1,6 @@
 #include "MainMenu.h"
 #include "GameManager.h"
+#include "GameType.h"
 #include "Screen.h"
 #include <iostream>
 #include <vector>

@@ -3,17 +3,11 @@
 #include <vector>
 #include "RoomElement.h"
 #include "Enemy.h"
-#include "Player.h"
+//#include "Player.h"
 #include "GameDef.h"
+#include "GameType.h"
 #include <ctime>
 
-const RoomElement room_wall = RoomElement(1, static_cast<char>(219), false, 0);
-const RoomElement room_door = RoomElement(-1, ' ', true, 5);
-const RoomElement room_scale = RoomElement(2, static_cast<char>(178), false, 0);
-const RoomElement room_treasure = RoomElement(3, static_cast<char>(158), true, 2);
-const RoomElement room_inner = RoomElement(0, ' ', true, 0);
-const RoomElement room_enemy = RoomElement(4, static_cast<char>(172), false, 10);
-const RoomElement failed = RoomElement(-11, ' ', false, 0);
 
 using namespace std;
 
@@ -29,8 +23,8 @@ public:
 	void setPrinterMessage(printMessage printer) { //displaying info in specified place
 		this->printerMsg = printer;
 	}
-	bool set(int column, int row, RoomElement el);
-	RoomElement get(int column, int row);
+	bool put(int column, int row, RoomElement* el);
+	RoomElement* get(int column, int row);
 	bool setWall(int column, int row);
 	bool setInner(int column, int row);
 	bool setDoor(int column, int row);
@@ -39,23 +33,27 @@ public:
 	void moveEnemys();
 	void moveEnemy(Enemy* enemy);
 	bool moveEnemy(int columnStep, int rowStep, Enemy* enemy);
-	bool setPlayer(int column, int row, Player* player);
-	bool setPlayer(Player* player);
+	/*bool setPlayer(int column, int row, Player* player);
+	bool setPlayer(Player* player);*/
 	bool setScale(int column, int row);
-	bool setTreacure(int column, int row);
-	bool canPlayerMove(int column, int row);
+	bool setTreasure(int column, int row);
+	bool isInner(int column, int row);
 	bool canEnemyMove(int column, int row);
-	bool isDoor(int column, int row);
 	bool isEnemy(int column, int row);
 	Enemy* getEnemy(int column, int row);
 	Enemy* getEnemyById(int id);
-
+	Point getRandomInner();
+	GameAction motionSimulation(int column, int row, Creature* el);
 	int getScore(int column, int row) {
-		return get(column, row).score;
+		return (*get(column, row)).score;
 	}
 
 	char getIcon(int column, int row) {
-		return get(column, row).icon;
+		return (*get(column, row)).icon;
+	}
+
+	int getId(int column, int row) {
+		return (*get(column, row)).id;
 	}
 
 	int getWidth() {
@@ -73,19 +71,23 @@ public:
 	size_t getEnemyCount() {
 		return enemys.size();
 	}
-	GameAction movePlayer(int columnStep, int rowStep);
+	//GameAction movePlayer(int columnStep, int rowStep);
 	~Room();
 private:
 	int width;
 	int height;
-	Player* player;
+	//Player* player;
 	vector<vector<RoomElement>> roomMap; //2d vector
-	bool canPut(int row, int column);
+
 	void conflict(Enemy* enemy, int score);
 	vector<Enemy> enemys;
 	printElement printer = nullptr;
 	printMessage printerMsg = nullptr;
 	clock_t last_move_enemy_time;
+
+	
+
+	
 };
 
 

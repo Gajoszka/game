@@ -19,7 +19,7 @@ public:
 		statsFrame.print(50, 15);
 		infoFrame.print(1, 20);
 		roomFrame.print(1, 1);
-		infoFrame.printLine(4, "F5-new room, F10-exit");
+		infoFrame.printLine(4, "F3-new room, F10-exit");
 	};
 	void printScore(string score);
 	void printName(string name);

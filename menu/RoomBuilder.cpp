@@ -112,7 +112,7 @@ void RoomBuilder::createVInnerWall(Room* room)
 void RoomBuilder::createTreasure(Room* room)
 {
 	for (int j = 0; j < treasureCount; j++) {
-		(*room).setTreacure((rand() % (width - 5)) + 2, (rand() % (height - 4)) + 2);
+		(*room).setTreasure((rand() % (width - 5)) + 2, (rand() % (height - 4)) + 2);
 	}
 }
 

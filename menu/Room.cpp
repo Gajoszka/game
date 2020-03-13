@@ -1,5 +1,6 @@
 #include "Room.h"
 #include "Screen.h"
+#include "Treasure.h"
 
 
 Room::Room(int width, int height) {
@@ -7,56 +8,53 @@ Room::Room(int width, int height) {
 	this->width = width;
 	this->height = height;;
 	for (int row = 0; row < height; row++) {
-		vector<RoomElement> tmp;
-		for (int i = 0; i < width; i++) {
-			tmp.push_back(room_inner);
-		}
+		vector<RoomElement> tmp(width, *p_room_inner);
 		roomMap.push_back(move(tmp));
 	}
 }
 
-RoomElement Room::get(int column, int row) {
+RoomElement* Room::get(int column, int row) {
 	if (row >= 0 && row < height && column >= 0 && column < width) {
-		return roomMap[row][column];
+		return &roomMap[row][column];
 	}
-	return failed;
+	return p_failed;
 }
 bool Room::setWall(int column, int row) {
-	return set(column, row, room_wall);
+	return put(column, row, p_room_wall);
 }
 
 bool Room::setScale(int column, int row) {
-	if (canPut(column, row))
-		return set(column, row, room_scale);
+	if (isInner(column, row))
+		return put(column, row, p_room_scale);
 	return false;
 }
 
-bool Room::setTreacure(int column, int row) {
-	if (canPut(column, row))
-		return set(column, row, room_treasure);
+bool Room::setTreasure(int column, int row) {
+	if (isInner(column, row))
+		return put(column, row, p_room_treasure);
 	return false;
 }
 
-bool Room::canPlayerMove(int column, int row) {
-	return get(column, row).canPass;
-}
+//bool Room::canPlayerMove(int column, int row) {
+//	return get(column, row).canPass;
+//}
+
+
 
 bool Room::canEnemyMove(int column, int row) {
-	RoomElement el = get(column, row);
-	return el.canPass && el.id != room_door.id && el.id != room_treasure.id;
+	RoomElement* el = get(column, row);
+	return (*el).canPass && (*el).id != (*p_room_door).id && (*el).id != (*p_room_treasure).id;
 }
 
-bool Room::isDoor(int column, int row) {
-	return get(column, row).id == room_door.id;
-}
+
 bool Room::isEnemy(int column, int row) {
-	return get(column, row).id > 10000;
+	return (*get(column, row)).id > 10000;
 }
 
 bool Room::setInner(int column, int row) {
-	if (get(column, row).id == room_door.id)
+	if ((*get(column, row)).id == (*p_room_door).id)
 		return true;
-	return set(column, row, room_inner);
+	return put(column, row, p_room_inner);
 }
 
 Room::~Room()
@@ -68,17 +66,17 @@ Room::~Room()
 	roomMap.clear();
 }
 
-bool  Room::set(int column, int row, RoomElement el) {
+bool  Room::put(int column, int row, RoomElement* el) {
 	if (row >= 0 && row < height && column >= 0 && column < width) {
-		roomMap[row][column] = el;
+		roomMap[row][column] = *el;
 		if (printer != nullptr)
-			printer(column, row, el.icon);
+			printer(column, row,(*el).icon);
 		return true;
 	}
 	return false;
 }
 Enemy* Room::getEnemy(int column, int row) {
-	return getEnemyById(get(column, row).getId());
+	return getEnemyById((*get(column, row)).getId());
 
 }
 
@@ -91,8 +89,8 @@ Enemy* Room::getEnemyById(int id) {
 }
 
 bool Room::setEnemy(int column, int row, Enemy enemy) {
-	if (canPut(column, row)) {
-		if (set(column, row, enemy)) {
+	if (isInner(column, row)) {
+		if (put(column, row, &enemy)) {
 			bool found = false;
 			for (int i = 0; i < enemys.size(); i++) {
 				if (enemys[i].id == enemy.id) {
@@ -104,7 +102,6 @@ bool Room::setEnemy(int column, int row, Enemy enemy) {
 			if (!found) {
 				enemy.setLocation(column, row);
 				enemy.setMoveDirection(((enemy.getMoveDirection().getColumn() + 2) % 3) - 1, ((enemy).getMoveDirection().getRow() + 2) % 3 - 1);
-				enemy.id = enemy.id + 10000;
 				enemys.push_back(enemy);
 				return true;
 			}
@@ -114,11 +111,11 @@ bool Room::setEnemy(int column, int row, Enemy enemy) {
 	}
 	return false;
 }
-void Room::conflict(Enemy* enemy,int score) {
-		printerMsg(info, "booom");
-		(*player).addScore(score);
-		delay(1500);
-		printerMsg(info, " ");
+void Room::conflict(Enemy* enemy, int score) {
+	printerMsg(info, "booom");
+	//(*player).addScore(score);
+	delay(1500);
+	printerMsg(info, " ");
 }
 
 // automatic setup
@@ -130,7 +127,7 @@ void Room::moveEnemy(Enemy* enemy) {
 		// first in current direction, if impossible - change
 		if (!(ok = moveEnemy((*enemy).getMoveDirection().getColumn(), (*enemy).getMoveDirection().getRow(), enemy))) {
 			int s = (((*enemy).getMoveDirection().getColumn() + 2) % 3) - 1; // choosing new direction, where the enemy can move
-			(*enemy).setMoveDirection(s, (((*enemy).getMoveDirection().getRow() + 2+s) % 3) - 1);
+			(*enemy).setMoveDirection(s, (((*enemy).getMoveDirection().getRow() + 2 + s) % 3) - 1);
 		}
 		i++;
 	}
@@ -144,26 +141,26 @@ bool Room::moveEnemy(int columnStep, int rowStep, Enemy* enemy) {
 		return false;
 	setInner(actColumn, actRow);
 	// conflict 
-	if ((*player).getLocation().getColumn() == actColumn + columnStep && (*player).getLocation().getRow() + rowStep == actRow) {
+	/*if ((*player).getLocation().getColumn() == actColumn + columnStep && (*player).getLocation().getRow() + rowStep == actRow) {
 		conflict(enemy, -50);
 		for (int i=0;i<enemys.size();i++)
 			if ((*enemy).id=enemys[i].id)
 		enemys.erase(enemys.begin()+i);
 	}
 	else
-	setEnemy(actColumn + columnStep, actRow + rowStep, *enemy);
-	
+	setEnemy(actColumn + columnStep, actRow + rowStep, *enemy);*/
+
 	return true;
 }
 
 
 // time between enemies moves
-void Room::moveEnemys() { 
+void Room::moveEnemys() {
 	if (clock() / CLOCKS_PER_SEC - last_move_enemy_time < 0.3) // for enemies not to move to fast, every 0.3s
 		return;
 	last_move_enemy_time = clock() / CLOCKS_PER_SEC;
 	int selectedEnemy = rand() % enemys.size(); // chooses only one enemy to move
-	moveEnemy(&enemys[selectedEnemy]); 
+	moveEnemy(&enemys[selectedEnemy]);
 	delay(4);
 	shotEnemys();
 }
@@ -179,60 +176,31 @@ void Room::shotEnemys() {
 		// if enemy can no longer move forward, escape
 		if (!canEnemyMove(actColumn, actRow))
 			return;
-		RoomElement actEl = get(actColumn, actRow);
+		RoomElement* actEl = get(actColumn, actRow);
 		printer(actColumn, actRow, sign_shot);
 		//affecting player
-		if ((*player).getLocation().getColumn() == actColumn && (*player).getLocation().getRow() == actRow) {
+	/*	if ((*player).getLocation().getColumn() == actColumn && (*player).getLocation().getRow() == actRow) {
 			conflict(&enemys[selectedEnemy], -10);
 		}else
-		delay(100);
-		printer(actColumn, actRow, actEl.icon); // to remove shots from previous postition
+		delay(100);*/
+		printer(actColumn, actRow, (*actEl).icon); // to remove shots from previous postition
 	}
 }
 
 
-GameAction Room::movePlayer(int columnStep, int rowStep) {
-	int actColumn = (*player).getLocation().getColumn();
-	int actRow = (*player).getLocation().getRow();
-	RoomElement actEl = get(actColumn + columnStep, actRow + rowStep);
-	setInner(actColumn, actRow);
-	//delay(100);
-	if (isDoor(actColumn + columnStep, actRow + rowStep)) {
-		(*player).addScore(actEl.score);
+GameAction Room::motionSimulation(int column, int row, Creature* el) {
+	RoomElement* actEl = get(column, row);
+	setInner((*el).getLocation().getColumn(), (*el).getLocation().getRow());
+	delay(100);
+	if ((*actEl).id == (*p_room_door).id) {
+
 		// imitating movement
-		printer(actColumn + columnStep, actRow + rowStep, (*player).icon);
+		printer(column, row, (*el).icon);
 		return exitRoom;
 	}
-	if (canPlayerMove(actColumn + columnStep, actRow + rowStep)) {
-		(*player).addScore(actEl.score);
-		setPlayer(actColumn + columnStep, actRow + rowStep, player);
-	}
-	else
-		setPlayer(actColumn, actRow, player);
+	put(column, row, el);
+	(*el).setLocation(column, row);
 	return served;
-}
-
-
-bool Room::setPlayer(Player* player) {
-	if (player != NULL) {
-		this->player = player;
-		int i = 0;
-		while (i < 40 && !setPlayer((rand() % (width - 2)) + 1, (rand() % (height - 2)) + 1, player))
-			i++;
-	}
-	//while (!setPlayer(rand() % width, rand() % height, player));
-	return true;
-}
-
-
-bool Room::setPlayer(int column, int row, Player* player) {
-	if (canPlayerMove(column, row))
-		if (set(column, row, *player)) {
-			(*player).setLocation(column, row);
-			this->player = player;
-			return true;
-		}
-	return false;
 }
 
 bool Room::setDoor(int column, int row) {
@@ -240,21 +208,39 @@ bool Room::setDoor(int column, int row) {
 		&& !(column == row)
 		&& !(column == 0 && row == height - 1)
 		&& !(column == width - 1 && row == 0)) {
-		set(column, row, room_door);
+		put(column, row, p_room_door);
 		return true;
 	}
 	return false;
 }
 
-bool Room::canPut(int column, int row) {
-	if (roomMap[row][column - 1].id == room_door.id
-		|| roomMap[row][column].id == room_wall.id
-		|| roomMap[row][column + 1].id == room_door.id
-		|| roomMap[row - 1][column].id == room_door.id)
+bool Room::isInner(int column, int row) {
+	if (roomMap[row][column - 1].id == (*p_room_door).id
+		|| roomMap[row][column].id == (*p_room_door).id
+		|| roomMap[row][column + 1].id == (*p_room_door).id
+		|| roomMap[row - 1][column].id == (*p_room_door).id)
 		return false;
-	if (roomMap[row - 1][column].id != room_inner.id && roomMap[row + 1][column].id != room_inner.id)
+	if (roomMap[row - 1][column].id != (*p_room_inner).id && roomMap[row + 1][column].id != (*p_room_inner).id)
 		return false;
 	return true;
+
+	/*bool Room::canPut(int column, int row) {
+		return get(column, row).canPass;
+	}*/
+}
+
+Point Room::getRandomInner()
+{
+	int i = 0;
+	bool ok = false;
+	int row, column;
+	while (i < 40 && !ok) {
+		row = (rand() % (height - 2)) + 1;
+		column = (rand() % (width - 2)) + 1;
+		ok = isInner(column, row);
+		i++;
+	}
+	return Point(column, row);
 }
 
 
