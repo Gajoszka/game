@@ -17,6 +17,7 @@ const int id_wall = 1;
 const int id_scale = 2;
 const int id_door = -1;
 const int id_treasure = 11;
+const int id_gun = 100;
 
 enum  GameAction { endGame, exitRoom, Failed, moveEnemy, key_up, key_down, key_left, key_right, served,can_move,stop };
 

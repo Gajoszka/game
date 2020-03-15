@@ -28,11 +28,9 @@ public:
 	bool put(int column, int row, RoomElement* el);
 	bool putInInner(RoomElement* el);
 	RoomElement* get(int column, int row);
-	void shotEnemys();
 	void moveEnemys();
 
 	bool isInner(int column, int row);
-	bool isEnemy(int column, int row);
 	
 	GameAction runAction(GameAction action);
 	GameAction moveCreature(int column, int row,int delay, Creature* el);
@@ -52,15 +50,20 @@ public:
 	int getHeight() {
 		return height;
 	}
+
+	RoomElementFactory* getElementFactory() {
+		return elementFactory;
+	}
 	
 	Point getRandomInner();
 	~Room();
+	printElement printer = nullptr;
 private:
 	int width;
 	int height;
 	RoomElementFactory* elementFactory;
 	vector<vector<RoomElement*>> roomMap; //2d vector
-	printElement printer = nullptr;
+	
 	printMessage printerMsg = nullptr;
 	clock_t last_move_enemy_time;
 	

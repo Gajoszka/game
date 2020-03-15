@@ -2,7 +2,6 @@
 #include "GameDef.h"
 #include "RoomElement.h"
 #include "Door.h"
-#include "Treasure.h"
 #include "Enemy.h"
 #include "Player.h"
 #include "Enemy.h"
@@ -27,7 +26,11 @@ public:
 		return door;
 	}
 
-	Treasure* getTreasure() {
+	Gun* getGun(int range,int magazine) {
+		return new Gun(range,magazine);
+	}
+
+	RoomElement* getTreasure() {
 		return treasure;
 	}
 
@@ -62,7 +65,7 @@ private:
 	RoomElement* wall = new  RoomElement(id_wall, static_cast<char>(219), false);
 	RoomElement* scale = new RoomElement(id_wall, static_cast<char>(219), false);
 	Door* door = new Door();
-	Treasure* treasure = new Treasure();
+	RoomElement* treasure = new RoomElement(id_treasure, static_cast<char>(158), true,2);
 	//Player* player = new Player();
 };
 

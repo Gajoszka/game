@@ -6,11 +6,11 @@
 class Door :public RoomElement
 {
 public:
-	Door() :RoomElement(id_door, ' ', true) {
+	Door() :RoomElement(id_door, ' ', true,5) {
 
 	}
 	GameAction conflict(Player* player) {
-		(*player).addScore(5);
+		(*player).addScore(score);
 		return exitRoom;
 	}
 };

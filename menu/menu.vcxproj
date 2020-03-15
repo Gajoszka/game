@@ -166,7 +166,9 @@
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="GameLayout.cpp" />
+    <ClCompile Include="Gun.cpp" />
     <ClCompile Include="Point.cpp" />
+    <ClCompile Include="RoomElement.cpp" />
     <ClCompile Include="RoomElementFactory.cpp" />
     <ClCompile Include="RoomFrame.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -179,12 +181,11 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="InfoFrame.cpp" />
     <ClCompile Include="MainMenu.cpp" />
-    <ClCompile Include="menu.cpp" />
+    <ClCompile Include="Application.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="RoomBuilder.cpp" />
     <ClCompile Include="GameManager.cpp" />
-    <ClCompile Include="Treasure.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Creature.h" />
@@ -193,6 +194,7 @@
     <ClInclude Include="Floor.h" />
     <ClInclude Include="GameLayout.h" />
     <ClInclude Include="GameType.h" />
+    <ClInclude Include="Gun.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="GameDef.h" />
     <ClInclude Include="Point.h" />
@@ -209,7 +211,6 @@
     <ClInclude Include="RoomElement.h" />
     <ClInclude Include="RoomBuilder.h" />
     <ClInclude Include="Screen.h" />
-    <ClInclude Include="Treasure.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="menu.rc" />

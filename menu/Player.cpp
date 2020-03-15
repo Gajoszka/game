@@ -17,15 +17,15 @@ string Player::getName() {
 void Player::setRoom(Room* room)
 {
 	this->room = room;
-	(*room).putInInner( this);
+	room->putInInner( this);
 }
 
 
 GameAction Player::move(int columnStep, int rowStep) {
-	RoomElement* actEl = (*room).get(getLocation().getColumn() + columnStep, getLocation().getRow() + rowStep);
-	GameAction action = (*actEl).conflict(this);
+	RoomElement* actEl = room->get(getLocation().getColumn() + columnStep, getLocation().getRow() + rowStep);
+	GameAction action = actEl->conflict(this);
 	if (action == can_move || action == exitRoom) {
-		GameAction action1 = (*room).moveCreature(getLocation().getColumn() + columnStep, getLocation().getRow() + rowStep, 25, this);
+		GameAction action1 = room->moveCreature(getLocation().getColumn() + columnStep, getLocation().getRow() + rowStep, 20, this);
 		if (action != exitRoom)
 			return action1;
 	}
@@ -46,9 +46,6 @@ GameAction Player::runAction(GameAction action)
 		return move(-1, 0);
 	case key_right:
 		return move(1, 0);
-		//case moveEnemy:
-		//	room.moveEnemys();
-		//	return served;
 	default:
 		return action;
 	}

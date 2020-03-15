@@ -71,8 +71,7 @@ void MainMenu::user_choice()
 
 int MainMenu::chooseIndex(string head, vector<string> options, string prompt) {
 	int highestNumber = menuDisplay(head, options);
-	printLine(options.size() + 3, prompt);
-	int choice = getValidInput(prompt + " (from 1 to " + to_string(highestNumber) + "): ", highestNumber);
+	int choice = getValidInput(prompt + "(from 1 to " + to_string(highestNumber) + "): ", highestNumber);
 	return choice;
 }
 
@@ -107,7 +106,9 @@ void MainMenu::showMenuLine(int index, string text) {
 int MainMenu::getValidInput(string prompt, int highestNum) {
 	int answer = 0;
 	while (answer <= 0 or answer > highestNum) {
-		string user_choice = prompt;
+		string user_choice ;
+		printLine(highestNum + 3, prompt);
+		//moveCursor(prompt.length()+1, highestNum+3);
 		cin >> user_choice;
 		try {
 			if (user_choice.size() > 0) { // takes first character from user input
@@ -125,7 +126,7 @@ int MainMenu::getValidInput(string prompt, int highestNum) {
 
 void MainMenu::showMenu() {  // self ?????
 	while (active) {  
-		string choose = chooseOption("Menu", menu_options, "Please choose option: ");
+		string choose = chooseOption("Menu", menu_options, "Please choose option");
 		if (choose == new_game) {
 			intro();
 		}

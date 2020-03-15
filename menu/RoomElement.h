@@ -10,16 +10,20 @@ public:
 		this->icon = icon;
 		this->canPass = canPass;
 	}
+	RoomElement(int id, char icon, bool canPass, int score) {
+		this->id = id;
+		this->icon = icon;
+		this->canPass = canPass;
+		this->score = score;
+	}
 	int getId() {
 		return id;
 	}
-	virtual GameAction conflict(Player* player) {
-		return canPass ? can_move : stop;
-	}
+	virtual GameAction conflict(Player* player);
 	int id = 0;
 	char icon = ' ';
 	bool canPass = true;
-private:
-
+protected:
+	int score = 0;
 };
 

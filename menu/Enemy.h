@@ -6,6 +6,7 @@ using namespace std;
 #include "Creature.h"
 #include "GameDef.h"
 #include "Player.h"
+#include "Gun.h"
 
 
 class Enemy : public Creature
@@ -18,9 +19,13 @@ public:
 	void setRoom(Room* room);
 	void move();
 	bool move(int columnStep, int rowStep);
+	void shot();
 	GameAction conflict(Player* player);
+	~Enemy();
 private:
 	Point moveDirection;
 	Room* room;
+	RoomElement* canMove(int column, int row);
+	Gun* gun;
 };
 
