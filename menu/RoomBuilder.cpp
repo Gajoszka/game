@@ -20,59 +20,56 @@ void RoomBuilder::setTreasureCount(int count) {
 void RoomBuilder::setEnemyCount(int count) {
 	this->enemyCount = count <= 0 ? 0 : count;
 }
-Room RoomBuilder::build()
+Room* RoomBuilder::build(RoomElementFactory* elementFactory)
 {
-	Room room(width, height);
-
+	Room* room = new Room(width, height, elementFactory);
 	//horizontal wall
 	for (int column = 0; column < width; column++) {
-		room.setWall(column, 0);
-		room.setWall(column, height - 1);
+		(*room).put(column, 0, (*elementFactory).getWall());
+		(*room).put(column, height - 1, (*elementFactory).getWall());
 	}
 	//vertical wall
 	for (int row = 0; row < height; row++) {
-		room.setWall(0, row);
-		room.setWall(width - 1, row);
+		(*room).put(0, row, (*elementFactory).getWall());
+		(*room).put(width - 1, row, (*elementFactory).getWall());
 	}
 
 	for (int i = 0; i < this->doorCount; i++) {
-		createDoor(&room);
+		createDoor(room, elementFactory);
 	}
 
-	for (int i = 0; i < this->scaleCount - 5; i++) {
-		createHInnerWall(&room);
+	for (int i = 0; i < this->scaleCount ; i++) {
+		createHScale(room, elementFactory);
 
 	}
-	for (int i = 0; i < this->scaleCount; i++) {
-		createVInnerWall(&room);
+	for (int i = 0; i < this->scaleCount-1; i++) {
+		createVScale(room, elementFactory);
 	}
 
 	for (int i = 0; i < this->enemyCount; i++) {
-		createEnemy(&room,  i);
+		createEnemy(room, elementFactory, i);
 	}
-
-	createTreasure(&room);
+	createTreasure(room, elementFactory);
 	return room;
 }
 
-
-void RoomBuilder::createDoor(Room* room) {
+void RoomBuilder::createDoor(Room* room, RoomElementFactory* elementFactory) {
 
 	bool ok = false;
 	while (!ok) {
 		switch (rand() % 4)  //which wall
 		{
 		case 0:
-			ok = (*room).setDoor( (rand() % (width - 3)) + 2,0);
+			ok = createDoor(rand() % (width - 3) + 2, 0, room, elementFactory);
 			break;
 		case 1:
-			ok = (*room).setDoor(width - 1,(rand() % (height - 3)) + 2);
+			ok = createDoor(width - 1, (rand() % (height - 3)) + 2, room, elementFactory);
 			break;
 		case 2:
-			ok = (*room).setDoor( (rand() % (width - 3) + 2), height - 1);
+			ok = createDoor((rand() % (width - 3) + 2), height - 1, room, elementFactory);
 			break;
 		case 3:
-			ok = (*room).setDoor(0,(rand() % (height - 3)) + 2);
+			ok = createDoor(0, (rand() % (height - 3)) + 2, room, elementFactory);
 			break;
 		default:
 			break;
@@ -80,39 +77,49 @@ void RoomBuilder::createDoor(Room* room) {
 	}
 }
 
-void RoomBuilder::createEnemy(Room* room, int id)
-{
-	Enemy enemy(id);
-	int i = 0;
-	while (i < 10 && !(*room).setEnemy((rand() % (width - 2)) + 1, (rand() % (height - 2)) + 1, enemy))
-		i++;
+bool RoomBuilder::createDoor(int column, int row, Room* room, RoomElementFactory* elementFactory) {
+	if ((column == 0 || column == width - 1 || row == 0 || row == height - 1)
+		&& !(column == row)
+		&& !(column == 0 && row == height - 1)
+		&& !(column == width - 1 && row == 0)) {
+		(*room).put(column, row, (*elementFactory).getDoor());
+		return true;
+	}
+	return false;
 }
 
-void RoomBuilder::createHInnerWall(Room* room)
+
+void RoomBuilder::createEnemy(Room* room, RoomElementFactory* elementFactory, int id)
 {
-	int column = (rand() % (width - 5)) + 1;
-	int row = (rand() % (height - 4)) + 1;
-	int size = (rand() % max((width - column - 15), 1)) + 1;
-	for (int j = column; j < column + size; j++) {
-		(*room).setScale(j, row);
+	Enemy* enemy = (*elementFactory).getEnemy(id);
+	(*enemy).setRoom(room);
+	(*room).putInInner(enemy);
+}
+
+void RoomBuilder::createHScale(Room* room, RoomElementFactory* elementFactory)
+{
+	Point point = (*room).getRandomInner();
+	int size = (rand() % max((width - point.getColumn() - 15), 1)) + 1;
+	for (int j = 0; j < size; j++) {
+		if ((*room).isInner(point.getColumn() + j, point.getRow()))
+			(*room).put(point.getColumn() + j, point.getRow(), (*elementFactory).getScale());
 	}
 }
 
-void RoomBuilder::createVInnerWall(Room* room)
+void RoomBuilder::createVScale(Room* room, RoomElementFactory* elementFactory)
 {
-	int column = (rand() % (width - 3)) + 1;
-	int row = (rand() % (height - 4)) + 1;
-	int size = (rand() % max((height - row - 5), 1)) + 1;
-	for (int j = row; j < row + size; j++) {
-		(*room).setScale(column, j);
+	Point point = (*room).getRandomInner();
+	int size = (rand() % max((height - point.getRow() - 5), 1)) + 1;
+	for (int j = 0; j < size; j++) {
+		if ((*room).isInner(point.getColumn(), point.getRow()+j))
+			(*room).put(point.getColumn() , point.getRow()+j, (*elementFactory).getScale());
 	}
 }
 
-
-void RoomBuilder::createTreasure(Room* room)
+void RoomBuilder::createTreasure(Room* room, RoomElementFactory* elementFactory)
 {
 	for (int j = 0; j < treasureCount; j++) {
-		(*room).setTreacure((rand() % (width - 5)) + 2, (rand() % (height - 4)) + 2);
+		(*room).putInInner((*elementFactory).getTreasure());
 	}
 }
 

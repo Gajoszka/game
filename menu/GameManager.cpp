@@ -14,10 +14,18 @@ void GameManager::play(Player* player) {
 	(*player).setPrinterMessage(std::bind(&GameLayout::print, layout, std::placeholders::_1, std::placeholders::_2));
 	srand(time(NULL)); // make rand more randomise
 	layout.printName((*player).getName());
-	createRoom();
+	//createFloor();
+	actFloor.setPlayer(player);
+	actFloor.setLayout(&layout);
+	actFloor.createRoom();
 	keyReader();
 }
 
+void GameManager::createFloor()
+{
+
+
+}
 
 // reading user input
 void GameManager::keyReader() {
@@ -33,7 +41,7 @@ void GameManager::keyReader() {
 					action = endGame;
 					system("CLS");
 					break;
-				case KEY_F5:
+				case KEY_F3:
 					(*player).addScore(-10);
 					layout.print(score,to_string((*player).getScore()));
 					action = exitRoom;
@@ -68,26 +76,16 @@ void GameManager::keyReader() {
 }
 
 // escaping room and creating a new one
-void GameManager::exitFromRoom()
-{
-	this->layout.printInfo("room change");
-	Sleep(1000);
-	createRoom();
-	this->layout.printInfo("  ");
-	Sleep(1000);
-	this->layout.printInfo("");
-}
+
 
 // manage occuring actions
 void GameManager::runAction(GameAction action)
 {
-	action = (*getRoom()).runAction(action);
+	//action = (*getRoom()).runAction(action);
+	action = actFloor.runAction(action);
 	switch (action)
 	{
 	case served:
-		break;
-	case exitRoom:
-		exitFromRoom();
 		break;
 	case Failed:
 		break;
@@ -100,18 +98,6 @@ GameManager::~GameManager() {
 	layout.shutCursor(true);
 }
 
-void GameManager::createRoom()
-{
-	RoomBuilder roomBuilder(45, 15);
-	//the higher score, the more obstacles
-	roomBuilder.setScaleCount((rand() % min(max(8,(*player).getScore()), 15)) + 1);
-	roomBuilder.setEnemyCount((rand() % min(max(3,(*player).getScore()), 10)) + 1);
-	roomBuilder.setDoorCount(1);
-	roomBuilder.setTreasureCount(rand() % 12);
-	Room room = roomBuilder.build();
-	room.setPlayer(player);
-	room.setPrinterMessage(bind(&GameLayout::print, layout, placeholders::_1, placeholders::_2));
-	layout.setRoom(&room);
-	
-	
-}
+
+
+

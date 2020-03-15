@@ -1,6 +1,5 @@
 #include "Creature.h"
 #include "Screen.h"
-#include "RoomElement.h"
 
 void Creature::fight() {
 };
@@ -16,3 +15,4 @@ void Creature::setLocation(int column, int row) {
 void Creature::setLocation(Point l) {
 	roomLocation = l;
 };
+

@@ -162,8 +162,13 @@
   <ItemGroup>
     <ClCompile Include="Creature.cpp" />
     <ClCompile Include="DBconnection.cpp" />
+    <ClCompile Include="Door.cpp" />
+    <ClCompile Include="Floor.cpp" />
     <ClCompile Include="GameLayout.cpp" />
+    <ClCompile Include="Gun.cpp" />
     <ClCompile Include="Point.cpp" />
+    <ClCompile Include="RoomElement.cpp" />
+    <ClCompile Include="RoomElementFactory.cpp" />
     <ClCompile Include="RoomFrame.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </ExcludedFromBuild>
@@ -175,7 +180,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="InfoFrame.cpp" />
     <ClCompile Include="MainMenu.cpp" />
-    <ClCompile Include="menu.cpp" />
+    <ClCompile Include="Application.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="RoomBuilder.cpp" />
@@ -184,12 +189,16 @@
   <ItemGroup>
     <ClInclude Include="Creature.h" />
     <ClInclude Include="DBconnection.h" />
+    <ClInclude Include="Door.h" />
+    <ClInclude Include="Floor.h" />
     <ClInclude Include="GameLayout.h" />
     <ClInclude Include="GameType.h" />
+    <ClInclude Include="Gun.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="GameDef.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="RoomElementFactory.h" />
     <ClInclude Include="RoomFrame.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Frame.h" />
