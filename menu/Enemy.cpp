@@ -63,7 +63,7 @@ void Enemy::shot() {
 	if (!gun->canShot())
 		return;
 	Point  direction = moveDirection;
-	int s = (direction.getColumn() + 2) % 3 - 1; // choosing new direction, where the enemy can move
+	int s = (rand()) % 3 - 1; // choosing new direction, where the enemy can move
 	direction.setColumn(s);
 	direction.setRow(((moveDirection.getRow() + 2 + s) % 3) - 1);
 	int actColumn = getLocation().getColumn();
