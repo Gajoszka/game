@@ -27,5 +27,6 @@ private:
 	Room* room;
 	RoomElement* canMove(int column, int row);
 	Gun* gun;
+	Point changeDirection(Point direction);
 };
 

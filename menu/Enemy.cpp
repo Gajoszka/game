@@ -7,6 +7,8 @@
 GameAction Enemy::conflict(Player* player)
 {
 	player->addScore(-15);
+	moveDirection = changeDirection(moveDirection);
+	player->boom();
 	return can_move;
 }
 
@@ -28,14 +30,19 @@ void Enemy::move() {
 	while (i < 10 && !ok) { // i < 10 so the loop is not infinite
 		// first in current direction, if impossible - change
 		if (!(ok = move(moveDirection.getColumn(), moveDirection.getRow()))) {
-			int s = (moveDirection.getColumn() + 2) % 3 - 1; // choosing new direction, where the enemy can move
-			moveDirection.setColumn(s);
-			moveDirection.setRow(((moveDirection.getRow() + 2 + s) % 3) - 1);
-			if (0 == moveDirection.getColumn() == moveDirection.getRow())
-				moveDirection.setColumn(-1);
+			moveDirection = changeDirection(moveDirection);
 		}
 		i++;
 	}
+}
+
+Point Enemy::changeDirection(Point direction) {
+		int s = (rand() + 2) % 3 - 1; // choosing new direction, where the enemy can move
+		direction.setColumn(s);
+		direction.setRow(((direction.getRow() + 2 + s) % 3) - 1);
+			if (0 == direction.getColumn() == direction.getRow())
+				direction.setColumn(-1);
+			return direction;
 }
 
 RoomElement* Enemy::canMove(int column, int row) {
@@ -54,7 +61,10 @@ bool Enemy::move(int columnStep, int rowStep) {
 	RoomElement* actEl = canMove(getLocation().getColumn() + columnStep, getLocation().getRow() + rowStep);
 	if (actEl == nullptr)
 		return false;
-	room->moveCreature(getLocation().getColumn() + columnStep, getLocation().getRow() + rowStep, 5, this);
+	if (Player* player = dynamic_cast<Player*>(actEl))
+		conflict(player);
+	else
+		room->moveCreature(getLocation().getColumn() + columnStep, getLocation().getRow() + rowStep, 5, this);
 	//setLocation(getLocation().getColumn() + columnStep, getLocation().getRow() + rowStep);
 	return true;
 }
@@ -62,10 +72,7 @@ bool Enemy::move(int columnStep, int rowStep) {
 void Enemy::shot() {
 	if (!gun->canShot())
 		return;
-	Point  direction = moveDirection;
-	int s = (rand()) % 3 - 1; // choosing new direction, where the enemy can move
-	direction.setColumn(s);
-	direction.setRow(((moveDirection.getRow() + 2 + s) % 3) - 1);
+	Point  direction = changeDirection(moveDirection);
 	int actColumn = getLocation().getColumn();
 	int actRow = getLocation().getRow();
 	RoomElement* actEl;
@@ -78,8 +85,8 @@ void Enemy::shot() {
 			return;
 
 		room->printer(actColumn, actRow, gun->icon);
-		if (instanceof<Player>(actEl))
-			gun->conflict((Player*)actEl);
+		if (Player* player = dynamic_cast<Player*>(actEl))
+			gun->conflict(player);
 		delay(50);
 		(*room).printer(actColumn, actRow, (*actEl).icon); // to remove shots from previous postition
 	}

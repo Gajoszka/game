@@ -10,11 +10,7 @@ public:
 		this->magazine = magazine;
 		this->range = range;
 	};
-	GameAction conflict(Player* player) {
-		RoomElement::conflict(player);
-		magazine--;
-		return served;
-	}
+	GameAction conflict(Player* player);
 	bool canShot() {
 		return magazine > 0;
 	}

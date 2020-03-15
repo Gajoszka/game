@@ -38,8 +38,8 @@ bool  Room::put(int column, int row, RoomElement* el) {
 		roomMap[row][column] = el;
 		if (printer != nullptr)
 			printer(column, row, (*el).icon);
-		if (Creature* t = dynamic_cast<Creature*>(el))
-			(*(Creature*)el).setLocation(column, row);
+		if (Creature* creature = dynamic_cast<Creature*>(el))
+			creature->setLocation(column, row);
 		return true;
 	}
 	return false;

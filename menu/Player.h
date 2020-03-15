@@ -33,7 +33,7 @@ public:
 	string getName();
 
 	void setRoom(Room* room);
-
+	void  boom();
 	Room* getRoom() {
 		return room;
 	}

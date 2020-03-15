@@ -1,6 +1,7 @@
 #include "Player.h"
 #include <iostream>
 #include <string>
+#include "Screen.h"
 using namespace std;
 
 void Player::addScore(int s) {
@@ -18,6 +19,42 @@ void Player::setRoom(Room* room)
 {
 	this->room = room;
 	room->putInInner( this);
+}
+
+void Player::boom()
+{
+	
+	for (int i = 1; i < 3; i++) {
+		RoomElement*  actEl0 = room->get(getLocation().getColumn()+1, getLocation().getRow());
+		if (actEl0->canPass) {
+			room->printer(getLocation().getColumn() + 1, getLocation().getRow(), '.');
+		}
+		delay(10);
+		RoomElement*  actEl1 = room->get(getLocation().getColumn() - 1, getLocation().getRow());
+		if (actEl1->canPass) {
+			room->printer(getLocation().getColumn() - 1, getLocation().getRow(), '.');
+			delay(10);
+		}
+		RoomElement* actEl2 = room->get(getLocation().getColumn() , getLocation().getRow()+1);
+		if (actEl2->canPass) {
+			room->printer(getLocation().getColumn(), getLocation().getRow() + 1, '.');
+			delay(10);
+		}
+		RoomElement* actEl3 = room->get(getLocation().getColumn() , getLocation().getRow()-1);
+		if (actEl3->canPass) {
+			room->printer(getLocation().getColumn(), getLocation().getRow() - 1, '.');
+		}
+		delay(50);
+		room->printer(getLocation().getColumn() + 1, getLocation().getRow(), actEl0->icon);
+		delay(10);
+		room->printer(getLocation().getColumn() - 1, getLocation().getRow(), actEl1->icon);
+		delay(10);
+		room->printer(getLocation().getColumn(), getLocation().getRow() + 1, actEl2->icon);
+		delay(10);
+		room->printer(getLocation().getColumn(), getLocation().getRow() - 1, actEl3->icon);
+		delay(30);
+	}
+	room->printer(getLocation().getColumn(), getLocation().getRow(), icon);
 }
 
 
