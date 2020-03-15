@@ -15,3 +15,4 @@ void Creature::setLocation(int column, int row) {
 void Creature::setLocation(Point l) {
 	roomLocation = l;
 };
+

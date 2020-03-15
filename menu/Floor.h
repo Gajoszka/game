@@ -1,11 +1,12 @@
 #pragma once
 #include "Room.h"
 #include "GameLayout.h"
+#include"RoomElementFactory.h"
 
 class Floor
 {
 public:
-	Floor():actRoom(0, 0) {
+	Floor():elementFactory(){
 	}
 	void setLayout(GameLayout* layout) {
 		this->layout = layout;
@@ -16,9 +17,10 @@ public:
 	Room* getRoom();
 	void createRoom();
 	GameAction runAction(GameAction action);
+	~Floor();
 private:
-
-	Room actRoom;
+	RoomElementFactory elementFactory;
+	Room* actRoom=nullptr;
 	Player* player;
 	GameLayout* layout;
 	int roomNr = 0;

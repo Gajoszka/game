@@ -1,0 +1,68 @@
+#pragma once
+#include "GameDef.h"
+#include "RoomElement.h"
+#include "Door.h"
+#include "Treasure.h"
+#include "Enemy.h"
+#include "Player.h"
+#include "Enemy.h"
+
+class RoomElementFactory {
+public:
+	RoomElementFactory();
+
+	RoomElement* getWall() {
+		return wall;
+	}
+
+	RoomElement* getInner() {
+		return inner;
+	}
+
+	RoomElement* getScale() {
+		return scale;
+	}
+
+	Door* getDoor() {
+		return door;
+	}
+
+	Treasure* getTreasure() {
+		return treasure;
+	}
+
+	/*Player* getPlayer() {
+		return player;
+	}*/
+
+	Enemy* getEnemy(int id) {
+		Enemy* enemy = new Enemy(id);
+		enemys.push_back(enemy);
+		return enemy;
+	}
+
+	void clearEnemys();
+
+	size_t getEnemyCount() {
+		return enemys.size();
+	}
+
+	Enemy* getRandEnemy() {
+		int selectedEnemy = 0;
+		while (enemys.size()>1 && lastSelectedEnemy == (selectedEnemy = rand() % enemys.size())); // chooses only one enemy to move
+		lastSelectedEnemy = selectedEnemy;
+		return enemys[selectedEnemy];
+	}
+
+	~RoomElementFactory();
+private:
+	vector<Enemy*> enemys;
+	int lastSelectedEnemy = -1;
+	RoomElement* inner = new  RoomElement(id_inner, ' ', true);
+	RoomElement* wall = new  RoomElement(id_wall, static_cast<char>(219), false);
+	RoomElement* scale = new RoomElement(id_wall, static_cast<char>(219), false);
+	Door* door = new Door();
+	Treasure* treasure = new Treasure();
+	//Player* player = new Player();
+};
+

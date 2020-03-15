@@ -5,23 +5,26 @@ using namespace std;
 
 Room* Floor::getRoom()
 {
-	return &actRoom;
+	return actRoom;
 }
 
 void Floor::createRoom()
 {
 	roomNr++;
+	elementFactory.clearEnemys();
 	RoomBuilder roomBuilder(45, 15);
 	//the higher score, the more obstacles
-	roomBuilder.setScaleCount((rand() % min(max(8, roomNr), 15)) + 1);
-	roomBuilder.setEnemyCount((rand() % min(max(3, roomNr), 10)) + 1);
+	roomBuilder.setScaleCount((rand() % min(max((*player).getScore(), roomNr), 15)) + 1);
+	roomBuilder.setEnemyCount((rand() % min(max((*player).getScore(), roomNr), 10)) + 1);
 	roomBuilder.setDoorCount(1);
 	roomBuilder.setTreasureCount(rand() % 12);
-	actRoom = roomBuilder.build();
-	actRoom.setPrinterMessage(bind(&GameLayout::print, layout, placeholders::_1, placeholders::_2));
+	if (actRoom != nullptr)
+		delete actRoom;
+	actRoom = roomBuilder.build(&elementFactory);
+	(*actRoom).setPrinterMessage(bind(&GameLayout::print, layout, placeholders::_1, placeholders::_2));
 
-	(*player).setRoom(&actRoom);
-	(*layout).setRoom(&actRoom);
+	(*player).setRoom(actRoom);
+	(*layout).setRoom(actRoom);
 }
 
 void Floor::exitFromRoom()
@@ -43,7 +46,14 @@ GameAction Floor::runAction(GameAction action)
 		exitFromRoom();
 		return served;;
 	default:
-		return action;
+		return (*actRoom).runAction(action);
 	}
 }
+
+Floor::~Floor()
+{
+	if (actRoom != nullptr)
+		delete actRoom;
+}
+
 

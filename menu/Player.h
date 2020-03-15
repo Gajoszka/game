@@ -12,21 +12,31 @@ using namespace std;
 class Player:public Creature
 {
 public:
-	Player(string name) :  Creature(50,sign_player, 10, 4, 3) {
+	Player(string name) :  Creature(id_player,sign_player, 10, 4, 3) {
 		this->name = name;
 	};
+	Player() : Creature(id_player, sign_player, 10, 4, 3) {
+
+	};
+	void setName(string name) {
+		this->name = name;
+	};
+
 	void setPrinterMessage(printMessage printer) {
 		this->printMsg = printer;
 	}
-	void setRoom(Room* room);
-	Room* getRoom() {
-		return room;
-	}
+	
 	GameAction runAction(GameAction action);
 	GameAction move(int columnStep, int rowStep);
 	void addScore(int s);
 	int getScore();
 	string getName();
+
+	void setRoom(Room* room);
+
+	Room* getRoom() {
+		return room;
+	}
 
 private:
 	int score = 0;

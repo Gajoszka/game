@@ -17,28 +17,20 @@ string Player::getName() {
 void Player::setRoom(Room* room)
 {
 	this->room = room;
-	Point place = (*room).getRandomInner();
-	(*room).put(place.getColumn(), place.getRow(), this);
-	setLocation(place);
+	(*room).putInInner( this);
 }
-
-//	//while (!setPlayer(rand() % width, rand() % height, player));
-//	return true;
-//}
 
 
 GameAction Player::move(int columnStep, int rowStep) {
-	int actColumn = getLocation().getColumn();
-	int actRow = getLocation().getRow();
-	RoomElement* actEl = (*room).get(actColumn + columnStep, actRow + rowStep);
-	if ((*actEl).canPass) {
-		//if ((*actEl).getId() != room_inner.id)
-			(*actEl).conflict(this);
-		return (*room).motionSimulation(getLocation().getColumn() + columnStep, getLocation().getRow() + rowStep, this);
+	RoomElement* actEl = (*room).get(getLocation().getColumn() + columnStep, getLocation().getRow() + rowStep);
+	GameAction action = (*actEl).conflict(this);
+	if (action == can_move || action == exitRoom) {
+		GameAction action1 = (*room).moveCreature(getLocation().getColumn() + columnStep, getLocation().getRow() + rowStep, 25, this);
+		if (action != exitRoom)
+			return action1;
 	}
-	return served;
+	return action;
 }
-
 
 GameAction Player::runAction(GameAction action)
 {

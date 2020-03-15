@@ -5,9 +5,8 @@ using namespace std;
 */
 #include "Creature.h"
 #include "GameDef.h"
-//#include "Player.h"
+#include "Player.h"
 
-class Player;
 
 class Enemy : public Creature
 {
@@ -16,13 +15,12 @@ public:
 	Enemy(int id) : Creature(id+1000,sign_enemy, 2, 1, 1), moveDirection( 1,0){
 		//this->room = room;
 	};
-	//virtual void conflict(Player *player);
-	void setMoveDirection(int column, int row);
-
-	Point getMoveDirection() {
-		return moveDirection;
-	}
+	void setRoom(Room* room);
+	void move();
+	bool move(int columnStep, int rowStep);
+	GameAction conflict(Player* player);
 private:
 	Point moveDirection;
+	Room* room;
 };
 

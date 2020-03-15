@@ -5,10 +5,7 @@
 #include "Creature.h"
 
 using namespace std;
-//template<typename Base, typename T>
-//inline bool instanceof(const T*) {
-//	return is_base_of<Base, T>::value;
-//}
+
 
 // setting cursor position
 void RoomFrame::moveCursor(int column, int row) {
@@ -36,6 +33,8 @@ void RoomFrame::setRoom(Room* room) {
 bool RoomFrame::isInside(int mapColumn, int mapRow) {
 	return (*room).isInner(mapColumn, mapRow);
 }
+
+
 
 // defining arrow keys
 GameAction RoomFrame::runAction(GameAction action)

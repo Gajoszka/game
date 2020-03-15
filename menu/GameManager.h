@@ -26,7 +26,6 @@ public:
 		return layout.getRoomFrame();
 	}
 	void play(Player *player);
-	void exitFromRoom();
 	void runAction(GameAction action);
 	~GameManager();
 
