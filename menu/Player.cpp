@@ -75,17 +75,17 @@ GameAction Player::runAction(GameAction action)
 		return move(1, 0);
 	case fire:
 		return shot();
-	case bay_ammunition:
+	case buy_ammunition:
 		if (score > 10) {
 			score -= 10;
 			gun->addAmmunition(10);
 			printerMsg(messageType::score, to_string(score));
 			printerMsg(messageType::ammunition, to_string(gun->getAmmunition()));
-			printerMsg(messageType::info_delay	, "kupiłeś doładowanie");
+			printerMsg(messageType::info_delay	, "Bought ammunition");
 			return served;
 		}
 		else
-			printerMsg(messageType::info_delay, "za mało");
+			printerMsg(messageType::info_delay, "not enough");
 	default:
 		return action;
 	}
