@@ -2,6 +2,7 @@
 #include "Screen.h"
 #include "Enemy.h"
 #include "RoomElementFactory.h"
+#include "Creature.h"
 
 
 Room::Room(int width, int height, RoomElementFactory* elementFactory) {
@@ -57,8 +58,13 @@ void Room::moveEnemys() {
 		return;
 	last_move_enemy_time = clock() / CLOCKS_PER_SEC;
 	// chooses only one enemy to move
-	elementFactory->getRandEnemy()->move();
-	elementFactory->getRandEnemy()->shot();
+	Enemy* enemy;
+	if ((enemy = elementFactory->getRandEnemy()) != nullptr)
+		enemy->move();
+	if ((enemy = elementFactory->getRandEnemy()) != nullptr)
+		enemy->shot();
+	if ((enemy = elementFactory->getRandEnemy()) != nullptr)
+		enemy->shot();
 }
 
 GameAction Room::moveCreature(int column, int row, int _delay, Creature* el) {
@@ -69,8 +75,53 @@ GameAction Room::moveCreature(int column, int row, int _delay, Creature* el) {
 	return served;
 }
 
+void Room::boomSimulation(Creature* creature, bool death)
+{
+	printerMsg(messageType::info, "BOOM!!");
+	for (int i = 1; i < 3; i++) {
+		RoomElement* actEl0 = get(creature->getLocation().getColumn() + 1, creature->getLocation().getRow());
+		if (actEl0->canPass) {
+			printer(creature->getLocation().getColumn() + 1, creature->getLocation().getRow(), '.');
+		}
+		delay(10);
+		RoomElement* actEl1 = get(creature->getLocation().getColumn() - 1, creature->getLocation().getRow());
+		if (actEl1->canPass) {
+			printer(creature->getLocation().getColumn() - 1, creature->getLocation().getRow(), '.');
+			delay(10);
+		}
+		RoomElement* actEl2 = get(creature->getLocation().getColumn(), creature->getLocation().getRow() + 1);
+		if (actEl2->canPass) {
+			printer(creature->getLocation().getColumn(), creature->getLocation().getRow() + 1, '.');
+			delay(10);
+		}
+		RoomElement* actEl3 = get(creature->getLocation().getColumn(), creature->getLocation().getRow() - 1);
+		if (actEl3->canPass) {
+			printer(creature->getLocation().getColumn(), creature->getLocation().getRow() - 1, '.');
+		}
+		delay(50);
+		printer(creature->getLocation().getColumn() + 1, creature->getLocation().getRow(), actEl0->icon);
+		delay(10);
+		printer(creature->getLocation().getColumn() - 1, creature->getLocation().getRow(), actEl1->icon);
+		delay(10);
+		printer(creature->getLocation().getColumn(), creature->getLocation().getRow() + 1, actEl2->icon);
+		delay(10);
+		printer(creature->getLocation().getColumn(), creature->getLocation().getRow() - 1, actEl3->icon);
+		delay(30);
+	}
+	if (death) {
+		put(creature->getLocation().getColumn(), creature->getLocation().getRow(), elementFactory->getInner());
+		if (Enemy* enemy = dynamic_cast<Enemy*>(creature)) {
+			elementFactory->removeEnemy(enemy);
+		}
+	}
+	else
+		printer(creature->getLocation().getColumn(), creature->getLocation().getRow(), creature->icon);
+	printerMsg(messageType::info, "");
+}
+
+
 bool Room::isInner(int column, int row) {
-	if ( column<1 || row<1 
+	if (column < 1 || row < 1
 		|| roomMap[row][column - 1]->id == id_door
 		|| roomMap[row][column]->id == id_door
 		|| roomMap[row][column + 1]->id == id_door
@@ -79,10 +130,6 @@ bool Room::isInner(int column, int row) {
 	if (roomMap[row - 1][column]->id != id_inner && roomMap[row + 1][column]->id != id_inner)
 		return false;
 	return true;
-
-	/*bool Room::canPut(int column, int row) {
-		return get(column, row).canPass;
-	}*/
 }
 
 Point Room::getRandomInner()

@@ -101,7 +101,8 @@ void RoomBuilder::createHScale(Room* room, RoomElementFactory* elementFactory)
 	Point point = (*room).getRandomInner();
 	int size = (rand() % max((width - point.getColumn() - 15), 1)) + 1;
 	for (int j = 0; j < size; j++) {
-		if ((*room).isInner(point.getColumn() + j, point.getRow()))
+		if ((*room).isInner(point.getColumn() + j, point.getRow())
+			&& room->get(point.getColumn() +j, point.getRow() + 1)->id == id_inner)
 			(*room).put(point.getColumn() + j, point.getRow(), (*elementFactory).getScale());
 	}
 }
@@ -111,7 +112,8 @@ void RoomBuilder::createVScale(Room* room, RoomElementFactory* elementFactory)
 	Point point = (*room).getRandomInner();
 	int size = (rand() % max((height - point.getRow() - 5), 1)) + 1;
 	for (int j = 0; j < size; j++) {
-		if ((*room).isInner(point.getColumn(), point.getRow()+j))
+		if ((*room).isInner(point.getColumn(), point.getRow()+j)
+			&& room->get(point.getColumn()+1,point.getRow() + j)->id==id_inner)
 			(*room).put(point.getColumn() , point.getRow()+j, (*elementFactory).getScale());
 	}
 }

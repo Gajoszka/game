@@ -1,12 +1,17 @@
-#include "Player.h"
+﻿#include "Player.h"
 #include <iostream>
 #include <string>
 #include "Screen.h"
+#include "Room.h"
+#include "Enemy.h"
+
 using namespace std;
 
 void Player::addScore(int s) {
+	if (s < 0)
+		boom();
 	score = score + s;
-	printMsg(messageType::score, to_string(score));
+	printerMsg(messageType::score, to_string(score));
 }
 int Player::getScore() {
 	return score;
@@ -18,56 +23,41 @@ string Player::getName() {
 void Player::setRoom(Room* room)
 {
 	this->room = room;
-	room->putInInner( this);
+	room->putInInner(this);
+	printerMsg(messageType::score, to_string(score));
+	printerMsg(messageType::ammunition, to_string(gun->getAmmunition()));
 }
 
 void Player::boom()
 {
-	
-	for (int i = 1; i < 3; i++) {
-		RoomElement*  actEl0 = room->get(getLocation().getColumn()+1, getLocation().getRow());
-		if (actEl0->canPass) {
-			room->printer(getLocation().getColumn() + 1, getLocation().getRow(), '.');
-		}
-		delay(10);
-		RoomElement*  actEl1 = room->get(getLocation().getColumn() - 1, getLocation().getRow());
-		if (actEl1->canPass) {
-			room->printer(getLocation().getColumn() - 1, getLocation().getRow(), '.');
-			delay(10);
-		}
-		RoomElement* actEl2 = room->get(getLocation().getColumn() , getLocation().getRow()+1);
-		if (actEl2->canPass) {
-			room->printer(getLocation().getColumn(), getLocation().getRow() + 1, '.');
-			delay(10);
-		}
-		RoomElement* actEl3 = room->get(getLocation().getColumn() , getLocation().getRow()-1);
-		if (actEl3->canPass) {
-			room->printer(getLocation().getColumn(), getLocation().getRow() - 1, '.');
-		}
-		delay(50);
-		room->printer(getLocation().getColumn() + 1, getLocation().getRow(), actEl0->icon);
-		delay(10);
-		room->printer(getLocation().getColumn() - 1, getLocation().getRow(), actEl1->icon);
-		delay(10);
-		room->printer(getLocation().getColumn(), getLocation().getRow() + 1, actEl2->icon);
-		delay(10);
-		room->printer(getLocation().getColumn(), getLocation().getRow() - 1, actEl3->icon);
-		delay(30);
-	}
-	room->printer(getLocation().getColumn(), getLocation().getRow(), icon);
+	room->boomSimulation(this, false);
 }
 
+Player::~Player()
+{
+	if (gun != nullptr)
+		delete gun;
+}
 
 GameAction Player::move(int columnStep, int rowStep) {
-	RoomElement* actEl = room->get(getLocation().getColumn() + columnStep, getLocation().getRow() + rowStep);
-	GameAction action = actEl->conflict(this);
+	RoomElement* nextEl = room->get(getLocation().getColumn() + columnStep, getLocation().getRow() + rowStep);
+	GameAction action = nextEl->conflict(this);
 	if (action == can_move || action == exitRoom) {
+		lastMoveDirection.setColumn(columnStep);
+		lastMoveDirection.setRow(rowStep);
 		GameAction action1 = room->moveCreature(getLocation().getColumn() + columnStep, getLocation().getRow() + rowStep, 20, this);
 		if (action != exitRoom)
 			return action1;
 	}
 	return action;
 }
+
+GameAction Player::shot() {
+	gun->shot(room, this);
+	room->printerMsg(messageType::ammunition, to_string(gun->getAmmunition()));
+	return served;
+}
+
 
 GameAction Player::runAction(GameAction action)
 {
@@ -83,6 +73,19 @@ GameAction Player::runAction(GameAction action)
 		return move(-1, 0);
 	case key_right:
 		return move(1, 0);
+	case fire:
+		return shot();
+	case bay_ammunition:
+		if (score > 10) {
+			score -= 10;
+			gun->addAmmunition(10);
+			printerMsg(messageType::score, to_string(score));
+			printerMsg(messageType::ammunition, to_string(gun->getAmmunition()));
+			printerMsg(messageType::info_delay	, "kupiłeś doładowanie");
+			return served;
+		}
+		else
+			printerMsg(messageType::info_delay, "za mało");
 	default:
 		return action;
 	}

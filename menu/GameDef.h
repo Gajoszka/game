@@ -19,6 +19,8 @@ const int id_door = -1;
 const int id_treasure = 11;
 const int id_gun = 100;
 
-enum  GameAction { endGame, exitRoom, Failed, moveEnemy, key_up, key_down, key_left, key_right, served,can_move,stop };
+enum  GameAction { bay_ammunition,endGame, exitRoom,fire, Failed, moveEnemy, key_up, key_down, key_left, key_right, served,can_move,stop };
 
-enum  messageType { score, info };
+enum  messageType { score, info,info_delay,
+	ammunition
+};

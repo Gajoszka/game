@@ -26,8 +26,8 @@ public:
 		return door;
 	}
 
-	Gun* getGun(int range,int magazine) {
-		return new Gun(range,magazine);
+	Gun* getGun(int range, int magazine) {
+		return new Gun(range, magazine);
 	}
 
 	RoomElement* getTreasure() {
@@ -44,6 +44,10 @@ public:
 		return enemy;
 	}
 
+	Enemy* getEnemyById(int id);
+
+	void removeEnemy(Enemy* enemy);
+
 	void clearEnemys();
 
 	size_t getEnemyCount() {
@@ -51,8 +55,12 @@ public:
 	}
 
 	Enemy* getRandEnemy() {
+		if (enemys.size()==0)
+			return nullptr;
+		if (enemys.size() == 1)
+			return enemys[0];
 		int selectedEnemy = 0;
-		while (enemys.size()>1 && lastSelectedEnemy == (selectedEnemy = rand() % enemys.size())); // chooses only one enemy to move
+		while ( lastSelectedEnemy == (selectedEnemy = rand() % enemys.size())); // chooses only one enemy to move
 		lastSelectedEnemy = selectedEnemy;
 		return enemys[selectedEnemy];
 	}
@@ -65,7 +73,7 @@ private:
 	RoomElement* wall = new  RoomElement(id_wall, static_cast<char>(219), false);
 	RoomElement* scale = new RoomElement(id_wall, static_cast<char>(219), false);
 	Door* door = new Door();
-	RoomElement* treasure = new RoomElement(id_treasure, static_cast<char>(158), true,2);
+	RoomElement* treasure = new RoomElement(id_treasure, static_cast<char>(158), true, 2);
 	//Player* player = new Player();
 };
 

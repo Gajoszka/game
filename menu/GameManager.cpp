@@ -11,7 +11,7 @@ using namespace std;
 // 
 void GameManager::play(Player* player) {
 	this->player = player;
-	(*player).setPrinterMessage(std::bind(&GameLayout::print, layout, std::placeholders::_1, std::placeholders::_2));
+	(*player).setPrinterMsg(std::bind(&GameLayout::print, layout, std::placeholders::_1, std::placeholders::_2));
 	srand(time(NULL)); // make rand more randomise
 	layout.printName((*player).getName());
 	//createFloor();
@@ -46,12 +46,19 @@ void GameManager::keyReader() {
 					layout.print(score,to_string((*player).getScore()));
 					action = exitRoom;
 					break;
+				case KEY_F4:
+					action = bay_ammunition;
+					break;
 				default:
 					action = served;
 				}
 			}
 			else {
 				switch (key) {
+				case KEY_SPACE:
+					action = fire;
+					break;
+				
 				case KEY_UP:
 					action = key_up;
 					break;

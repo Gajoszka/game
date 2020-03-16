@@ -1,7 +1,6 @@
 #pragma once
 #include "GameDef.h"	
-//#include "Player.h"
-class Player;
+class Creature;
 
 class RoomElement {
 public:
@@ -19,11 +18,11 @@ public:
 	int getId() {
 		return id;
 	}
-	virtual GameAction conflict(Player* player);
+	virtual GameAction conflict(Creature* player);
 	int id = 0;
-	char icon = ' ';
+	char icon = '\u0032';
 	bool canPass = true;
-protected:
 	int score = 0;
 };
+	
 

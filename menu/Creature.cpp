@@ -8,11 +8,11 @@ void Creature::takeDamage() {
 };
 
 void Creature::setLocation(int column, int row) {
-	roomLocation.setColumn(column);
-	roomLocation.setRow(row);
+	location.setColumn(column);
+	location.setRow(row);
 };
 
 void Creature::setLocation(Point l) {
-	roomLocation = l;
+	location = l;
 };
 

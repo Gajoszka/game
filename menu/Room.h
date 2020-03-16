@@ -2,18 +2,18 @@
 #include <xiosbase>
 #include <vector>
 #include "RoomElement.h"
-//#include "Player.h"
 #include "GameDef.h"
 #include "GameType.h"
 #include <ctime>
 #include "Point.h"
-#include "Creature.h"
+//#include "Creature.h"
 //#include "RoomElementFactory.h"
 
 
 using namespace std;
 
 class RoomElementFactory;
+class Creature;
 
 
 class Room {
@@ -34,6 +34,7 @@ public:
 	
 	GameAction runAction(GameAction action);
 	GameAction moveCreature(int column, int row,int delay, Creature* el);
+	void boomSimulation(Creature* creature, bool death);
 
 	char getIcon(int column, int row) {
 		return (*get(column, row)).icon;
@@ -58,13 +59,12 @@ public:
 	Point getRandomInner();
 	~Room();
 	printElement printer = nullptr;
+	printMessage printerMsg = nullptr;
 private:
 	int width;
 	int height;
 	RoomElementFactory* elementFactory;
 	vector<vector<RoomElement*>> roomMap; //2d vector
-	
-	printMessage printerMsg = nullptr;
 	clock_t last_move_enemy_time;
 	
 };

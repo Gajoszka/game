@@ -4,12 +4,16 @@
 #include "Screen.h"
 #include "RoomElementFactory.h"
 
-GameAction Enemy::conflict(Player* player)
+GameAction Enemy::conflict(Creature* creature)
 {
-	player->addScore(-15);
-	moveDirection = changeDirection(moveDirection);
-	player->boom();
-	return can_move;
+	GameAction action= RoomElement::conflict(creature);
+	lastMoveDirection = changeDirection(lastMoveDirection);
+	return action;
+}
+
+void Enemy::death()
+{
+	room->boomSimulation(this,true);
 }
 
 Enemy::~Enemy()
@@ -20,7 +24,7 @@ Enemy::~Enemy()
 void Enemy::setRoom(Room* room)
 {
 	this->room = room;
-	gun = room->getElementFactory()->getGun(6, 50);
+	gun = room->getElementFactory()->getGun(6, 40);
 }
 
 void Enemy::move() {
@@ -29,8 +33,8 @@ void Enemy::move() {
 	bool ok = false;
 	while (i < 10 && !ok) { // i < 10 so the loop is not infinite
 		// first in current direction, if impossible - change
-		if (!(ok = move(moveDirection.getColumn(), moveDirection.getRow()))) {
-			moveDirection = changeDirection(moveDirection);
+		if (!(ok = move(lastMoveDirection.getColumn(), lastMoveDirection.getRow()))) {
+			lastMoveDirection = changeDirection(lastMoveDirection);
 		}
 		i++;
 	}
@@ -70,26 +74,27 @@ bool Enemy::move(int columnStep, int rowStep) {
 }
 
 void Enemy::shot() {
-	if (!gun->canShot())
-		return;
-	Point  direction = changeDirection(moveDirection);
-	int actColumn = getLocation().getColumn();
-	int actRow = getLocation().getRow();
-	RoomElement* actEl;
-	for (int i = 1; i < gun->range; i++) {
-		actColumn = actColumn + direction.getColumn(); // shoots in moving direction
-		actRow = actRow + direction.getRow();
-		actEl = canMove(actColumn, actRow);
-		// if enemy can no longer move forward, escape
-		if (actEl == nullptr)
-			return;
+	gun->shot(room, this);
+	//if (!gun->canShot())
+	//	return;
+	//Point  direction = changeDirection(lastMoveDirection);
+	//int actColumn = getLocation().getColumn();
+	//int actRow = getLocation().getRow();
+	//RoomElement* actEl;
+	//for (int i = 1; i < gun->range; i++) {
+	//	actColumn = actColumn + direction.getColumn(); // shoots in moving direction
+	//	actRow = actRow + direction.getRow();
+	//	actEl = canMove(actColumn, actRow);
+	//	// if enemy can no longer move forward, escape
+	//	if (actEl == nullptr)
+	//		return;
 
-		room->printer(actColumn, actRow, gun->icon);
-		if (Player* player = dynamic_cast<Player*>(actEl))
-			gun->conflict(player);
-		delay(50);
-		(*room).printer(actColumn, actRow, (*actEl).icon); // to remove shots from previous postition
-	}
+	//	room->printer(actColumn, actRow, gun->icon);
+	//	if (Player* player = dynamic_cast<Player*>(actEl))
+	//		gun->conflict(player);
+	//	delay(50);
+	//	(*room).printer(actColumn, actRow, (*actEl).icon); // to remove shots from previous postition
+	//}
 }
 
 
