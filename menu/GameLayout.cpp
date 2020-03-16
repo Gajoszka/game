@@ -1,19 +1,30 @@
 #include "GameLayout.h"
 #include "Screen.h"
 #include <string>
+#include <fcntl.h>
+#include <io.h>
+#include <stdio.h>
 using namespace std;
 
 void GameLayout::setFont() {
+	//_setmode(_fileno(stdout), _O_U16TEXT);
+	HANDLE hStdin = GetStdHandle(STD_INPUT_HANDLE);
+	HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_FONT_INFOEX cfi;
+
+	CONSOLE_FONT_INFOEX Font = { sizeof(Font) };
+	GetCurrentConsoleFontEx(hStdout, FALSE, &Font);
+	
 	cfi.cbSize = sizeof cfi;
-	cfi.nFont = 0;
-	cfi.dwFontSize.X = 0;
-	cfi.dwFontSize.Y = 20;
-	cfi.FontFamily = FF_DONTCARE;
+	cfi.nFont = 8;
+	cfi.dwFontSize.X = 10;
+	cfi.dwFontSize.Y = 16;
+	cfi.FontFamily = FF_ROMAN;
 	cfi.FontWeight = FW_NORMAL;
-	wcscpy_s(cfi.FaceName, L"Lucida Console");
+	////wcscpy_s(cfi.FaceName, L"Lucida Console");
 	wcscpy_s(cfi.FaceName, L"Consolas");
-	//SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
+	//SetCurrentConsoleFontEx(hStdout, FALSE, &cfi);
+	
 }
 
 // cursor disappearance
@@ -32,7 +43,11 @@ GameLayout::~GameLayout() {
 
 // displays current score
 void GameLayout::printScore(string score) {
-	statsFrame.printLine(2, "Score: " + score);
+	statsFrame.printLine(2, "Money: " + score);
+}
+
+void GameLayout::printAmmunition(string ammunition) {
+	statsFrame.printLine(3, "Ammunition: " + ammunition);
 }
 
 // displays players username
@@ -58,8 +73,16 @@ void GameLayout::print(messageType type, string msg)
 	case messageType::score:
 		printScore(msg);
 		break;
+	case messageType::ammunition:
+		printAmmunition(msg);
+		break;
 	case messageType::info:
 		printInfo(msg);
+		break;
+	case messageType::info_delay:
+		printInfo(msg);
+		delay(1000);
+		printInfo("");
 		break;
 	default:
 		break;
