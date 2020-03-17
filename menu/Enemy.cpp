@@ -50,14 +50,9 @@ Point Enemy::changeDirection(Point direction) {
 }
 
 RoomElement* Enemy::canMove(int column, int row) {
-	RoomElement* actEl = room->get(column, row);
-	if (actEl == nullptr
-		|| !actEl->canPass
-		|| actEl->id == id_door
-		|| actEl->id == id_treasure
-		|| actEl->id >= 1000)
+	if (room->canMove(column, row, this))
 		return nullptr;
-	return actEl;
+	return room->get(column,row);
 }
 
 //manual setup
@@ -68,7 +63,7 @@ bool Enemy::move(int columnStep, int rowStep) {
 	if (Player* player = dynamic_cast<Player*>(actEl))
 		conflict(player);
 	else
-		room->moveCreature(getLocation().getColumn() + columnStep, getLocation().getRow() + rowStep, 5, this);
+		room->moveSimulation(getLocation().getColumn() + columnStep, getLocation().getRow() + rowStep, 5, this);
 	//setLocation(getLocation().getColumn() + columnStep, getLocation().getRow() + rowStep);
 	return true;
 }

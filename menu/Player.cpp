@@ -45,7 +45,7 @@ GameAction Player::move(int columnStep, int rowStep) {
 	if (action == can_move || action == exitRoom) {
 		lastMoveDirection.setColumn(columnStep);
 		lastMoveDirection.setRow(rowStep);
-		GameAction action1 = room->moveCreature(getLocation().getColumn() + columnStep, getLocation().getRow() + rowStep, 20, this);
+		GameAction action1 = room->moveSimulation(getLocation().getColumn() + columnStep, getLocation().getRow() + rowStep, 20, this);
 		if (action != exitRoom)
 			return action1;
 	}

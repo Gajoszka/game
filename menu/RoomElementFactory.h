@@ -18,6 +18,8 @@ public:
 		return inner;
 	}
 
+	RoomElement* get(int id);
+
 	RoomElement* getScale() {
 		return scale;
 	}
@@ -26,9 +28,9 @@ public:
 		return door;
 	}
 
-	Gun* getGun(int range, int magazine) {
-		return new Gun(range, magazine);
-	}
+	Gun* getGun(int range, int magazine);
+
+	Gun* getGun(int id);
 
 	RoomElement* getTreasure() {
 		return treasure;
@@ -49,6 +51,7 @@ public:
 	void removeEnemy(Enemy* enemy);
 
 	void clearEnemys();
+	void clearGuns();
 
 	size_t getEnemyCount() {
 		return enemys.size();
@@ -68,6 +71,7 @@ public:
 	~RoomElementFactory();
 private:
 	vector<Enemy*> enemys;
+	vector<Gun*> guns;
 	int lastSelectedEnemy = -1;
 	RoomElement* inner = new  RoomElement(id_inner, ' ', true);
 	RoomElement* wall = new  RoomElement(id_wall, static_cast<char>(219), false);

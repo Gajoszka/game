@@ -38,5 +38,5 @@ private:
 	void keyReader();
 	GameLayout layout;
 	Player *player=nullptr;
-	Floor actFloor;
+	Floor* actFloor;
 };

@@ -5,15 +5,27 @@
 #include "Creature.h"
 
 
-Room::Room(int width, int height, RoomElementFactory* elementFactory) {
-	last_move_enemy_time = clock() / CLOCKS_PER_SEC;
-	this->width = width;
-	this->height = height;
+Room::Room(vector<vector<int>> map, RoomElementFactory* elementFactory)
+{
 	this->elementFactory = elementFactory;
+	setMap(map);
+}
+
+void Room::setMap(vector<vector<int>> map)
+{
+	mapId = map;
+	height = map.size();
+	width = map[0].size();
+	RoomElement* el;
 	for (int row = 0; row < height; row++) {
 		vector<RoomElement*> tmp;
-		for (int i = 0; i < width; i++) {
-			tmp.push_back(elementFactory->getInner());
+		for (int column = 0; column < width; column++) {
+			el = elementFactory->get(map[row][column]);
+			if (Creature* creature = dynamic_cast<Creature*>(el))
+				creature->setLocation(column,row);
+			if (Enemy* enemy = dynamic_cast<Enemy*>(el))
+				enemy->setRoom(this);
+			tmp.push_back(el);
 		}
 		roomMap.push_back(move(tmp));
 	}
@@ -51,6 +63,16 @@ bool  Room::putInInner(RoomElement* el) {
 	return put(point.getColumn(), point.getRow(), el);
 }
 
+bool Room::canMove(int column, int row,RoomElement* el) {
+	RoomElement* actEl = get(column, row);
+	if (actEl == nullptr
+		|| !actEl->canPass
+		|| actEl->id == id_door
+		|| actEl->id == id_treasure
+		|| actEl->id >= id_enemy_min)
+		return false;
+	return true;
+}
 
 // time between enemies moves
 void Room::moveEnemys() {
@@ -67,7 +89,7 @@ void Room::moveEnemys() {
 		enemy->shot();
 }
 
-GameAction Room::moveCreature(int column, int row, int _delay, Creature* el) {
+GameAction Room::moveSimulation(int column, int row, int _delay, Creature* el) {
 	RoomElement* actEl = get(column, row);
 	put(el->getLocation().getColumn(), el->getLocation().getRow(), elementFactory->getInner());
 	delay(_delay);

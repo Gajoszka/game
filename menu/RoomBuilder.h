@@ -7,8 +7,7 @@
 
 using namespace std;
 
-class RoomBuilder
-{
+class RoomBuilder{
 public:
 	RoomBuilder(int width, int heihgt);
 	Room* build(RoomElementFactory* elementFactory);

@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include "GameDef.h"
 #include "RoomBuilder.h"
+#include "FloorBuilder.h"
 
 using namespace std;
 
@@ -14,17 +15,21 @@ void GameManager::play(Player* player) {
 	(*player).setPrinterMsg(std::bind(&GameLayout::print, layout, std::placeholders::_1, std::placeholders::_2));
 	srand(time(NULL)); // make rand more randomise
 	layout.printName((*player).getName());
-	//createFloor();
-	actFloor.setPlayer(player);
-	actFloor.setLayout(&layout);
-	actFloor.createRoom();
+	createFloor();
 	keyReader();
 }
 
 void GameManager::createFloor()
 {
-
-
+	if (actFloor != nullptr)
+		delete actFloor;
+	FloorBuilder floorBuilder();
+	
+	actFloor = new Floor();
+	//floorBuilder.bulid();
+	actFloor->setPlayer(player);
+	actFloor->setLayout(&layout);
+	actFloor->createRoom();
 }
 
 // reading user input
@@ -89,7 +94,7 @@ void GameManager::keyReader() {
 void GameManager::runAction(GameAction action)
 {
 	//action = (*getRoom()).runAction(action);
-	action = actFloor.runAction(action);
+	action = actFloor->runAction(action);
 	switch (action)
 	{
 	case served:
@@ -102,6 +107,8 @@ void GameManager::runAction(GameAction action)
 }
 
 GameManager::~GameManager() {
+	if (actFloor != nullptr)
+		delete actFloor;
 	layout.shutCursor(true);
 }
 

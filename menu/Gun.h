@@ -3,11 +3,9 @@
 #include "GameType.h"
 #include "Creature.h"
 
-class Gun :
-	public RoomElement
-{
+class Gun :	public RoomElement {
 public:
-	Gun(int range, int magazine) : RoomElement(id_gun, '.', false, -5) {
+	Gun(int range, int magazine) : RoomElement(id_gun_min, '.', false, -5) {
 		this->ammunition = magazine;
 		this->range = range;
 	};

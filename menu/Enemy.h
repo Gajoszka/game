@@ -13,7 +13,7 @@ class Enemy : public Creature
 {
 public:
 	// enemy extends creature with its unique data
-	Enemy(int id) : Creature(id+1000,sign_enemy, 2, 1, 1){
+	Enemy(int id) : Creature(id,sign_enemy, 2, 1, 1){
 		score = -15;
 	};
 	void setRoom(Room* room);
