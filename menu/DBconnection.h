@@ -1,6 +1,6 @@
 #pragma once
 /* Class that deals with database queries*/
-#include <mysql.h>
+//#include <mysql.h>
 #include <string>
 using namespace std;
 
@@ -13,9 +13,9 @@ class DBconnection
 	private:
 		
 		int qstate;
-		MYSQL* conn;
+		/*MYSQL* conn;
 		MYSQL_ROW row;
-		MYSQL_RES* res;
+		MYSQL_RES* res;*/
 	
 };
 

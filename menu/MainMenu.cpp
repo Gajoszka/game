@@ -7,7 +7,7 @@
 #include <iomanip>
 using namespace std;
 
-MainMenu::MainMenu() :Frame(40,10) {
+MainMenu::MainMenu() :Frame(40, 10) {
 }
 
 // manu options
@@ -38,11 +38,11 @@ void MainMenu::intro()
 	printFrame();
 	string name;
 	printCenterLine(2, "Welcome to the game!");
-	printLine(5,"What's your name? ");
+	printLine(5, "What's your name? ");
 	cin >> name;
 	db.add_username(name);
 	system("CLS");
-	play(name);	
+	play(name);
 }
 
 void MainMenu::key_fun()
@@ -56,7 +56,7 @@ void MainMenu::key_fun()
 void MainMenu::user_choice()
 {
 	GameAction action;
-	int choice;	
+	int choice;
 	cin >> choice;
 	switch (choice) {
 	case 1: intro();
@@ -66,7 +66,7 @@ void MainMenu::user_choice()
 		break;
 	case 3: cout << "Score board" << endl;
 		break;
-	case 4: action=endGame;
+	case 4: action = endGame;
 	}
 }
 
@@ -77,7 +77,7 @@ int MainMenu::chooseIndex(string head, vector<string> options, string prompt) {
 }
 
 string MainMenu::chooseOption(string head, vector<string> options, string prompt) {
-	int choice = chooseIndex( head,  options,  prompt);
+	int choice = chooseIndex(head, options, prompt);
 	return options[choice - 1];
 }
 
@@ -86,7 +86,7 @@ int MainMenu::menuDisplay(string head, vector<string> options) {
 		nameDisplay(head);
 	}
 	for (int index = 0; index < options.size(); index++) {
-		printLine(index + 2, to_string(index+1)+". "+options[index]);
+		printLine(index + 2, to_string(index + 1) + ". " + options[index]);
 	}
 
 	return options.size();
@@ -106,17 +106,12 @@ void MainMenu::showMenuLine(int index, string text) {
 
 int MainMenu::getValidInput(string prompt, int highestNum) {
 	int answer = 0;
+	string key;
+	printLine(highestNum + 3, prompt);
 	while (answer <= 0 or answer > highestNum) {
-		string user_choice ;
-		printLine(highestNum + 3, prompt);
-		//moveCursor(prompt.length()+1, highestNum+3);
-		cin >> user_choice;
+		key = _getch();
 		try {
-			if (user_choice.size() > 0) { // takes first character from user input
-				answer = stoi(user_choice); // makes an integer from a string
-			} else {
-				answer = -1;
-			}
+			answer = stoi(key); // makes an integer from a string
 		}
 		catch (exception) {
 			answer = -1;
@@ -126,7 +121,7 @@ int MainMenu::getValidInput(string prompt, int highestNum) {
 }
 
 void MainMenu::showMenu() {  // self ?????
-	while (active) {  
+	while (active) {
 		string choose = chooseOption("Menu", menu_options, "Please choose option");
 		if (choose == new_game) {
 			intro();
