@@ -40,7 +40,7 @@ void MainMenu::intro()
 	printCenterLine(2, "Welcome to the game!");
 	printLine(5,"What's your name? ");
 	cin >> name;
-	//store name, so it cann be added to database with a score
+	db.add_username(name);
 	system("CLS");
 	play(name);	
 }
@@ -55,6 +55,7 @@ void MainMenu::key_fun()
 // taking user input and proceeding chosen action
 void MainMenu::user_choice()
 {
+	GameAction action;
 	int choice;	
 	cin >> choice;
 	switch (choice) {
@@ -65,7 +66,7 @@ void MainMenu::user_choice()
 		break;
 	case 3: cout << "Score board" << endl;
 		break;
-	case 4: cout << "Exit" << endl;
+	case 4: action=endGame;
 	}
 }
 
@@ -112,7 +113,7 @@ int MainMenu::getValidInput(string prompt, int highestNum) {
 		cin >> user_choice;
 		try {
 			if (user_choice.size() > 0) { // takes first character from user input
-				answer = stoi(user_choice);
+				answer = stoi(user_choice); // makes an integer from a string
 			} else {
 				answer = -1;
 			}

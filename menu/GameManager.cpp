@@ -52,7 +52,7 @@ void GameManager::keyReader() {
 					action = exitRoom;
 					break;
 				case KEY_F4:
-					action = bay_ammunition;
+					action = buy_ammunition;
 					break;
 				default:
 					action = served;

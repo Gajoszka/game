@@ -22,7 +22,7 @@ GameAction Gun::shot(Room* room, Creature* shooter) {
 		return served;
 	Point shotDirection = shooter->lastMoveDirection;
 	if (Enemy* enemy = dynamic_cast<Enemy*>(shooter)) {
-		//dowolny kierunek strza³u
+		//random shoting direction
 		int s = (rand() + 2) % 3 - 1; // choosing new direction, where the enemy can move
 		shotDirection.setColumn(s);
 		shotDirection.setRow(((shotDirection.getRow() + 2 + s) % 3) - 1);

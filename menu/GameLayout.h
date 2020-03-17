@@ -19,7 +19,7 @@ public:
 		statsFrame.print(50, 15);
 		infoFrame.print(1, 20);
 		roomFrame.print(1, 1);
-		infoFrame.printCenterLine(4, "space-fire, F3-new room, F4- bay, F10-exit");
+		infoFrame.printCenterLine(4, "space-fire, F3-new room, F4- buy, F10-exit");
 	};
 	void printScore(string score);
 	void printAmmunition(string ammunition);
