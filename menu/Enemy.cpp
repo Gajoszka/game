@@ -6,14 +6,14 @@
 
 GameAction Enemy::conflict(Creature* creature)
 {
-	GameAction action= RoomElement::conflict(creature);
+	GameAction action = RoomElement::conflict(creature);
 	lastMoveDirection = changeDirection(lastMoveDirection);
 	return action;
 }
 
 void Enemy::death()
 {
-	room->boomSimulation(this,true);
+	room->boomSimulation(this, true);
 }
 
 Enemy::~Enemy()
@@ -41,18 +41,18 @@ void Enemy::move() {
 }
 
 Point Enemy::changeDirection(Point direction) {
-		int s = (rand() + 2) % 3 - 1; // choosing new direction, where the enemy can move
-		direction.setColumn(s);
-		direction.setRow(((direction.getRow() + 2 + s) % 3) - 1);
-			if (0 == direction.getColumn() == direction.getRow())
-				direction.setColumn(-1);
-			return direction;
+	int s = (direction.getColumn() + 2) % 3 - 1; // choosing new direction, where the enemy can move
+	direction.setColumn(s);
+	direction.setRow(((direction.getRow() + 2 + s) % 3) - 1);
+	if (0 == direction.getColumn() && 0 == direction.getRow())
+		direction.setColumn(-1);
+	return direction;
 }
 
 RoomElement* Enemy::canMove(int column, int row) {
 	if (room->canMove(column, row, this))
-		return nullptr;
-	return room->get(column,row);
+		return room->get(column, row);
+	return nullptr;
 }
 
 //manual setup

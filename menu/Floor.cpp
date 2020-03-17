@@ -15,8 +15,8 @@ void Floor::createRoom()
 	elementFactory.clearEnemys();
 	RoomMapBuilder roomBuilder(45, 15);
 	//the higher score, the more obstacles
-	roomBuilder.setScaleCount((rand() % min(max((*player).getScore(), roomNr), 15)) + 1);
-	roomBuilder.setEnemyCount((rand() % min(max((*player).getScore(), roomNr), 10)) + 1);
+	roomBuilder.setScaleCount((rand() % min(abs(player->getScore()+ roomNr), 15)) + 1);
+	roomBuilder.setEnemyCount((rand() % min(abs(player->getScore())+ roomNr, 8)) + 1);
 	roomBuilder.setDoorCount(1);
 	roomBuilder.setTreasureCount(rand() % 12);
 	if (actRoom != nullptr)

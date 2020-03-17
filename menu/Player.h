@@ -16,11 +16,9 @@ class Player :public Creature
 public:
 	Player(string name) : Creature(id_player, sign_player, 10, 4, 3) {
 		this->name = name;
-		gun = new Gun(6, 50);
 
 	};
 	Player() : Creature(id_player, sign_player, 10, 4, 3) {
-		gun = new Gun(6, 100);
 	};
 	void setName(string name) {
 		this->name = name;

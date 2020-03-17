@@ -24,6 +24,8 @@ void Player::setRoom(Room* room)
 {
 	this->room = room;
 	room->putInInner(this);
+	if (gun == nullptr)
+		gun = new Gun(8, 50);
 	printerMsg(messageType::score, to_string(score));
 	printerMsg(messageType::ammunition, to_string(gun->getAmmunition()));
 }
@@ -81,7 +83,7 @@ GameAction Player::runAction(GameAction action)
 			gun->addAmmunition(10);
 			printerMsg(messageType::score, to_string(score));
 			printerMsg(messageType::ammunition, to_string(gun->getAmmunition()));
-			printerMsg(messageType::info_delay	, "Bought ammunition");
+			printerMsg(messageType::info_delay, "Bought ammunition");
 			return served;
 		}
 		else

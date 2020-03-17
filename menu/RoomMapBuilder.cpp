@@ -8,16 +8,16 @@ RoomMapBuilder::RoomMapBuilder(int width, int heihgt) {
 }
 
 void RoomMapBuilder::setScaleCount(int count) {
-	this->scaleCount = count <= 0 ? 0 : count; // like if statement, right after ? if true, after if false
+	this->scaleCount =  abs( count); 
 }
 void RoomMapBuilder::setDoorCount(int count) {
 	this->doorCount = count <= 0 ? 1 : count;
 }
 void RoomMapBuilder::setTreasureCount(int count) {
-	this->treasureCount = count <= 0 ? 0 : count;
+	this->treasureCount = abs(count);;
 }
 void RoomMapBuilder::setEnemyCount(int count) {
-	this->enemyCount = count <= 0 ? 0 : count;
+	this->enemyCount = abs(count);;
 }
 vector<vector<int>> RoomMapBuilder::build()
 {
