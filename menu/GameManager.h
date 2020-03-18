@@ -27,8 +27,8 @@ public:
 	RoomFrame* getRoom() {
 		return layout.getRoomFrame();
 	}
-	void play(Player *player);
-	void runAction(GameAction action);
+	void play(string player);
+	GameAction runAction(GameAction action);
 	~GameManager();
 
 protected:

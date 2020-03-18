@@ -14,7 +14,7 @@ void GameLayout::setFont() {
 
 	CONSOLE_FONT_INFOEX Font = { sizeof(Font) };
 	GetCurrentConsoleFontEx(hStdout, FALSE, &Font);
-	
+
 	cfi.cbSize = sizeof cfi;
 	cfi.nFont = 8;
 	cfi.dwFontSize.X = 10;
@@ -24,7 +24,7 @@ void GameLayout::setFont() {
 	////wcscpy_s(cfi.FaceName, L"Lucida Console");
 	wcscpy_s(cfi.FaceName, L"Consolas");
 	//SetCurrentConsoleFontEx(hStdout, FALSE, &cfi);
-	
+
 }
 
 // cursor disappearance
@@ -38,17 +38,10 @@ void GameLayout::shutCursor(bool visible) {
 
 // destructor - cursor appearance
 GameLayout::~GameLayout() {
-	
+
 }
 
-// displays current score
-void GameLayout::printScore(string score) {
-	statsFrame.printLine(2, "Money: " + score);
-}
 
-void GameLayout::printAmmunition(string ammunition) {
-	statsFrame.printLine(3, "Ammunition: " + ammunition);
-}
 
 // displays players username
 void GameLayout::printName(string name) {
@@ -71,19 +64,23 @@ void GameLayout::print(messageType type, string msg)
 	switch (type)
 	{
 	case messageType::score:
-		printScore(msg);
+		statsFrame.printLine(3, "Money: " + msg);
 		break;
 	case messageType::ammunition:
-		printAmmunition(msg);
+		statsFrame.printLine(4, "Ammunition: " + ammunition);
+		break;
+	case messageType::lives:
+		statsFrame.printLine(2, "Lives: " + msg);
 		break;
 	case messageType::info:
 		printInfo(msg);
 		break;
 	case messageType::info_delay:
-		printInfo(msg);
-		delay(1000);
+		printInfo(msg+" (press any key)");
+		_getch();
 		printInfo("");
 		break;
+	
 	default:
 		break;
 	}

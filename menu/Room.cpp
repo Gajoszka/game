@@ -75,18 +75,20 @@ bool Room::canMove(int column, int row,RoomElement* el) {
 }
 
 // time between enemies moves
-void Room::moveEnemys() {
+GameAction Room::moveEnemys() {
 	if (clock() / CLOCKS_PER_SEC - last_move_enemy_time < 1) // for enemies not to move to fast, every 0.3s
-		return;
+		return served;
+	GameAction action=served;
 	last_move_enemy_time = clock() / CLOCKS_PER_SEC;
 	// chooses only one enemy to move
 	Enemy* enemy;
 	if ((enemy = elementFactory->getRandEnemy()) != nullptr)
-		enemy->move();
-	if ((enemy = elementFactory->getRandEnemy()) != nullptr)
-		enemy->shot();
-	if ((enemy = elementFactory->getRandEnemy()) != nullptr)
-		enemy->shot();
+		action=enemy->move();
+	if (action == served && (enemy = elementFactory->getRandEnemy()) != nullptr)
+		action = enemy->shot();
+	if (action==served && (enemy = elementFactory->getRandEnemy()) != nullptr)
+		action = enemy->shot();
+	return action;
 }
 
 GameAction Room::moveSimulation(int column, int row, int _delay, Creature* el) {
@@ -170,8 +172,7 @@ Point Room::getRandomInner()
 
 GameAction Room::runAction(GameAction action)
 {
-	moveEnemys();
-	return action;
+	return moveEnemys();
 }
 
 

@@ -6,7 +6,7 @@
 class Door :public RoomElement
 {
 public:
-	Door() :RoomElement(id_door, ' ', true,5) {
+	Door() :RoomElement(id_door, ' ', true,3) {
 
 	}
 	GameAction conflict(Creature* creature) {

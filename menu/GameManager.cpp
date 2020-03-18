@@ -10,8 +10,9 @@
 using namespace std;
 
 // 
-void GameManager::play(Player* player) {
-	this->player = player;
+void GameManager::play(string playerName) {
+	
+	this->player = new Player(playerName);
 	(*player).setPrinterMsg(std::bind(&GameLayout::print, layout, std::placeholders::_1, std::placeholders::_2));
 	srand(time(NULL)); // make rand more randomise
 	layout.printName((*player).getName());
@@ -44,7 +45,6 @@ void GameManager::keyReader() {
 				switch (key) {
 				case KEY_F10:
 					action = endGame;
-					system("CLS");
 					break;
 				case KEY_F3:
 					(*player).addScore(-10);
@@ -63,7 +63,6 @@ void GameManager::keyReader() {
 				case KEY_SPACE:
 					action = fire;
 					break;
-				
 				case KEY_UP:
 					action = key_up;
 					break;
@@ -80,18 +79,19 @@ void GameManager::keyReader() {
 					action = served;
 				}
 			}
-			runAction(action);
+			action=runAction(action);
 		}
 		else
-			runAction(moveEnemy); // if nothing pressed - enemy move
+			action=runAction(moveEnemy); // if nothing pressed - enemy move
 	}
+	system("CLS");
 }
 
 // escaping room and creating a new one
 
 
 // manage occuring actions
-void GameManager::runAction(GameAction action)
+GameAction GameManager::runAction(GameAction action)
 {
 	//action = (*getRoom()).runAction(action);
 	action = actFloor->runAction(action);
@@ -101,14 +101,19 @@ void GameManager::runAction(GameAction action)
 		break;
 	case Failed:
 		break;
+	case player_death:
+		layout.print(info_delay, "END GAME");
+		action = endGame;
 	default:
 		break;
 	}
+	return action;
 }
 
 GameManager::~GameManager() {
 	if (actFloor != nullptr)
 		delete actFloor;
+	delete player;
 	layout.shutCursor(true);
 }
 

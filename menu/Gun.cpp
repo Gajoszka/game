@@ -9,10 +9,8 @@ GameAction Gun::conflict(Creature* creature)
 		enemy->death();
 	}
 	else if (Player* player = dynamic_cast<Player*>(creature)) {
-		RoomElement::conflict(player);
 		ammunition--;
-		player->boom();
-		player->addScore(score);
+		return player->decreseLives();
 	}
 	return served;
 }
@@ -39,7 +37,7 @@ GameAction Gun::shot(Room* room, Creature* shooter) {
 		nextRow = nextRow + shotDirection.getRow();
 		nextEl = room->get(nextColumn, nextRow);
 		// if enemy can no longer move forward, escape
-		if (nextEl==nullptr || !nextEl->canPass)
+		if (nextEl==nullptr || !nextEl->canPass || nextEl->id==id_door)
 			return served;
 		room->printer(nextColumn, nextRow, icon);
 		

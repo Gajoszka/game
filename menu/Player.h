@@ -33,9 +33,13 @@ public:
 	void addScore(int s);
 	int getScore();
 	string getName();
-
+	GameAction decreseLives() {
+		lives--;
+		printerMsg(messageType::lives, to_string(lives));
+		room->boomSimulation(this, false);
+		return lives <= 0 ? player_death: served;
+	}
 	void setRoom(Room* room);
-	void  boom();
 	Room* getRoom() {
 		return room;
 	}
@@ -46,6 +50,7 @@ private:
 	printMessage printerMsg = nullptr;
 	Room* room;
 	Gun* gun = nullptr;
+	int lives = 5;
 	GameAction shot();
 };
 

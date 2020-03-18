@@ -26,20 +26,26 @@ void MainMenu::printInside() {
 // creating user for a current game
 void MainMenu::play(string name) {
 	GameManager game;
-	Player player(name);
-	game.play(&player);
+	game.play(name);
+	printFrame();
 }
-
 
 // taking username and putting it into database
 void MainMenu::intro()
 {
 	system("CLS"); // cleat the screen
 	printFrame();
-	string name;
+	string name = "";
 	printCenterLine(2, "Welcome to the game!");
 	printLine(5, "What's your name? ");
-	cin >> name;
+	char key=32;
+	while (key != 13) {
+		key = _getch();
+		if (name.size()<10 && key >= '0' && key <= 'z') {
+			name += key;
+			printLine(5, "What's your name? " + name);
+		}
+	}
 	db.add_username(name);
 	system("CLS");
 	play(name);

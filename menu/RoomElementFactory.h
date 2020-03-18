@@ -77,7 +77,7 @@ private:
 	RoomElement* wall = new  RoomElement(id_wall, static_cast<char>(219), false);
 	RoomElement* scale = new RoomElement(id_wall, static_cast<char>(219), false);
 	Door* door = new Door();
-	RoomElement* treasure = new RoomElement(id_treasure, static_cast<char>(158), true, 2);
+	RoomElement* treasure = new RoomElement(id_treasure, static_cast<char>(158), true, 1);
 	//Player* player = new Player();
 };
 

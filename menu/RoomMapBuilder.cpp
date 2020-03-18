@@ -141,7 +141,9 @@ void RoomMapBuilder::createTreasure(vector<vector<int>>* map)
 		while (i < 40 && !ok) {
 			row = (rand() % (height - 2)) + 1;
 			column = (rand() % (width - 2)) + 1;
-			ok = (*map)[row][column]==id_inner;
+			ok = column>1 && column<width-2
+				 && row>1 && row<height-2
+				&& (*map)[row][column]==id_inner;
 			i++;
 		}
 		return Point(column, row);

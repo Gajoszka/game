@@ -9,7 +9,7 @@ using namespace std;
 
 void Player::addScore(int s) {
 	if (s < 0)
-		boom();
+		room->boomSimulation(this, false);
 	score = score + s;
 	printerMsg(messageType::score, to_string(score));
 }
@@ -27,12 +27,8 @@ void Player::setRoom(Room* room)
 	if (gun == nullptr)
 		gun = new Gun(8, 50);
 	printerMsg(messageType::score, to_string(score));
+	printerMsg(messageType::lives, to_string(lives));
 	printerMsg(messageType::ammunition, to_string(gun->getAmmunition()));
-}
-
-void Player::boom()
-{
-	room->boomSimulation(this, false);
 }
 
 Player::~Player()
@@ -80,7 +76,7 @@ GameAction Player::runAction(GameAction action)
 	case buy_ammunition:
 		if (score > 10) {
 			score -= 10;
-			gun->addAmmunition(10);
+			gun->addAmmunition(5);
 			printerMsg(messageType::score, to_string(score));
 			printerMsg(messageType::ammunition, to_string(gun->getAmmunition()));
 			printerMsg(messageType::info_delay, "Bought ammunition");

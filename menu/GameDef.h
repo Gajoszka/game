@@ -20,8 +20,8 @@ const int id_treasure = 11;
 const int id_gun_min = 100;
 const int id_enemy_min = 1000;
 
-enum  GameAction { buy_ammunition,endGame, exitRoom,fire, Failed, moveEnemy, key_up, key_down, key_left, key_right, served,can_move,stop };
+enum  GameAction { buy_ammunition,endGame, exitRoom,fire, Failed,none, moveEnemy, key_up, key_down, key_left, key_right,player_death,served,can_move,stop };
 
 enum  messageType { score, info,info_delay,
-	ammunition
+	ammunition,lives
 };

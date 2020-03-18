@@ -21,8 +21,6 @@ public:
 		roomFrame.print(1, 1);
 		infoFrame.printCenterLine(4, "space-fire, F3-new room, F4- buy, F10-exit");
 	};
-	void printScore(string score);
-	void printAmmunition(string ammunition);
 	void printName(string name);
 	void printInfo(string value);
 

@@ -14,12 +14,12 @@ class Enemy : public Creature
 public:
 	// enemy extends creature with its unique data
 	Enemy(int id) : Creature(id,sign_enemy, 2, 1, 1){
-		score = -15;
+		score = -10;
 	};
 	void setRoom(Room* room);
-	void move();
-	bool move(int columnStep, int rowStep);
-	void shot();
+	GameAction move();
+	GameAction move(int columnStep, int rowStep);
+	GameAction shot();
 	GameAction conflict(Creature* creature);
 	void death();
 	~Enemy();

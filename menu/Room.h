@@ -29,7 +29,7 @@ public:
 	bool put(int column, int row, RoomElement* el);
 	bool putInInner(RoomElement* el);
 	RoomElement* get(int column, int row);
-	void moveEnemys();
+	GameAction moveEnemys();
 
 	bool isInner(int column, int row);
 	bool canMove(int column, int row, RoomElement* el);
