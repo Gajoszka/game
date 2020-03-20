@@ -4,8 +4,10 @@
 #include <fcntl.h>
 #include <io.h>
 #include <stdio.h>
+/*Displaying current information and room*/
 using namespace std;
 
+//setting font size and style
 void GameLayout::setFont() {
 	//_setmode(_fileno(stdout), _O_U16TEXT);
 	HANDLE hStdin = GetStdHandle(STD_INPUT_HANDLE);
@@ -21,9 +23,7 @@ void GameLayout::setFont() {
 	cfi.dwFontSize.Y = 16;
 	cfi.FontFamily = FF_ROMAN;
 	cfi.FontWeight = FW_NORMAL;
-	////wcscpy_s(cfi.FaceName, L"Lucida Console");
 	wcscpy_s(cfi.FaceName, L"Consolas");
-	//SetCurrentConsoleFontEx(hStdout, FALSE, &cfi);
 
 }
 
@@ -38,9 +38,7 @@ void GameLayout::shutCursor(bool visible) {
 
 // destructor - cursor appearance
 GameLayout::~GameLayout() {
-
 }
-
 
 
 // displays players username
@@ -59,6 +57,7 @@ void GameLayout::setRoom(Room* room) {
 	roomFrame.printInside();
 }
 
+// printing messages in adequate places
 void GameLayout::print(messageType type, string msg)
 {
 	switch (type)

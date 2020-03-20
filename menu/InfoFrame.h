@@ -1,5 +1,5 @@
 #pragma once
-/*Class for all frames that are used to display information*/
+/*Frames for displaying current information to the player*/
 #include "Frame.h"
 #include <vector>
 #include <string>
@@ -18,4 +18,3 @@ public:
 private:
 	vector<string> content;
 };
-

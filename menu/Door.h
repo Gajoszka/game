@@ -2,6 +2,8 @@
 #include "RoomElement.h"
 #include "GameDef.h"
 #include "Player.h"
+/* Adding points when exit the room*/
+using namespace std;
 
 class Door :public RoomElement
 {

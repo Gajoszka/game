@@ -1,6 +1,6 @@
 #pragma once
 #include "Floor.h"
-
+/* Generating floor with multiple rooms */
 class FloorBuilder {
 public:
 	FloorBuilder();
@@ -13,5 +13,3 @@ public:
 private:
 	int roomCount = 0;
 };
-
-

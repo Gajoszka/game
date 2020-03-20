@@ -5,6 +5,7 @@
 #include <iostream>
 #include <vector>
 #include <iomanip>
+/* Creating the opening menu*/
 using namespace std;
 
 MainMenu::MainMenu() :Frame(40, 10) {
@@ -16,10 +17,6 @@ void MainMenu::printInside() {
 	menu_options.push_back(keys);
 	menu_options.push_back(scores);
 	menu_options.push_back(exit);
-	/*for (int i = 0; i < menu_options.size(); i++) {
-		printLine(i+2, menu_options[i]);
-	}
-	printLine(8, "Which option do you choose? ");*/
 	showMenu();
 }
 
@@ -38,8 +35,9 @@ void MainMenu::intro()
 	string name = "";
 	printCenterLine(2, "Welcome to the game!");
 	printLine(5, "What's your name? ");
-	char key=32;
-	while (key != 13) {
+	char key=32; //32 = SPACE
+	// username cannot escape the frame
+	while (key != 13) { // 13 = ENTER
 		key = _getch();
 		if (name.size()<10 && key >= '0' && key <= 'z') {
 			name += key;
@@ -51,6 +49,7 @@ void MainMenu::intro()
 	play(name);
 }
 
+// transfer to key functions
 void MainMenu::key_fun()
 {
 	system("CLS");
@@ -76,17 +75,20 @@ void MainMenu::user_choice()
 	}
 }
 
+// choose option by index
 int MainMenu::chooseIndex(string head, vector<string> options, string prompt) {
 	int highestNumber = menuDisplay(head, options);
 	int choice = getValidInput(prompt + "(from 1 to " + to_string(highestNumber) + "): ", highestNumber);
 	return choice;
 }
 
+//choose option by name
 string MainMenu::chooseOption(string head, vector<string> options, string prompt) {
 	int choice = chooseIndex(head, options, prompt);
 	return options[choice - 1];
 }
 
+//display menu
 int MainMenu::menuDisplay(string head, vector<string> options) {
 	if (head.size() > 0) {
 		nameDisplay(head);
@@ -98,18 +100,19 @@ int MainMenu::menuDisplay(string head, vector<string> options) {
 	return options.size();
 }
 
+//display option name
 void MainMenu::nameDisplay(string name) {
 	if (name != " ") {
-		//cout << "\t" + name + "\n";
 		printLine(1, name);
 	}
 }
 
-
+// show whole option line
 void MainMenu::showMenuLine(int index, string text) {
 	cout << index + ". " + text;
 }
 
+// ensure input is valid, there is such option in menu
 int MainMenu::getValidInput(string prompt, int highestNum) {
 	int answer = 0;
 	string key;
@@ -126,7 +129,8 @@ int MainMenu::getValidInput(string prompt, int highestNum) {
 	return answer;
 }
 
-void MainMenu::showMenu() {  // self ?????
+// chosen option transfers to appropriate actions
+void MainMenu::showMenu() {
 	while (active) {
 		string choose = chooseOption("Menu", menu_options, "Please choose option");
 		if (choose == new_game) {

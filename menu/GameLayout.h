@@ -1,6 +1,5 @@
 #pragma once
-/* Creating game layout, creating frames in desired places
-and controlling their inputs*/
+/*Displaying current information and room*/
 #include "InfoFrame.h"
 #include "RoomFrame.h"
 #include "GameDef.h"
@@ -38,7 +37,4 @@ private:
 	InfoFrame mapFrame;
 	InfoFrame activeItemFrame;
 	void setFont();
-	
-	
 };
-

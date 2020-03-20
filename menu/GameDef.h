@@ -1,5 +1,18 @@
 #pragma once
+/* defining constants*/
 
+// defining special keys
+#define KEY_UP 72
+#define KEY_DOWN 80
+#define KEY_LEFT 75
+#define KEY_RIGHT 77
+#define KEY_END 79
+#define KEY_SPACE 32
+#define KEY_F3 61
+#define KEY_F4 62
+#define KEY_F10 68
+
+// defining sing for wall creation
 #define sign_wall  static_cast<char>(186);
 #define sign_top_right static_cast<char>(187);
 #define sign_top_left static_cast<char>(201);
@@ -7,6 +20,7 @@
 #define sign_bottom_left static_cast<char>(200);
 #define sign_dash static_cast<char>(205);
 
+// defining constants
 const char sign_enemy = 'E';
 const char sign_player = '@';
 const char sign_shot = '.';

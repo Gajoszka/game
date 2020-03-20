@@ -3,33 +3,38 @@
 #include "Room.h"
 #include "Screen.h"
 #include "RoomElementFactory.h"
+/* Controlling enemy movement and loation*/
 
+// death when encounter player
 GameAction Enemy::conflict(Creature* creature)
 {
 	if (Player* player = dynamic_cast<Player*>(creature)) {
 		death(); 
 		return player->decreseLives();
 	}
-	//lastMoveDirection = changeDirection(lastMoveDirection);
 	return served;
 }
 
+// enemy explodes when dying
 void Enemy::death()
 {
 	room->boomSimulation(this, true);
 }
 
+// destructor
 Enemy::~Enemy()
 {
 	delete gun;
 }
 
+// enemy inside room and moves inside room
 void Enemy::setRoom(Room* room)
 {
 	this->room = room;
 	gun = room->getElementFactory()->getGun(6, 40);
 }
 
+//enemy movement
 GameAction Enemy::move() {
 	Point actLocation = getLocation();
 	int i = 0;
@@ -44,6 +49,7 @@ GameAction Enemy::move() {
 	return action==none? served:action;
 }
 
+// changing direction if obstacle encountered
 Point Enemy::changeDirection(Point direction) {
 	int s = (direction.getColumn() + 2) % 3 - 1; // choosing new direction, where the enemy can move
 	direction.setColumn(s);
@@ -53,6 +59,7 @@ Point Enemy::changeDirection(Point direction) {
 	return direction;
 }
 
+// checking if enemy can move in current direction
 RoomElement* Enemy::canMove(int column, int row) {
 	if (room->canMove(column, row, this))
 		return room->get(column, row);
@@ -68,7 +75,6 @@ GameAction Enemy::move(int columnStep, int rowStep) {
 		return conflict(player);
 	else
 		room->moveSimulation(getLocation().getColumn() + columnStep, getLocation().getRow() + rowStep, 5, this);
-	//setLocation(getLocation().getColumn() + columnStep, getLocation().getRow() + rowStep);
 	return served;
 }
 

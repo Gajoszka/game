@@ -7,23 +7,10 @@
 #include "GameLayout.h"
 #include "Floor.h"
 
-// defining special keys
-#define KEY_UP 72
-#define KEY_DOWN 80
-#define KEY_LEFT 75
-#define KEY_RIGHT 77
-#define KEY_END 79
-#define KEY_SPACE 32
-#define KEY_F3 61
-#define KEY_F4 62
-#define KEY_F10 68
-
 class GameManager
 {
 public:
-	GameManager() : layout(){
-		
-	};
+	GameManager() : layout() {};
 	RoomFrame* getRoom() {
 		return layout.getRoomFrame();
 	}

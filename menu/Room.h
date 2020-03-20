@@ -6,8 +6,6 @@
 #include "GameType.h"
 #include <ctime>
 #include "Point.h"
-//#include "Creature.h"
-//#include "RoomElementFactory.h"
 
 
 using namespace std;

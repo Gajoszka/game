@@ -1,6 +1,6 @@
 ﻿#include "DBconnection.h"
 #include "Game.h"
-
+/* Start of the game, connecting to database*/
 
 using namespace std;
 

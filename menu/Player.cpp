@@ -4,7 +4,7 @@
 #include "Screen.h"
 #include "Room.h"
 #include "Enemy.h"
-
+/*Defining players and their attributes and abilities*/
 using namespace std;
 
 void Player::addScore(int s) {
@@ -37,10 +37,11 @@ Player::~Player()
 		delete gun;
 }
 
+// player movement
 GameAction Player::move(int columnStep, int rowStep) {
 	RoomElement* nextEl = room->get(getLocation().getColumn() + columnStep, getLocation().getRow() + rowStep);
 	GameAction action = nextEl->conflict(this);
-	if (action == can_move || action == exitRoom) {
+	if (action == can_move || action == exitRoom) { // checking whether player can move in chosen direction
 		lastMoveDirection.setColumn(columnStep);
 		lastMoveDirection.setRow(rowStep);
 		GameAction action1 = room->moveSimulation(getLocation().getColumn() + columnStep, getLocation().getRow() + rowStep, 20, this);
@@ -50,6 +51,7 @@ GameAction Player::move(int columnStep, int rowStep) {
 	return action;
 }
 
+// shooting and changing amunition amount
 GameAction Player::shot() {
 	gun->shot(room, this);
 	room->printerMsg(messageType::ammunition, to_string(gun->getAmmunition()));

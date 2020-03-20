@@ -1,15 +1,13 @@
 #pragma once
-/*Parent class for enemies and player, child class of Room Element */
+/*Parent class for enemies and player, defining players' coordinates, how they fight, take damage */
 #include "Point.h"
 #include "RoomElement.h"
-//#include "Room.h"
 
 class Room;
 
 class Creature : public  RoomElement
 {
 public:
-	//Creature() {};
 
 	virtual void fight();
 	virtual void takeDamage();
@@ -34,7 +32,5 @@ private:
 	int hp;
 	int attack;
 	int defence;
-
-
 };
 

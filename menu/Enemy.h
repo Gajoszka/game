@@ -1,8 +1,6 @@
 #pragma once
 using namespace std;
-
-/* Child class inheriting from Creature class
-*/
+/* Child class inheriting from Creature class, defining enemy creature*/
 #include "Creature.h"
 #include "GameDef.h"
 #include "Player.h"

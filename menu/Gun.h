@@ -2,6 +2,7 @@
 #include "RoomElement.h"
 #include "GameType.h"
 #include "Creature.h"
+/* Gun shooting and amunition interactions with creatures*/
 
 class Gun :	public RoomElement {
 public:
@@ -25,8 +26,4 @@ public:
 protected:
 	int range = 4;
 	int ammunition = 0;
-private:
-	
-
 };
-

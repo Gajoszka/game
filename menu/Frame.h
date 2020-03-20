@@ -1,9 +1,7 @@
 #pragma once
-/* Creating frames and defining its insides*/
+/* Creating frames to divide screen into separate sections and defining insides*/
 #include <string>
 #include "Point.h"
-
-// defining frame elements
 
 class Frame
 {
@@ -35,7 +33,4 @@ protected:
 	int width;
 	int height;
 	Point topLeft;
-
-
 };
-

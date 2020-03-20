@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Screen.h"
+/* Gun shooting and amunition interactions with creatures*/
 
 GameAction Gun::conflict(Creature* creature)
 {
@@ -18,7 +19,8 @@ GameAction Gun::conflict(Creature* creature)
 GameAction Gun::shot(Room* room, Creature* shooter) {
 	if (!canShot())
 		return served;
-	Point shotDirection = shooter->lastMoveDirection;
+	// shots are in the direction of last move of creature
+	Point shotDirection = shooter->lastMoveDirection; 
 	if (Enemy* enemy = dynamic_cast<Enemy*>(shooter)) {
 		//random shoting direction
 		int s = (rand() + 2) % 3 - 1; // choosing new direction, where the enemy can move
@@ -33,7 +35,7 @@ GameAction Gun::shot(Room* room, Creature* shooter) {
 	RoomElement* nextEl;
 	--ammunition;
 	for (int i = 1; i < range; i++) {
-		nextColumn = nextColumn + shotDirection.getColumn(); // shoots in moving direction
+		nextColumn = nextColumn + shotDirection.getColumn();
 		nextRow = nextRow + shotDirection.getRow();
 		nextEl = room->get(nextColumn, nextRow);
 		// if enemy can no longer move forward, escape

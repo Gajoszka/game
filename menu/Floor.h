@@ -2,6 +2,7 @@
 #include "Room.h"
 #include "GameLayout.h"
 #include"RoomElementFactory.h"
+/* Creating floor with multiplle rooms */
 
 class Floor
 {

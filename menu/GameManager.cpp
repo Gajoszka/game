@@ -6,10 +6,9 @@
 #include "GameDef.h"
 #include "RoomBuilder.h"
 #include "FloorBuilder.h"
-
+/* Controls game flow */
 using namespace std;
 
-// 
 void GameManager::play(string playerName) {
 	
 	this->player = new Player(playerName);
@@ -20,6 +19,7 @@ void GameManager::play(string playerName) {
 	keyReader();
 }
 
+// floor creation
 void GameManager::createFloor()
 {
 	if (actFloor != nullptr)
@@ -27,7 +27,6 @@ void GameManager::createFloor()
 	FloorBuilder floorBuilder();
 	
 	actFloor = new Floor();
-	//floorBuilder.bulid();
 	actFloor->setPlayer(player);
 	actFloor->setLayout(&layout);
 	actFloor->createRoom();
@@ -87,8 +86,6 @@ void GameManager::keyReader() {
 	system("CLS");
 }
 
-// escaping room and creating a new one
-
 
 // manage occuring actions
 GameAction GameManager::runAction(GameAction action)
@@ -110,13 +107,10 @@ GameAction GameManager::runAction(GameAction action)
 	return action;
 }
 
+// destructor
 GameManager::~GameManager() {
 	if (actFloor != nullptr)
 		delete actFloor;
 	delete player;
 	layout.shutCursor(true);
 }
-
-
-
-

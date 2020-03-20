@@ -1,5 +1,5 @@
 #pragma once
-/*Player class defining players point, health...*/
+/*Defining players and their attributes and abilities*/
 #include <math.h>
 #include <string>
 #include "Creature.h"
@@ -53,4 +53,3 @@ private:
 	int lives = 5;
 	GameAction shot();
 };
-

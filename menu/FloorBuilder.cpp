@@ -1,8 +1,7 @@
 #include "FloorBuilder.h"
+/* Generating floor with multiple rooms */
 
-FloorBuilder::FloorBuilder()
-{
-}
+FloorBuilder::FloorBuilder() {}
 
 Floor* FloorBuilder::build()
 {
