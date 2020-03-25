@@ -1,5 +1,6 @@
 #pragma once
-#include "GameDef.h"	
+#include "GameDef.h"
+/* Maps elements as room elements*/
 class Creature;
 
 class RoomElement {
@@ -24,5 +25,3 @@ public:
 	bool canPass = true;
 	int score = 0;
 };
-	
-

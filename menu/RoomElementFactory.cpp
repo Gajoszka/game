@@ -1,8 +1,7 @@
 #include "RoomElementFactory.h"
+/* Creating room elements */
 
-RoomElementFactory::RoomElementFactory()
-{
-}
+RoomElementFactory::RoomElementFactory() {}
 
 RoomElement* RoomElementFactory::get(int id)
 {
@@ -70,6 +69,7 @@ void RoomElementFactory::clearGuns()
 	guns.clear();
 }
 
+// destructor
 RoomElementFactory::~RoomElementFactory()
 {
 	delete inner;
@@ -78,5 +78,4 @@ RoomElementFactory::~RoomElementFactory()
 	delete treasure;
 	clearEnemys();
 	clearGuns();
-
 }

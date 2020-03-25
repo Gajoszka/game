@@ -3,7 +3,7 @@
 #include <iostream>
 #include "Room.h"
 #include "Creature.h"
-
+/* Manages what's inside room walls*/
 using namespace std;
 
 
@@ -34,8 +34,6 @@ bool RoomFrame::isInside(int mapColumn, int mapRow) {
 	return (*room).isInner(mapColumn, mapRow);
 }
 
-
-
 // defining arrow keys
 GameAction RoomFrame::runAction(GameAction action)
 {
@@ -43,14 +41,6 @@ GameAction RoomFrame::runAction(GameAction action)
 	{
 	case served:
 		return action;
-	/*case key_up:
-		return room.movePlayer(0, -1);
-	case key_down:
-		return room.movePlayer(0, 1);
-	case key_left:
-		return room.movePlayer(-1, 0);
-	case key_right:
-		return room.movePlayer(1, 0);*/
 	case moveEnemy:
 		(*room).moveEnemys();
 		return served;
@@ -58,4 +48,3 @@ GameAction RoomFrame::runAction(GameAction action)
 		return action;
 	}
 }
-

@@ -29,5 +29,3 @@ private:
 	void createEnemy(vector<vector<int>>* map, int id);
 	Point getRandomInner(vector<vector<int>>* map);
 };
-
-

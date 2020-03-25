@@ -1,5 +1,5 @@
 #pragma once
-
+/* Tracking one's coordinates*/
 class Point
 {
 public:
@@ -12,4 +12,3 @@ public:
 private:
 	int column=0, row=0;
 };
-

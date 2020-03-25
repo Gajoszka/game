@@ -1,4 +1,5 @@
 #include "Point.h"
+/* Tracking one's coordinates*/
 using namespace std;
 
 Point::Point(int column, int row) {

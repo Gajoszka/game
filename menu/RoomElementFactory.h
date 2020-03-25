@@ -5,6 +5,7 @@
 #include "Enemy.h"
 #include "Player.h"
 #include "Enemy.h"
+/* Creating room elements */
 
 class RoomElementFactory {
 public:
@@ -80,4 +81,3 @@ private:
 	RoomElement* treasure = new RoomElement(id_treasure, static_cast<char>(158), true, 1);
 	//Player* player = new Player();
 };
-

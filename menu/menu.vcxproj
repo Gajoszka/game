@@ -198,7 +198,6 @@
     <ClInclude Include="Room.h" />
     <ClInclude Include="GameDef.h" />
     <ClInclude Include="Point.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="RoomElementFactory.h" />
     <ClInclude Include="RoomFrame.h" />
     <ClInclude Include="Enemy.h" />

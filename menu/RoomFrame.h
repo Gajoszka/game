@@ -1,6 +1,5 @@
 #pragma once
-/* Manage what's inside room walls,
-controls movements of creatures*/
+/* Manages what's inside room walls*/
 #include "Frame.h"
 #include "Player.h"
 #include "GameDef.h"
@@ -9,15 +8,12 @@ controls movements of creatures*/
 #include "Room.h"
 #include "Enemy.h"
 
-
 using namespace std;
 
 class RoomFrame : public Frame
 {
 public:
-	RoomFrame(int width, int height) :Frame(width,height)  {
-	
-	};
+	RoomFrame(int width, int height) :Frame(width,height)  {};
 	virtual void printInside();
     virtual bool isInside(int row, int column);
 	void setRoom(Room* room);
@@ -26,5 +22,4 @@ protected:
 	virtual void moveCursor(int column, int row);
 private:
 	Room* room=nullptr;
-	
 };

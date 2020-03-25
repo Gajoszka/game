@@ -3,7 +3,7 @@
 #include "Enemy.h"
 #include "RoomElementFactory.h"
 #include "Creature.h"
-
+/*Room creation*/
 
 Room::Room(vector<vector<int>> map, RoomElementFactory* elementFactory)
 {
@@ -11,6 +11,7 @@ Room::Room(vector<vector<int>> map, RoomElementFactory* elementFactory)
 	setMap(map);
 }
 
+// inserting map elements
 void Room::setMap(vector<vector<int>> map)
 {
 	mapId = map;
@@ -38,6 +39,7 @@ RoomElement* Room::get(int column, int row) {
 	return nullptr;
 }
 
+// destructor
 Room::~Room()
 {
 	for (vector<RoomElement*> vector : roomMap) {
@@ -58,11 +60,13 @@ bool  Room::put(int column, int row, RoomElement* el) {
 	return false;
 }
 
+// making position of elements random
 bool  Room::putInInner(RoomElement* el) {
 	Point point = getRandomInner();
 	return put(point.getColumn(), point.getRow(), el);
 }
 
+// checking if element can be stepped into
 bool Room::canMove(int column, int row,RoomElement* el) {
 	RoomElement* actEl = get(column, row);
 	if (actEl == nullptr
@@ -91,6 +95,7 @@ GameAction Room::moveEnemys() {
 	return action;
 }
 
+// making movement move real (dissapear and delay)
 GameAction Room::moveSimulation(int column, int row, int _delay, Creature* el) {
 	RoomElement* actEl = get(column, row);
 	put(el->getLocation().getColumn(), el->getLocation().getRow(), elementFactory->getInner());
@@ -99,9 +104,11 @@ GameAction Room::moveSimulation(int column, int row, int _delay, Creature* el) {
 	return served;
 }
 
+// making simulation look more realistic
 void Room::boomSimulation(Creature* creature, bool death)
 {
 	printerMsg(messageType::info, "BOOM!!");
+	// sign in all neighbour coordinates
 	for (int i = 1; i < 3; i++) {
 		RoomElement* actEl0 = get(creature->getLocation().getColumn() + 1, creature->getLocation().getRow());
 		if (actEl0->canPass) {
@@ -132,6 +139,7 @@ void Room::boomSimulation(Creature* creature, bool death)
 		printer(creature->getLocation().getColumn(), creature->getLocation().getRow() - 1, actEl3->icon);
 		delay(30);
 	}
+	// dead enemy disappearance
 	if (death) {
 		put(creature->getLocation().getColumn(), creature->getLocation().getRow(), elementFactory->getInner());
 		if (Enemy* enemy = dynamic_cast<Enemy*>(creature)) {
@@ -174,6 +182,3 @@ GameAction Room::runAction(GameAction action)
 {
 	return moveEnemys();
 }
-
-
-

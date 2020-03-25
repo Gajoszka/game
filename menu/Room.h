@@ -12,7 +12,7 @@ using namespace std;
 
 class RoomElementFactory;
 class Creature;
-
+/*Room creation*/
 
 class Room {
 public:
@@ -66,8 +66,4 @@ private:
 	vector<vector<RoomElement*>> roomMap; //2d vector
 	vector<vector<int>> mapId;
 	clock_t last_move_enemy_time;
-	
 };
-
-
-

@@ -133,18 +133,18 @@ void RoomMapBuilder::createTreasure(vector<vector<int>>* map)
 	}
 }
 
-	Point RoomMapBuilder::getRandomInner(vector<vector<int>>* map)
-	{
-		int i = 0;
-		bool ok = false;
-		int row, column;
-		while (i < 40 && !ok) {
-			row = (rand() % (height - 2)) + 1;
-			column = (rand() % (width - 2)) + 1;
-			ok = column>1 && column<width-2
-				 && row>1 && row<height-2
-				&& (*map)[row][column]==id_inner;
-			i++;
-		}
-		return Point(column, row);
+Point RoomMapBuilder::getRandomInner(vector<vector<int>>* map)
+{
+	int i = 0;
+	bool ok = false;
+	int row, column;
+	while (i < 40 && !ok) {
+		row = (rand() % (height - 2)) + 1;
+		column = (rand() % (width - 2)) + 1;
+		ok = column>1 && column<width-2
+			 && row>1 && row<height-2
+			&& (*map)[row][column]==id_inner;
+		i++;
 	}
+	return Point(column, row);
+}
