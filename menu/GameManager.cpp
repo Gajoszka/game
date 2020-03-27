@@ -4,7 +4,6 @@
 #include <windows.h>
 #include <stdio.h>
 #include "GameDef.h"
-#include "RoomBuilder.h"
 #include "FloorBuilder.h"
 /* Controls game flow */
 using namespace std;

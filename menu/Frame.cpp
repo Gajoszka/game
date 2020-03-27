@@ -7,8 +7,7 @@
 
 using namespace std;
 
-void Frame::printInside() {
-}
+void Frame::printInside() {}
 
 // printing frame with its inside data, coordinates from top left corner
 void Frame::print(int column, int row) {
