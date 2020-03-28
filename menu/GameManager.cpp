@@ -1,5 +1,6 @@
 #include "GameManager.h"
 #include "Screen.h"
+#include <ctime>
 #include <iostream>
 #include <windows.h>
 #include <stdio.h>
@@ -10,25 +11,35 @@ using namespace std;
 
 void GameManager::play(string playerName) {
 	
-	this->player = new Player(playerName);
-	(*player).setPrinterMsg(std::bind(&GameLayout::print, layout, std::placeholders::_1, std::placeholders::_2));
+	layout.printLayout();
+	this->pPlayer = new Player(playerName);
+	(*pPlayer).setPrinterMsg(std::bind(&GameLayout::print, &layout, std::placeholders::_1, std::placeholders::_2));
 	srand(time(NULL)); // make rand more randomise
-	layout.printName((*player).getName());
+	layout.printName((*pPlayer).getName());
 	createFloor();
 	keyReader();
+}
+
+GameAction GameManager::shop()
+{
+	system("CLS");
+	shopping.openShop();
+	_getch();
+	layout.refresh();
+	return served;
 }
 
 // floor creation
 void GameManager::createFloor()
 {
-	if (actFloor != nullptr)
-		delete actFloor;
+	if (pActFloor != nullptr)
+		delete pActFloor;
 	FloorBuilder floorBuilder();
 	
-	actFloor = new Floor();
-	actFloor->setPlayer(player);
-	actFloor->setLayout(&layout);
-	actFloor->createRoom();
+	pActFloor = new Floor();
+	pActFloor->setPlayer(pPlayer);
+	pActFloor->setLayout(&layout);
+	pActFloor->createRoom();
 }
 
 // reading user input
@@ -41,17 +52,19 @@ void GameManager::keyReader() {
 			if (key == 0) { 
 				key = _getch();
 				switch (key) {
+				case KEY_F1:
+					action = shop();
 				case KEY_F10:
 					action = endGame;
 					break;
 				case KEY_F3:
-					(*player).addScore(-10);
-					layout.print(score,to_string((*player).getScore()));
+					(*pPlayer).addScore(-10);
+					layout.print(score,to_string((*pPlayer).getScore()));
 					action = exitRoom;
 					break;
-				case KEY_F4:
+				/*case KEY_F4:
 					action = buy_ammunition;
-					break;
+					break;*/
 				default:
 					action = served;
 				}
@@ -89,8 +102,7 @@ void GameManager::keyReader() {
 // manage occuring actions
 GameAction GameManager::runAction(GameAction action)
 {
-	//action = (*getRoom()).runAction(action);
-	action = actFloor->runAction(action);
+	action = pActFloor->runAction(action);
 	switch (action)
 	{
 	case served:
@@ -106,10 +118,19 @@ GameAction GameManager::runAction(GameAction action)
 	return action;
 }
 
+void GameManager::timerStart() {
+	/*start = clock();
+	printerMsg(messageType::timer, to_string(start));*/
+}
+
+void GameManager::timerStop() {
+	
+}
+
 // destructor
 GameManager::~GameManager() {
-	if (actFloor != nullptr)
-		delete actFloor;
-	delete player;
+	if (pActFloor != nullptr)
+		delete pActFloor;
+	delete pPlayer;
 	layout.shutCursor(true);
 }

@@ -41,14 +41,30 @@ GameLayout::~GameLayout() {
 }
 
 
+void GameLayout::printLayout()
+{
+	mapFrame.print(50, 1); // coordinates where printing begins
+	activeItemFrame.print(61, 1);
+	statsFrame.print(50, 15);
+	infoFrame.print(1, 20);
+	roomFrame.print(1, 1);
+	infoFrame.printCenterLine(4, "space-fire,F1-shop, F3-new room, F10-exit");
+}
+
 // displays players username
 void GameLayout::printName(string name) {
-	statsFrame.printLine(1, "Player: " + name);
+	statsFrame.addContent(1, "Player: " + name);
 }
 
 // displays additional information
 void GameLayout::printInfo(string value) {
 	infoFrame.printCenterLine(1, value);
+}
+
+void GameLayout::refresh()
+{
+	printLayout();
+	//player->refreshInfo();
 }
 
 // displays room
@@ -63,16 +79,19 @@ void GameLayout::print(messageType type, string msg)
 	switch (type)
 	{
 	case messageType::score:
-		statsFrame.printLine(3, "Money: " + msg);
+		statsFrame.addContent(3, "Money: " + msg);
 		break;
 	case messageType::ammunition:
-		statsFrame.printLine(4, "Ammunition: " + ammunition);
+		statsFrame.addContent(4, "Bullets: " + msg);
 		break;
 	case messageType::lives:
-		statsFrame.printLine(2, "Lives: " + msg);
+		statsFrame.addContent(2, "Lives: " + msg);
 		break;
 	case messageType::info:
 		printInfo(msg);
+		break;
+	case messageType::timer:
+		statsFrame.addContent(8, msg);
 		break;
 	case messageType::info_delay:
 		printInfo(msg+" (press any key)");

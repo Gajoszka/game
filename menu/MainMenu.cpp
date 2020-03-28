@@ -8,8 +8,7 @@
 /* Creating the opening menu*/
 using namespace std;
 
-MainMenu::MainMenu() :Frame(40, 10) {
-}
+
 
 // manu options
 void MainMenu::printInside() {
@@ -23,6 +22,7 @@ void MainMenu::printInside() {
 // creating user for a current game
 void MainMenu::play(string name) {
 	GameManager game;
+	game.timerStart();
 	game.play(name);
 	printFrame();
 }

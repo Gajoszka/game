@@ -9,7 +9,7 @@ using namespace std;
 class MainMenu : public Frame
 {
 public:
-	MainMenu();
+	MainMenu() : Frame(40, 10) {}
 	void user_choice();
 	virtual void printInside();
 

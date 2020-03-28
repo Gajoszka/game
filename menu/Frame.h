@@ -21,6 +21,7 @@ public:
 		return topLeft;
 	}
 	void printCenterLine(int rowNr, std::string text);
+	~Frame();
 
 private:
 	void printVertical(int column, int row, int width);

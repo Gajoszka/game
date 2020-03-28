@@ -9,7 +9,6 @@ class Creature : public  RoomElement
 {
 public:
 
-	virtual void fight();
 	virtual void takeDamage();
 	Point getLocation() {
 		return location;

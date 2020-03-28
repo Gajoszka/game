@@ -52,7 +52,7 @@ public:
 	}
 
 	RoomElementFactory* getElementFactory() {
-		return elementFactory;
+		return pElementFactory;
 	}
 	
 	Point getRandomInner();
@@ -62,7 +62,7 @@ public:
 private:
 	int width;
 	int height;
-	RoomElementFactory* elementFactory;
+	RoomElementFactory* pElementFactory;
 	vector<vector<RoomElement*>> roomMap; //2d vector
 	vector<vector<int>> mapId;
 	clock_t last_move_enemy_time;

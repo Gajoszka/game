@@ -21,5 +21,5 @@ public:
 protected:
 	virtual void moveCursor(int column, int row);
 private:
-	Room* room=nullptr;
+	Room* pRoom=nullptr;
 };

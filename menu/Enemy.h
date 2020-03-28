@@ -23,9 +23,9 @@ public:
 	~Enemy();
 private:
 	
-	Room* room;
+	Room* pRoom;
 	RoomElement* canMove(int column, int row);
-	Gun* gun;
+	Gun* pGun;
 	Point changeDirection(Point direction);
 };
 

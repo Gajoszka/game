@@ -10,10 +10,10 @@ public:
 	Floor():elementFactory(){
 	}
 	void setLayout(GameLayout* layout) {
-		this->layout = layout;
+		this->pLayout = layout;
 	}
 	void setPlayer(Player* player) {
-		this->player = player;
+		this->pPlayer = player;
 	}
 	Room* getRoom();
 	void createRoom();
@@ -21,9 +21,9 @@ public:
 	~Floor();
 private:
 	RoomElementFactory elementFactory;
-	Room* actRoom=nullptr;
-	Player* player;
-	GameLayout* layout;
+	Room* pActRoom=nullptr;
+	Player* pPlayer;
+	GameLayout* pLayout;
 	int roomNr = 0;
 	void exitFromRoom();
 };

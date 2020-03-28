@@ -13,7 +13,7 @@ public:
 			content.push_back("");
 	}
 	virtual void printInside();
-	void printLine(int rowNr, std::string content);
+	void addContent(int rowNr, std::string content);
 
 private:
 	vector<string> content;

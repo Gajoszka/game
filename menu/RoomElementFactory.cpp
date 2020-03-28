@@ -22,23 +22,19 @@ RoomElement* RoomElementFactory::get(int id)
 		if (id >= id_enemy_min)
 			return getEnemy(id);
 		if (id > id_gun_min)
-			return getGun(id);
+			return getGun();
 		break;
 	}
 	return nullptr;
 }
 
-Gun* RoomElementFactory::getGun(int range, int magazine)
+Gun* RoomElementFactory::getGun()
 {
 	{
-		return new Gun(range, magazine);
+		return new Gun();
 	}
 }
 
-Gun* RoomElementFactory::getGun(int id)
-{
-	return getGun(6, 50);
-}
 
 Enemy* RoomElementFactory::getEnemyById(int id)
 {
@@ -75,7 +71,7 @@ RoomElementFactory::~RoomElementFactory()
 	delete inner;
 	delete wall;
 	delete scale;
-	delete treasure;
+	delete pTreasure;
 	clearEnemys();
 	clearGuns();
 }

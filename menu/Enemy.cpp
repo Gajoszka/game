@@ -18,20 +18,20 @@ GameAction Enemy::conflict(Creature* creature)
 // enemy explodes when dying
 void Enemy::death()
 {
-	room->boomSimulation(this, true);
+	pRoom->boomSimulation(this, true);
 }
 
 // destructor
 Enemy::~Enemy()
 {
-	delete gun;
+	delete pGun;
 }
 
 // enemy inside room and moves inside room
 void Enemy::setRoom(Room* room)
 {
-	this->room = room;
-	gun = room->getElementFactory()->getGun(6, 40);
+	this->pRoom = room;
+	pGun = room->getElementFactory()->getGun();
 }
 
 //enemy movement
@@ -61,8 +61,8 @@ Point Enemy::changeDirection(Point direction) {
 
 // checking if enemy can move in current direction
 RoomElement* Enemy::canMove(int column, int row) {
-	if (room->canMove(column, row, this))
-		return room->get(column, row);
+	if (pRoom->canMove(column, row, this))
+		return pRoom->get(column, row);
 	return nullptr;
 }
 
@@ -74,12 +74,12 @@ GameAction Enemy::move(int columnStep, int rowStep) {
 	if (Player* player = dynamic_cast<Player*>(actEl))
 		return conflict(player);
 	else
-		room->moveSimulation(getLocation().getColumn() + columnStep, getLocation().getRow() + rowStep, 5, this);
+		pRoom->moveSimulation(getLocation().getColumn() + columnStep, getLocation().getRow() + rowStep, 5, this);
 	return served;
 }
 
 GameAction Enemy::shot() {
-	return gun->shot(room, this);
+	return pGun->shot(pRoom, this);
 }
 
 

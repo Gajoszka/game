@@ -14,24 +14,24 @@ void RoomFrame::moveCursor(int column, int row) {
 
 // pritning map elements
 void RoomFrame::printInside() {
-	if (room == nullptr)
+	if (pRoom == nullptr)
 		return;
-	for (int row = 0; row < (*room).getHeight(); row++) {
-		for (int column = 0; column < (*room).getWidth(); column++) {
-			printPoint(column, row, (*room).getIcon(column, row));
+	for (int row = 0; row < pRoom->getHeight(); row++) {
+		for (int column = 0; column < pRoom->getWidth(); column++) {
+			printPoint(column, row, pRoom->getIcon(column, row));
 		}
 	}
 }
 
 void RoomFrame::setRoom(Room* room) {
-	this->room = room;
+	this->pRoom = room;
 	using namespace placeholders;
-	(*this->room).setPrinter(bind(&RoomFrame::printPoint, this, _1, _2, _3)); //bind - adjusting parameters
+	pRoom->setPrinter(bind(&RoomFrame::printPoint, this, _1, _2, _3)); //bind - adjusting parameters
 	
 }
 
 bool RoomFrame::isInside(int mapColumn, int mapRow) {
-	return (*room).isInner(mapColumn, mapRow);
+	return pRoom->isInner(mapColumn, mapRow);
 }
 
 // defining arrow keys
@@ -42,7 +42,7 @@ GameAction RoomFrame::runAction(GameAction action)
 	case served:
 		return action;
 	case moveEnemy:
-		(*room).moveEnemys();
+		(*pRoom).moveEnemys();
 		return served;
 	default:
 		return action;

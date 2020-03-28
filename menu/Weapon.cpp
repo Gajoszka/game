@@ -1,10 +1,9 @@
-#include "Gun.h"
+#include "Weapon.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "Screen.h"
-/* Gun shooting and amunition interactions with creatures*/
 
-GameAction Gun::conflict(Creature* creature)
+GameAction Weapon::conflict(Creature* creature)
 {
 	if (Enemy* enemy = dynamic_cast<Enemy*>(creature)) {
 		enemy->death();
@@ -16,17 +15,17 @@ GameAction Gun::conflict(Creature* creature)
 	return served;
 }
 
-GameAction Gun::shot(Room* room, Creature* shooter) {
+GameAction Weapon::shot(Room* room, Creature* shooter) 
+{
 	if (!canShot())
 		return served;
 	// shots are in the direction of last move of creature
-	Point shotDirection = shooter->lastMoveDirection; 
+	Point shotDirection = shooter->lastMoveDirection;
 	if (Enemy* enemy = dynamic_cast<Enemy*>(shooter)) {
 		//random shoting direction
 		int s = (rand() + 2) % 3 - 1; // choosing new direction, where the enemy can move
 		shotDirection.setColumn(s);
 		shotDirection.setRow(((shotDirection.getRow() + 2 + s) % 3) - 1);
-
 	}
 	if (0 == shotDirection.getColumn() && 0 == shotDirection.getRow())
 		shotDirection.setColumn(-1);
@@ -39,10 +38,10 @@ GameAction Gun::shot(Room* room, Creature* shooter) {
 		nextRow = nextRow + shotDirection.getRow();
 		nextEl = room->get(nextColumn, nextRow);
 		// if enemy can no longer move forward, escape
-		if (nextEl==nullptr || !nextEl->canPass || nextEl->id==id_door)
+		if (nextEl == nullptr || !nextEl->canPass || nextEl->id == id_door)
 			return served;
 		room->printer(nextColumn, nextRow, icon);
-		
+
 		if (Enemy* enemy = dynamic_cast<Enemy*>(nextEl)) {
 			if (Player* player = dynamic_cast<Player*>(shooter))
 				player->addScore(abs(enemy->score));

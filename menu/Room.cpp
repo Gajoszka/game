@@ -7,7 +7,7 @@
 
 Room::Room(vector<vector<int>> map, RoomElementFactory* elementFactory)
 {
-	this->elementFactory = elementFactory;
+	this->pElementFactory = elementFactory;
 	setMap(map);
 }
 
@@ -21,7 +21,7 @@ void Room::setMap(vector<vector<int>> map)
 	for (int row = 0; row < height; row++) {
 		vector<RoomElement*> tmp;
 		for (int column = 0; column < width; column++) {
-			el = elementFactory->get(map[row][column]);
+			el = pElementFactory->get(map[row][column]);
 			if (Creature* creature = dynamic_cast<Creature*>(el))
 				creature->setLocation(column,row);
 			if (Enemy* enemy = dynamic_cast<Enemy*>(el))
@@ -86,11 +86,11 @@ GameAction Room::moveEnemys() {
 	last_move_enemy_time = clock() / CLOCKS_PER_SEC;
 	// chooses only one enemy to move
 	Enemy* enemy;
-	if ((enemy = elementFactory->getRandEnemy()) != nullptr)
+	if ((enemy = pElementFactory->getRandEnemy()) != nullptr)
 		action=enemy->move();
-	if (action == served && (enemy = elementFactory->getRandEnemy()) != nullptr)
+	if (action == served && (enemy = pElementFactory->getRandEnemy()) != nullptr)
 		action = enemy->shot();
-	if (action==served && (enemy = elementFactory->getRandEnemy()) != nullptr)
+	if (action==served && (enemy = pElementFactory->getRandEnemy()) != nullptr)
 		action = enemy->shot();
 	return action;
 }
@@ -98,7 +98,7 @@ GameAction Room::moveEnemys() {
 // making movement move real (dissapear and delay)
 GameAction Room::moveSimulation(int column, int row, int _delay, Creature* el) {
 	RoomElement* actEl = get(column, row);
-	put(el->getLocation().getColumn(), el->getLocation().getRow(), elementFactory->getInner());
+	put(el->getLocation().getColumn(), el->getLocation().getRow(), pElementFactory->getInner());
 	delay(_delay);
 	put(column, row, el);
 	return served;
@@ -141,9 +141,9 @@ void Room::boomSimulation(Creature* creature, bool death)
 	}
 	// dead enemy disappearance
 	if (death) {
-		put(creature->getLocation().getColumn(), creature->getLocation().getRow(), elementFactory->getInner());
+		put(creature->getLocation().getColumn(), creature->getLocation().getRow(), pElementFactory->getInner());
 		if (Enemy* enemy = dynamic_cast<Enemy*>(creature)) {
-			elementFactory->removeEnemy(enemy);
+			pElementFactory->removeEnemy(enemy);
 		}
 	}
 	else

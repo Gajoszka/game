@@ -8,8 +8,8 @@
 #define KEY_RIGHT 77
 #define KEY_END 79
 #define KEY_SPACE 32
+#define KEY_F1 59
 #define KEY_F3 61
-#define KEY_F4 62
 #define KEY_F10 68
 
 // defining sing for wall creation
@@ -34,8 +34,6 @@ const int id_treasure = 11;
 const int id_gun_min = 100;
 const int id_enemy_min = 1000;
 
-enum  GameAction { buy_ammunition,endGame, exitRoom,fire, Failed,none, moveEnemy, key_up, key_down, key_left, key_right,player_death,served,can_move,stop };
+enum  GameAction { buy_ammunition,endGame, exitRoom, fire, Failed, none, moveEnemy, key_up, key_down, key_left, key_right,player_death,served,can_move,stop };
 
-enum  messageType { score, info,info_delay,
-	ammunition,lives
-};
+enum  messageType { score, info, info_delay, ammunition, lives, timer};

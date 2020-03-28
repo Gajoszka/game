@@ -2,9 +2,6 @@
 #include "Screen.h"
 /*Parent class for enemies and player, defining players' coordinates, how they fight, take damage */
 
-void Creature::fight() {
-};
-
 void Creature::takeDamage() {
 };
 

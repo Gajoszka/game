@@ -1,4 +1,3 @@
-/*Found online on https://mathbits.com/MathBits/CompSci/Screen/screenfunctions.htm */
 // Header file:  screen.h
 // This header file will create functions similar to those
 // in the Turbo C++ conio.h header file, which are now not

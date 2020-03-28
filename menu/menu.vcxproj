@@ -165,7 +165,6 @@
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="FloorBuilder.cpp" />
     <ClCompile Include="GameLayout.cpp" />
-    <ClCompile Include="Gun.cpp" />
     <ClCompile Include="Point.cpp" />
     <ClCompile Include="RoomElement.cpp" />
     <ClCompile Include="RoomElementFactory.cpp" />
@@ -185,6 +184,8 @@
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="RoomMapBuilder.cpp" />
+    <ClCompile Include="Shop.cpp" />
+    <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Creature.h" />
@@ -195,6 +196,7 @@
     <ClInclude Include="GameLayout.h" />
     <ClInclude Include="GameType.h" />
     <ClInclude Include="Gun.h" />
+    <ClInclude Include="Revolver.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="GameDef.h" />
     <ClInclude Include="Point.h" />
@@ -210,6 +212,8 @@
     <ClInclude Include="RoomElement.h" />
     <ClInclude Include="RoomMapBuilder.h" />
     <ClInclude Include="Screen.h" />
+    <ClInclude Include="Shop.h" />
+    <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="menu.rc" />

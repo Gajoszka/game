@@ -36,20 +36,21 @@ public:
 	GameAction decreseLives() {
 		lives--;
 		printerMsg(messageType::lives, to_string(lives));
-		room->boomSimulation(this, false);
+		pRoom->boomSimulation(this, false);
 		return lives <= 0 ? player_death: served;
 	}
 	void setRoom(Room* room);
+	void refreshInfo();
 	Room* getRoom() {
-		return room;
+		return pRoom;
 	}
 	~Player();
 private:
 	int score = 0;
 	std::string name;
 	printMessage printerMsg = nullptr;
-	Room* room;
-	Gun* gun = nullptr;
+	Room* pRoom;
+	Gun* pGun = nullptr;
 	int lives = 5;
 	GameAction shot();
 };

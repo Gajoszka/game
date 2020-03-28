@@ -94,6 +94,10 @@ void Frame::printCenterLine(int rowNr, string text) {
 	cout << text;
 }
 
+Frame::~Frame()
+{
+}
+
 
 // checking whether something is within the frame or not and returning boolean
 bool Frame::isInside(int column, int row) {

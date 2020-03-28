@@ -4,12 +4,13 @@
 #include "Screen.h"
 #include "Room.h"
 #include "Enemy.h"
+#include "Weapon.h"
 /*Defining players and their attributes and abilities*/
 using namespace std;
 
 void Player::addScore(int s) {
 	if (s < 0)
-		room->boomSimulation(this, false);
+		pRoom->boomSimulation(this, false);
 	score = score + s;
 	printerMsg(messageType::score, to_string(score));
 }
@@ -22,29 +23,33 @@ string Player::getName() {
 
 void Player::setRoom(Room* room)
 {
-	this->room = room;
+	this->pRoom = room;
 	room->putInInner(this);
-	if (gun == nullptr)
-		gun = new Gun(8, 50);
+	if (pGun == nullptr)
+		pGun = new Gun();
+	refreshInfo();
+}
+
+void Player::refreshInfo() {
 	printerMsg(messageType::score, to_string(score));
 	printerMsg(messageType::lives, to_string(lives));
-	printerMsg(messageType::ammunition, to_string(gun->getAmmunition()));
+	printerMsg(messageType::ammunition, to_string(pGun->getAmmunition()));
 }
 
 Player::~Player()
 {
-	if (gun != nullptr)
-		delete gun;
+	if (pGun != nullptr)
+		delete pGun;
 }
 
 // player movement
 GameAction Player::move(int columnStep, int rowStep) {
-	RoomElement* nextEl = room->get(getLocation().getColumn() + columnStep, getLocation().getRow() + rowStep);
+	RoomElement* nextEl = pRoom->get(getLocation().getColumn() + columnStep, getLocation().getRow() + rowStep);
 	GameAction action = nextEl->conflict(this);
 	if (action == can_move || action == exitRoom) { // checking whether player can move in chosen direction
 		lastMoveDirection.setColumn(columnStep);
 		lastMoveDirection.setRow(rowStep);
-		GameAction action1 = room->moveSimulation(getLocation().getColumn() + columnStep, getLocation().getRow() + rowStep, 20, this);
+		GameAction action1 = pRoom->moveSimulation(getLocation().getColumn() + columnStep, getLocation().getRow() + rowStep, 20, this);
 		if (action != exitRoom)
 			return action1;
 	}
@@ -53,8 +58,8 @@ GameAction Player::move(int columnStep, int rowStep) {
 
 // shooting and changing amunition amount
 GameAction Player::shot() {
-	gun->shot(room, this);
-	room->printerMsg(messageType::ammunition, to_string(gun->getAmmunition()));
+	pGun->shot(pRoom, this);
+	pRoom->printerMsg(messageType::ammunition, to_string(pGun->getAmmunition()));
 	return served;
 }
 
@@ -78,9 +83,9 @@ GameAction Player::runAction(GameAction action)
 	case buy_ammunition:
 		if (score > 10) {
 			score -= 10;
-			gun->addAmmunition(5);
+			pGun->addAmmunition(5);
 			printerMsg(messageType::score, to_string(score));
-			printerMsg(messageType::ammunition, to_string(gun->getAmmunition()));
+			printerMsg(messageType::ammunition, to_string(pGun->getAmmunition()));
 			printerMsg(messageType::info_delay, "Bought ammunition");
 			return served;
 		}

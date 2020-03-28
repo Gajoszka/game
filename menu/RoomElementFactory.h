@@ -26,15 +26,13 @@ public:
 	}
 
 	Door* getDoor() {
-		return door;
+		return pDoor;
 	}
 
-	Gun* getGun(int range, int magazine);
-
-	Gun* getGun(int id);
+	Gun* getGun();
 
 	RoomElement* getTreasure() {
-		return treasure;
+		return pTreasure;
 	}
 
 	/*Player* getPlayer() {
@@ -77,7 +75,7 @@ private:
 	RoomElement* inner = new  RoomElement(id_inner, ' ', true);
 	RoomElement* wall = new  RoomElement(id_wall, static_cast<char>(219), false);
 	RoomElement* scale = new RoomElement(id_wall, static_cast<char>(219), false);
-	Door* door = new Door();
-	RoomElement* treasure = new RoomElement(id_treasure, static_cast<char>(158), true, 1);
+	Door* pDoor = new Door();
+	RoomElement* pTreasure = new RoomElement(id_treasure, static_cast<char>(158), true, 1);
 	//Player* player = new Player();
 };
