@@ -6,7 +6,7 @@
 class Frame
 {
 public:
-	Frame(int width, int height) :topLeft(1, 1) {
+	Frame(int width, int height) : topLeft(1, 1) {
 		this->width = width;
 		this->height = height;
 	};
@@ -21,6 +21,7 @@ public:
 		return topLeft;
 	}
 	void printCenterLine(int rowNr, std::string text);
+	void printLine(int rowNr, std::string text);
 	~Frame();
 
 private:
@@ -29,7 +30,7 @@ private:
 
 protected:
 	virtual void moveCursor(int column, int row);
-	void printLine(int rowNr, std::string text);
+	
 	
 	int width;
 	int height;

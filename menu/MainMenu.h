@@ -4,30 +4,25 @@
 #include "Frame.h"
 #include <vector>
 #include <string>
+#include "MenuTemplate.h"
 using namespace std;
 
-class MainMenu : public Frame
+class MainMenu
 {
 public:
-	MainMenu() : Frame(40, 10) {}
-	void user_choice();
+	MainMenu();
 	virtual void printInside();
 
 protected:
 
 private:
 	DBconnection db;
+	MenuTemplate menu;
 	int answer;
 	bool active = true;
 	void intro();
 	void play(string name);
 	void key_fun();
-	int chooseIndex(string head, vector<string> options, string prompt);
-	string chooseOption(string head, vector<string> options, string prompt);
-	int menuDisplay(string head, vector<string>options);
-	void nameDisplay(string name);
-	void showMenuLine(int index, string text);
-	int getValidInput(string prompt, int highestNum);
 	void showMenu();
 	vector<string> menu_options;
 	string new_game = "Start new game";

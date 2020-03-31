@@ -9,7 +9,6 @@
 using namespace std;
 
 
-
 // manu options
 void MainMenu::printInside() {
 	menu_options.push_back(new_game);
@@ -24,7 +23,7 @@ void MainMenu::play(string name) {
 	GameManager game;
 	game.timerStart();
 	game.play(name);
-	printFrame();
+	showMenu();
 }
 
 // taking username and putting it into database
@@ -57,82 +56,10 @@ void MainMenu::key_fun()
 	db.key_functions();
 }
 
-// taking user input and proceeding chosen action
-void MainMenu::user_choice()
-{
-	GameAction action;
-	int choice;
-	cin >> choice;
-	switch (choice) {
-	case 1: intro();
-		break;
-	case 2:
-		key_fun();
-		break;
-	case 3: cout << "Score board" << endl;
-		break;
-	case 4: action = endGame;
-	}
-}
-
-// choose option by index
-int MainMenu::chooseIndex(string head, vector<string> options, string prompt) {
-	int highestNumber = menuDisplay(head, options);
-	int choice = getValidInput(prompt + "(from 1 to " + to_string(highestNumber) + "): ", highestNumber);
-	return choice;
-}
-
-//choose option by name
-string MainMenu::chooseOption(string head, vector<string> options, string prompt) {
-	int choice = chooseIndex(head, options, prompt);
-	return options[choice - 1];
-}
-
-//display menu
-int MainMenu::menuDisplay(string head, vector<string> options) {
-	if (head.size() > 0) {
-		nameDisplay(head);
-	}
-	for (int index = 0; index < options.size(); index++) {
-		printLine(index + 2, to_string(index + 1) + ". " + options[index]);
-	}
-
-	return options.size();
-}
-
-//display option name
-void MainMenu::nameDisplay(string name) {
-	if (name != " ") {
-		printLine(1, name);
-	}
-}
-
-// show whole option line
-void MainMenu::showMenuLine(int index, string text) {
-	cout << index + ". " + text;
-}
-
-// ensure input is valid, there is such option in menu
-int MainMenu::getValidInput(string prompt, int highestNum) {
-	int answer = 0;
-	string key;
-	printLine(highestNum + 3, prompt);
-	while (answer <= 0 or answer > highestNum) {
-		key = _getch();
-		try {
-			answer = stoi(key); // makes an integer from a string
-		}
-		catch (exception) {
-			answer = -1;
-		}
-	}
-	return answer;
-}
-
 // chosen option transfers to appropriate actions
 void MainMenu::showMenu() {
 	while (active) {
-		string choose = chooseOption("Menu", menu_options, "Please choose option");
+		string choose = menu.chooseOption("Menu", menu_options, "Please choose option");
 		if (choose == new_game) {
 			intro();
 		}

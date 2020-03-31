@@ -165,6 +165,7 @@
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="FloorBuilder.cpp" />
     <ClCompile Include="GameLayout.cpp" />
+    <ClCompile Include="MenuTemplate.cpp" />
     <ClCompile Include="Point.cpp" />
     <ClCompile Include="RoomElement.cpp" />
     <ClCompile Include="RoomElementFactory.cpp" />
@@ -196,6 +197,7 @@
     <ClInclude Include="GameLayout.h" />
     <ClInclude Include="GameType.h" />
     <ClInclude Include="Gun.h" />
+    <ClInclude Include="MenuTemplate.h" />
     <ClInclude Include="Revolver.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="GameDef.h" />

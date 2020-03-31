@@ -1,16 +1,21 @@
 #pragma once
-#include "Frame.h"
+#include "InfoFrame.h"
 #include <vector>
 #include <string>
 using namespace std;
 
-class Shop : public Frame
+class Shop
 {
 public:
-	Shop() : Frame(20, 10) {};
+	Shop() : shopFrame(30, 15) {};
 	void openShop();
 
 private:
+	void shopMenu();
+	void buyWeapon();
+	void buyAmmunition();
+	void leaveShop();
+	InfoFrame shopFrame;
 	vector<string> content;
 };
 
