@@ -10,9 +10,7 @@ using namespace std;
 class MainMenu
 {
 public:
-	MainMenu();
-	virtual void printInside();
-
+	void showMenu();
 protected:
 
 private:
@@ -23,7 +21,7 @@ private:
 	void intro();
 	void play(string name);
 	void key_fun();
-	void showMenu();
+	void getOptions();
 	vector<string> menu_options;
 	string new_game = "Start new game";
 	string keys = "Key functions";

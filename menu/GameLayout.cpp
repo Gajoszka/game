@@ -43,11 +43,11 @@ GameLayout::~GameLayout() {
 
 void GameLayout::printLayout()
 {
-	mapFrame.print(50, 1); // coordinates where printing begins
-	activeItemFrame.print(61, 1);
-	statsFrame.print(50, 15);
-	infoFrame.print(1, 20);
-	roomFrame.print(1, 1);
+	mapFrame.print(50, 1, "Map"); // coordinates where printing begins
+	activeItemFrame.print(61, 1, "");
+	statsFrame.print(50, 15, "Stats");
+	infoFrame.print(1, 20, "Info");
+	roomFrame.print(1, 1, "Room");
 	infoFrame.printCenterLine(4, "space-fire,F1-shop, F3-new room, F10-exit");
 }
 

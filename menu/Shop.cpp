@@ -5,8 +5,7 @@
 
 void Shop::openShop()
 {
-	shopFrame.print(10, 5);
-	shopFrame.printCenterLine(1, "Shop");
+	shopFrame.print(10, 5, "Shop");
 }
 
 void Shop::buyWeapon()

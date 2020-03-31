@@ -5,16 +5,16 @@
 
 // choose option by index
 int MenuTemplate::chooseIndex(string head, vector<string> options, string prompt) {
-	height = options.size() + 3;
+	height = options.size() + 5;
 	width = max(head.size(), prompt.size());
 	for (string element : options) {
 		if (element.size() > width)
 			width = element.size();
 	}
-	width += 3;
-	if (head.size() > 0) {
-		nameDisplay(head);
-	}
+	width += 20;
+	this->topLeft.setColumn(10); topLeft.setRow(5);
+	printFrame();
+	printHeader(head);
 	for (int index = 0; index < options.size(); index++) {
 		printLine(index + 2, to_string(index + 1) + ". " + options[index]);
 	}
@@ -28,23 +28,25 @@ string MenuTemplate::chooseOption(string head, vector<string> options, string pr
 	return options[choice - 1];
 }
 
-void MenuTemplate::showOptions(vector<string> list)
+string MenuTemplate::nameMenu()
 {
-	for (string el : list) {
-		cout << el << endl;
+	width = 30, height = 6;
+	this->topLeft.setColumn(10); topLeft.setRow(5);
+	printFrame();
+	printHeader("Welcome to the game!");
+	string name = "";
+	printLine(3, "What's your name? ");
+	char key=32; //32 = SPACE
+	// username cannot escape the frame
+	while (key != 13) { // 13 = ENTER
+		key = _getch();
+		if (name.size()<10 && key >= '0' && key <= 'z') {
+			name += key;
+			printLine(3, "What's your name? " + name);
+		}
 	}
-} 
-
-//display option name
-void MenuTemplate::nameDisplay(string name) {
-	if (name != " ") {
-		printLine(1, name);
-	}
-}
-
-// show whole option line
-void MenuTemplate::showMenuLine(int index, string text) {
-	cout << index + ". " + text;
+	system("CLS");
+	return name;
 }
 
 // ensure input is valid, there is such option in menu

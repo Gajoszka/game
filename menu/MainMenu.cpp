@@ -10,12 +10,11 @@ using namespace std;
 
 
 // manu options
-void MainMenu::printInside() {
+void MainMenu::getOptions() {
 	menu_options.push_back(new_game);
 	menu_options.push_back(keys);
 	menu_options.push_back(scores);
 	menu_options.push_back(exit);
-	showMenu();
 }
 
 // creating user for a current game
@@ -30,34 +29,21 @@ void MainMenu::play(string name) {
 void MainMenu::intro()
 {
 	system("CLS"); // cleat the screen
-	printFrame();
-	string name = "";
-	printCenterLine(2, "Welcome to the game!");
-	printLine(5, "What's your name? ");
-	char key=32; //32 = SPACE
-	// username cannot escape the frame
-	while (key != 13) { // 13 = ENTER
-		key = _getch();
-		if (name.size()<10 && key >= '0' && key <= 'z') {
-			name += key;
-			printLine(5, "What's your name? " + name);
-		}
-	}
-	db.add_username(name);
-	system("CLS");
-	play(name);
+	play(menu.nameMenu());
 }
 
 // transfer to key functions
 void MainMenu::key_fun()
 {
 	system("CLS");
-	printFrame();
+	//printFrame();
 	db.key_functions();
 }
 
 // chosen option transfers to appropriate actions
 void MainMenu::showMenu() {
+	system("CLS");
+	getOptions();
 	while (active) {
 		string choose = menu.chooseOption("Menu", menu_options, "Please choose option");
 		if (choose == new_game) {

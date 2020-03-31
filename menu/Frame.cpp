@@ -10,12 +10,21 @@ using namespace std;
 void Frame::printInside() {}
 
 // printing frame with its inside data, coordinates from top left corner
-void Frame::print(int column, int row) {
+void Frame::print(int column, int row, string name) {
 	this->topLeft.setColumn(column);
 	this->topLeft.setRow(row);
 	printFrame();
+	printHeader(name);
 	printInside();
-};
+}
+
+void Frame::printHeader(string name)
+{
+	if (name != " ") {
+		moveCursor((width - (int)name.size()) / 2, 0);
+		cout << " " + name + " ";
+	}
+}
 
 // combining all functions printing particular sides and corners of a frame
 void Frame::printFrame() {

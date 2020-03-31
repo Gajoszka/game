@@ -3,6 +3,8 @@
 #include <string>
 #include "Point.h"
 
+using namespace std;
+
 class Frame
 {
 public:
@@ -10,10 +12,11 @@ public:
 		this->width = width;
 		this->height = height;
 	};
+	void printHeader(string name);
 	virtual void printFrame();
 	virtual void printInside();
 	virtual bool isInside(int column, int row);
-	void print(int column, int row);
+	void print(int column, int row, string name);
 	void printPoint(int column, int row, char sign);
 	void clear();
 	void clearLine(int nrLine);
